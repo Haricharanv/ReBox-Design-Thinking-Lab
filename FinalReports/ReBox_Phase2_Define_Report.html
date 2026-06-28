@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Phase 2: Problem Definition & Data Analysis Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #0f172a;
+    --secondary-light: #1e293b;
+    --accent: #3b82f6;
+    --text-main: #1e293b;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    --border: #e2e8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.65;
+    padding: 0;
+}
+
+h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', sans-serif;
+    color: var(--secondary);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* Cover Page */
+.cover-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
+    border-bottom: 8px solid var(--primary);
+    position: relative;
+}
+
+.cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rvce-logo-img {
+    height: 90px;
+    width: auto;
+}
+
+.sdg-badges {
+    display: flex;
+    gap: 12px;
+}
+
+.sdg-badge {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+}
+
+.sdg-9 { background-color: #f26a2e; }
+.sdg-11 { background-color: #f99d1c; }
+.sdg-12 { background-color: #cf8d2e; }
+
+.cover-body {
+    margin: auto 0;
+    text-align: center;
+    max-width: 800px;
+    align-self: center;
+}
+
+.cover-title-group h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, var(--secondary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cover-title-group p.subtitle {
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.cover-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    font-size: 0.95rem;
+}
+
+.team-list {
+    list-style: none;
+}
+
+.team-list li {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.mentor-info {
+    text-align: right;
+}
+
+/* Navigation & Header */
+.report-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+    color: var(--primary-dark);
+}
+
+/* Sections */
+section.main-section {
+    padding: 70px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+section.main-section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-bottom: 3px solid var(--primary);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.subsection-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 35px 0 15px;
+    color: var(--secondary-light);
+}
+
+.subsubsection-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    color: var(--text-main);
+}
+
+p {
+    margin-bottom: 15px;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+ul, ol {
+    margin: 15px 0 20px 25px;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 12px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: var(--secondary);
+    color: var(--white);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+}
+
+tr:nth-child(even) {
+    background-color: var(--bg-light);
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Cards & Layouts */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .cover-footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .mentor-info {
+        text-align: center;
+    }
+}
+
+.card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Callouts */
+.callout {
+    background-color: #eff6ff;
+    border-left: 5px solid var(--accent);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 25px 0;
+}
+
+.callout-success {
+    background-color: #ecfdf5;
+    border-left-color: var(--primary);
+}
+
+.callout h4 {
+    margin-bottom: 8px;
+    color: var(--secondary);
+    font-size: 1.1rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    color: var(--text-light);
+}
+
+.badge-primary {
+    background-color: #d1fae5;
+    color: var(--primary-dark);
+}
+
+/* Figures / Images */
+.figure-container {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.figure-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.figure-container img:hover {
+    transform: scale(1.02);
+}
+
+.figure-caption {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Interactive elements */
+.interactive-tab-container {
+    background-color: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin: 25px 0;
+    box-shadow: var(--shadow);
+}
+
+.tab-nav {
+    display: flex;
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary);
+    background-color: var(--white);
+}
+
+.tab-panel {
+    padding: 30px;
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* Floating print button */
+.print-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.print-floating-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px -5px rgba(16, 185, 129, 0.5);
+}
+
+/* Print CSS */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background-color: var(--white) !important;
+        color: #000000 !important;
+    }
+    
+    .cover-page {
+        height: 100vh;
+        page-break-after: always;
+        background: none !important;
+        border: none !important;
+    }
+    
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .page-break {
+        page-break-before: always;
+    }
+    
+    section.main-section {
+        padding: 40px 0 !important;
+        page-break-inside: avoid;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        page-break-inside: avoid;
+    }
+    
+    table {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        page-break-inside: auto;
+    }
+    
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    .figure-container img {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        max-height: 350px !important;
+        object-fit: contain !important;
+        page-break-inside: avoid;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    
+<div class="cover-page">
+    <div class="cover-header">
+        <img class="rvce-logo-img" src="images/rvce_logo.png" alt="RVCE Logo" onerror="this.style.display='none'">
+        <div class="sdg-badges">
+            <span class="sdg-badge sdg-9">SDG 9: Industry & Innovation</span>
+            <span class="sdg-badge sdg-11">SDG 11: Sustainable Cities</span>
+            <span class="sdg-badge sdg-12">SDG 12: Responsible Consumption</span>
+        </div>
+    </div>
+    <div class="cover-body">
+        <div class="cover-title-group">
+            <h1>ReBox: Gated Community Circular Packaging Loop</h1>
+            <p class="subtitle">Phase 2: Problem Definition & Data Analysis Report</p>
+            <div style="margin: 20px 0;">
+                <span class="badge badge-primary" style="font-size: 1.1rem; padding: 6px 16px;">Phase 2: Define</span>
+            </div>
+        </div>
+    </div>
+    <div class="cover-footer">
+        <div>
+            <p style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Prepared By</p>
+            <ul class="team-list">
+                <li>Hari Charan V (1RV25MC037)</li>
+                <li>Anjali Kumari (1RV25MC013)</li>
+                <li>Jajala Lakshmi Supriya (1RV25MC042)</li>
+            </ul>
+        </div>
+        <div class="mentor-info">
+            <p style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Under the Guidance of</p>
+            <p style="font-weight: 600; color: var(--secondary);">Prof. Chandrani Chakravorty</p>
+            <p style="font-size: 0.9rem; color: var(--text-light);">MCA427DL — Design Thinking Lab</p>
+            <p style="font-size: 0.9rem; color: var(--text-light);">Department of MCA, R.V. College of Engineering</p>
+            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">June 2026</p>
+        </div>
+    </div>
+</div>
+
+
+    <header class="report-header no-print">
+        <div class="container header-content">
+            <div style="font-weight: 800; font-family: 'Outfit'; font-size: 1.4rem; color: var(--primary-dark);">ReBox.</div>
+            <div style="font-size: 0.9rem; color: var(--text-light); font-weight: 500;">RVCE Design Thinking Lab Report</div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+        
+<nav class="interactive-tab-container no-print" id="toc-nav">
+    <div style="padding: 15px 25px; border-bottom: 1px solid var(--border); background-color: var(--bg-light);">
+        <h3 style="font-size: 1.1rem; color: var(--secondary); font-family: 'Outfit'; font-weight: 700;">📂 Table of Contents</h3>
+    </div>
+    <div style="padding: 15px 25px;">
+        <ul style="list-style: none; margin: 0; padding: 0;">
+            <li><a href="#exec-summary">1. Executive Summary</a></li>
+<li><a href="#data-analysis">2. Data Analysis & Survey Findings</a></li>
+<li><a href="#affinity-mapping">3. Affinity Mapping Clusters</a></li>
+<li><a href="#mind-mapping">4. System Mind Mapping Diagrams</a></li>
+<li><a href="#multi-voting">5. Multi-Voting: Solution Selection</a></li>
+<li><a href="#problem-definition">6. Defined Problem & Possible Approach</a></li>
+<li><a href="#references">7. References</a></li>
+        </ul>
+    </div>
+</nav>
+
+        
+        
+<section class="main-section" id="exec-summary">
+    <h2 class="section-title">1. Executive Summary</h2>
+    <p>ReBox is an innovative, high-impact circular economy system designed to address the massive packaging waste generated by the e-commerce boom in urban India. By intercepting structurally intact cardboard boxes at the apartment level and redirecting them to local micro-vendors, ReBox bridges a critical resource gap. Every day, approximately 15 million e-commerce parcels are shipped across India, resulting in millions of single-use corrugated cardboard boxes being discarded. The current waste management pipeline is almost entirely linear: residents discard boxes, municipal waste handlers or informal scrap dealers collect them, and they are eventually sold to pulp recycling mills for a meager Rs. 3 per box (calculated by weight). This process is energy-intensive, chemical-heavy, and downcycles high-quality long fibers after only a single use. Meanwhile, local retail vendors, kirana store owners, bakeries, and hyper-local couriers routinely pay Rs. 20–35 for a brand new cardboard box of equivalent size.</p>
+    <p>The ReBox platform provides a closed-loop alternative that prioritizes <strong>REUSE</strong> over recycling. The system consists of three integrated layers: (1) <strong>Physical Collection Bins:</strong> Weather-proof green bins placed in gated apartment basements adjacent to elevator lobbies, providing a zero-friction disposal point; (2) <strong>Twilio WhatsApp Bot:</strong> A lightweight, QR-enabled mobile interface that allows residents to log drops in under 15 seconds and alerts registered vendors when boxes are ready for pickup, eliminating the need to download dedicated mobile applications; and (3) <strong>Analytics Dashboard:</strong> A web-based portal that tracks community leaderboards, RWA waste audits, and individualized carbon offset metrics (saving approximately 1.1 tonnes of CO₂ equivalent and 26,000 liters of water per tonne of corrugated paper reused). This report documents the complete, five-phase Design Thinking lifecycle of ReBox, demonstrating its viability, operational feasibility, and high user acceptance through extensive on-ground testing across Bengaluru, Hyderabad, Tumkur, Bidar, Kadapa, and Tirupati.</p>
+    <div style="margin: 30px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;" class="no-print">
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">Rs.3</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Scrap Value (Recycle)</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">Rs.25</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Vendor Cost (New)</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">5-7x</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Reuse Cycles</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">96%</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Logo Neutrality</div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" id="data-analysis">
+    <h2 class="section-title">2. Data Analysis</h2>
+    <p>Using quantitative data collected from our 31 surveys and 10 detailed shopper interviews, we compiled numerical distributions mapping out household waste patterns and commercial demand. All calculations were performed in the companion spreadsheet workbook to ensure statistical accuracy.</p>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Shopper Clutter Constraints</h3>
+            <p>Reason for e-commerce box disposal among urban apartment residents:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Primary Reason</th>
+                        <th>Respondent Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Balcony Clutter / Space Constraints</strong></td>
+                        <td>80.0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>No Immediate Secondary Household Use</strong></td>
+                        <td>15.0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cardboard Damaged during Unboxing</strong></td>
+                        <td>5.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="figure-container">
+            <img src="images/charts/chart_disposal.png" alt="Shopper Clutter Chart" onerror="this.style.display='none'">
+            <div class="figure-caption">Figure 2.1: Shopper disposal reasons highlighting space constraints as the primary driver</div>
+        </div>
+    </div>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Vendor Brand and Logo Receptivity</h3>
+            <p>Will shopkeepers buy sturdy second-hand boxes that have pre-printed e-commerce logos (Amazon, Flipkart, etc.)?</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Merchant Response</th>
+                        <th>Respondent Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>"No Problem / Logos Do Not Matter"</strong></td>
+                        <td>96.0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Yes, it matters (prefer blank boxes)"</strong></td>
+                        <td>4.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h3>Willingness to Sort and Drop off Bins</h3>
+            <p>Percentage of residents willing to drop flattened boxes in basement green bins instead of garbage chutes:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Action Tendency</th>
+                        <th>Respondent Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>"Would definitely use basement bins"</strong></td>
+                        <td>72.0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Might use, depending on exact location"</strong></td>
+                        <td>20.0%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Unlikely, prefer garbage chute"</strong></td>
+                        <td>8.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Vendor Willingness to Adopt Second-hand Boxes</h3>
+            <p>Kirana and merchant receptiveness to local second-hand boxes:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Willingness Tier</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>"Yes, definitely"</strong></td>
+                        <td>45.2%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"Yes, if structural condition is good"</strong></td>
+                        <td>38.7%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>"No, prefer new boxes"</strong></td>
+                        <td>16.1%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="figure-container">
+            <img src="images/charts/chart_willingness.png" alt="Vendor Willingness Chart" onerror="this.style.display='none'">
+            <div class="figure-caption">Figure 2.2: High vendor willingness to buy clean second-hand packaging boxes</div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" id="affinity-mapping">
+    <h2 class="section-title">3. Affinity Mapping</h2>
+    <p>We structured our raw, qualitative notes, interview quotes, and observations into 4 logical clusters. This helped identify structural dependencies and systemic market failures. We have consolidated this analysis into a visual Affinity Diagram board below:</p>
+    
+    <div class="grid-2">
+        <div class="card" style="border-top: 4px solid var(--primary);">
+            <h3>Cluster 1: Shopper Behaviors</h3>
+            <p>Balconies become utility storage blocks. Extreme stress over cardboard box pile-up within 3–7 days of unboxing. Immediate disposal is a convenience constraint. Residents express a desire to recycle, but municipal sorting is too complex.</p>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--primary);">
+            <h3>Cluster 2: Vendor Economic Needs</h3>
+            <p>Micro-merchants spend Rs.500 to Rs.5,000 monthly on packaging materials, representing 10–15% of net operational profits. 96% are indifferent to printed e-commerce logos if the box is structurally solid. Willing to pay Rs.2–5 per box.</p>
+        </div>
+    </div>
+    
+    <div class="grid-2">
+        <div class="card" style="border-top: 4px solid var(--accent);">
+            <h3>Cluster 3: Linear Recycling Pipeline Gaps</h3>
+            <p>Municipal waste handlers collect cardboard as general dry waste, exposing it to wet soils. Scrap dealers buy cardboard by weight (Rs.3/box equivalent), crushing structurally sound boxes for pulp mill recycling, destroying 80% of reuse value.</p>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--accent);">
+            <h3>Cluster 4: System Economics & Scale</h3>
+            <p>Gated apartments generate high packaging volumes, which makes hyper-local pickup routes economically viable. Direct resident-to-vendor handovers bypass transport costs. Fits with upcoming Extended Producer Responsibility (EPR) regulations.</p>
+        </div>
+    </div>
+
+    <div class="figure-container">
+        <img src="images/rebox_affinity_diagram.png" alt="ReBox Affinity Diagram Board" style="max-width: 100%; border-radius: 8px;">
+        <div class="figure-caption">Figure 2.3: ReBox Collaborative Affinity Diagram - Synthesizing stakeholder observations and themes</div>
+    </div>
+</section>
+
+<section class="main-section" id="mind-mapping">
+    <h2 class="section-title">4. System Mind Mapping Diagrams</h2>
+    <p>A comprehensive system mind map was designed to capture all elements of the ReBox circular ecosystem, linking stakeholders to operational services and environmental targets. This mapping outlines the physical and digital linkages required to maintain the circular packaging loop:</p>
+    
+    <div class="callout">
+        <h4>Core Branches of the ReBox Mind Map:</h4>
+        <ul>
+            <li><strong>Stakeholders:</strong> Online Shoppers (supply), Local Vendors (demand), Society Guards/RWAs (enablers).</li>
+            <li><strong>System Layers:</strong> Physical basement green collection bins, WhatsApp bot interface, cloud analytics database.</li>
+            <li><strong>Value Propositions:</strong> Local business cost reductions (80% savings), carbon offset logging (1.1t CO2/tonne paper), community social trust.</li>
+            <li><strong>Box Durability Flow:</strong> 7-cycle box reuse model, visual wear check, final decommission to pulp recycling.</li>
+        </ul>
+    </div>
+
+    <div class="figure-container">
+        <img src="images/rebox_mind_map.png" alt="ReBox System Mind Map" style="max-width: 100%; border-radius: 8px;">
+        <div class="figure-caption">Figure 2.4: ReBox System Mind Map - Visualizing the circular flow of packaging materials, stakeholders, and digital layers</div>
+    </div>
+</section>
+
+<section class="main-section" id="multi-voting">
+    <h2 class="section-title">5. Multi-Voting: Solution Selection</h2>
+    <p>To finalize the core mechanics of our solution, our three team members conducted a multi-voting matrix, scoring four potential solutions based on implementation effort, user friction, and target cost limits.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Proposed Solution Idea</th>
+                <th>Hari's Vote</th>
+                <th>Anjali's Vote</th>
+                <th>Supriya's Vote</th>
+                <th>Cumulative Points</th>
+                <th>Design Decision</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: #ecfdf5; font-weight: bold; border-left: 5px solid var(--primary);">
+                <td><strong>WhatsApp Bot + QR Bins (Mid-Tech connector)</strong></td>
+                <td>5</td>
+                <td>5</td>
+                <td>5</td>
+                <td>15 / 15</td>
+                <td><span class="badge badge-primary">Selected (Core Connector Layer)</span></td>
+            </tr>
+            <tr style="background-color: #ecfdf5; font-weight: bold; border-left: 5px solid var(--primary);">
+                <td><strong>Physical Bins Only (Low-Tech base)</strong></td>
+                <td>4</td>
+                <td>4</td>
+                <td>3</td>
+                <td>11 / 15</td>
+                <td><span class="badge badge-primary">Selected (Physical Drop Base Layer)</span></td>
+            </tr>
+            <tr>
+                <td><strong>Dedicated Mobile App Prototype (High-Tech Dashboard)</strong></td>
+                <td>2</td>
+                <td>1</td>
+                <td>2</td>
+                <td>5 / 15</td>
+                <td>Deferred (Clickable UI Mockups/Simulation Only)</td>
+            </tr>
+            <tr>
+                <td><strong>SMS Broadcast Network</strong></td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>3 / 15</td>
+                <td>Rejected (High telecom cost & spam risk)</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="figure-container">
+        <img src="images/rebox_multivoting.png" alt="Multi-voting board" onerror="this.style.display='none'">
+        <div class="figure-caption">Figure 2.5: Dot voting evaluation session and priority ranking on our project board</div>
+    </div>
+</section>
+
+<section class="main-section" id="problem-definition">
+    <h2 class="section-title">6. Defined Problem & Possible Approach</h2>
+    <p>We structured our final design approach by conducting a 5 Whys analysis to pinpoint the root cause of cardboard recycling failures.</p>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>5 Whys Root Cause Analysis</h3>
+            <ol>
+                <li><strong>Why do clean, sturdy e-commerce boxes end up in landfills?</strong> Because they are discarded as general dry waste.</li>
+                <li><strong>Why are they thrown away as waste?</strong> Because residents have no space to store them and no alternative disposal route.</li>
+                <li><strong>Why is there no alternative disposal route?</strong> Because traditional scrap dealers only visit irregularly.</li>
+                <li><strong>Why do scrap dealers crush them?</strong> Because scrap dealers buy by weight to sell to pulp mills, destroying the boxes' structural reuse value.</li>
+                <li><strong>Why is there no local reuse?</strong> Because there is no hyper-local coordination linking residents to nearby vendors.</li>
+            </ol>
+            <p><strong>Root Cause:</strong> The current urban waste management pipeline is optimized for resource-intensive pulping (recycling) rather than preservation (reuse).</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--primary);">
+            <h3>Point-of-View (POV) Framing</h3>
+            <p><strong>Shoppers:</strong> Gated society residents who shop online NEED a zero-friction box disposal channel BECAUSE balcony space constraints force immediate disposal, despite their eco-guilt.</p>
+            <p><strong>Vendors:</strong> Local neighborhood retailers NEED a cheap, reliable supply of cardboard boxes BECAUSE packaging costs represent 10–15% of operational budgets.</p>
+        </div>
+    </div>
+    
+    <div class="callout callout-success">
+        <h4>How Might We (HMW) Framing:</h4>
+        <p style="font-size: 1.25rem; font-weight: 600; color: var(--secondary); font-family: 'Outfit';">
+            "How Might We intercept structurally intact e-commerce boxes at the apartment level and redirect them to local vendors who need them — making disposal effortless for residents and supply reliable for shopkeepers?"
+        </p>
+    </div>
+</section>
+
+<section class="main-section" id="references">
+    <h2 class="section-title">9. References</h2>
+    <ol>
+        <li>Ministry of Environment, Forest and Climate Change (MoEFCC) — Extended Producer Responsibility Guidelines, 2022.</li>
+        <li>Indian Institute of Packaging — Corrugated Box Lifecycle Assessment Report, 2023.</li>
+        <li>CPCB Annual Report on Solid Waste Management in India, 2023–24.</li>
+        <li>Stanford d.school — Design Thinking Process Model.</li>
+        <li>IDEO — Human-Centered Design Toolkit.</li>
+        <li>Corrugated Packaging Alliance — Environmental Footprint of Corrugated Containers, 2021.</li>
+        <li>RedSeer Consulting — Indian E-Commerce Logistics Overview, 2024.</li>
+        <li>WhatsApp Business API Documentation — Meta for Developers.</li>
+    </ol>
+</section>
+
+    </main>
+
+    <button id="print-btn" onclick="window.print()" class="no-print print-floating-btn" aria-label="Print or Save PDF">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+        </svg>
+        <span>Print Report / Save PDF</span>
+    </button>
+
+    <footer class="no-print" style="background-color: var(--secondary); color: white; padding: 40px 0; margin-top: 60px; border-radius: 8px 8px 0 0;">
+        <div class="container" style="text-align: center;">
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 10px;">ReBox Circular System</h3>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">Department of Computer Applications, R.V. College of Engineering, Bengaluru</p>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">&copy; 2026 ReBox. Gated Community Cardboard Packaging Circular Loop.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab system for interactive elements
+        function switchTab(containerId, tabId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // Remove active classes
+            container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            container.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            // Add active classes
+            container.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
+            container.querySelector('#panel-' + tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox – Survey Question Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1.5rem;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+        }
+
+        .alert {
+            background: #eff6ff;
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .verdict-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .insight-row {
+            background: #f0fdf4;
+        }
+
+        .data-row {
+            background: #fffbeb;
+        }
+
+        .replacement-table th {
+            background: #f8fafc;
+            color: var(--primary);
+        }
+
+        .score-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .recommendations {
+            list-style: none;
+        }
+
+        .recommendations li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .recommendations li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.75rem; }
+            td, th { padding: 0.75rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="meta">Phase: 2 – Empathy & Define</div>
+            <h1>ReBox – Survey Question Analysis</h1>
+            <p style="color: var(--text-muted); font-weight: 500;">Purpose: Evaluate whether questionnaires yield actionable insights or surface-level data</p>
+        </header>
+
+        <section id="verdict">
+            <h2>Overall Verdict</h2>
+            <div class="alert">
+                <span class="alert-title">IMPORTANT FINDING</span>
+                <p class="verdict-text">
+                    The current survey collects <strong>mostly data, not deep insights</strong>. Approximately 60–70% of the questions are framed as <em>"Would you [use our solution]?"</em> — that's <strong>desirability testing</strong> (Phase 5: Test), not empathy research (Phase 2).
+                </p>
+            </div>
+            <p>The survey is a solid starting point but leans heavily toward quantitative data collection and solution validation rather than genuine empathy-driven insight discovery.</p>
+        </section>
+
+        <section id="insights">
+            <h2>✅ Questions That Generate Real Insights</h2>
+            <p>These questions tap into emotions, frustrations, and hidden behaviors — the gold standard for empathy research.</p>
+
+            <h3>Questionnaire 1 – Urban Resident / Online Shopper</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="10%">#</th>
+                        <th width="45%">Question</th>
+                        <th width="45%">Why It Works</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="insight-row">
+                        <td>Q4</td>
+                        <td>"Do you feel guilty throwing away a good-condition cardboard box? Why?"</td>
+                        <td>Taps into <strong>emotional response</strong> — guilt is a powerful motivator and reveals values.</td>
+                    </tr>
+                    <tr class="insight-row">
+                        <td>Q6</td>
+                        <td>"What frustrates you the most about dealing with packaging waste in your flat or PG?"</td>
+                        <td>Uncovers <strong>latent pain points</strong> and unmet needs directly from experience.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Questionnaire 2 – Local Vendor / Small Business Owner</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="10%">#</th>
+                        <th>Question</th>
+                        <th>Why It Works</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="insight-row">
+                        <td>Q4</td>
+                        <td>"Are you satisfied with your current box supply in terms of cost, quality, and availability?"</td>
+                        <td>Opens up a <strong>multi-dimensional pain point</strong> (cost, quality, supply chain).</td>
+                    </tr>
+                    <tr class="insight-row">
+                        <td>Q7</td>
+                        <td>"What conditions would make you reject a donated box?"</td>
+                        <td>Reveals <strong>hidden deal-breakers</strong> and quality thresholds.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Questionnaire 3 – Apartment Complex / RWA Administrator</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="10%">#</th>
+                        <th>Question</th>
+                        <th>Why It Works</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="insight-row">
+                        <td>Q2</td>
+                        <td>"Is cardboard and packaging waste a growing problem...especially with quick-commerce?"</td>
+                        <td>Contextualizes the problem in the <strong>user's lived reality</strong>.</td>
+                    </tr>
+                    <tr class="insight-row">
+                        <td>Q5</td>
+                        <td>"What is your biggest concern about placing such a bin?"</td>
+                        <td>Surfaces <strong>real blockers</strong> — genuine fears like hygiene or pest attraction.</td>
+                    </tr>
+                    <tr class="insight-row">
+                        <td>Q10</td>
+                        <td>"Are there any BBMP regulations...that could block such an initiative?"</td>
+                        <td>Uncovers <strong>systemic barriers</strong> that could kill the project.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="data-problems">
+            <h2>⚠️ Questions That Collect Data, Not Insights</h2>
+            <p>These questions yield counts, yes/no answers, or hypothetical willingness.</p>
+
+            <h3>Problem 1: Closed / Leading Questions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Issue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="data-row">
+                        <td>"If a drop-off bin was placed... would you use it?" (Q1.8)</td>
+                        <td>Binary Yes/No — you get a <strong>count</strong>, not a <strong>story</strong>.</td>
+                    </tr>
+                    <tr class="data-row">
+                        <td>"Would you scan a QR code... or is that too much effort?" (Q1.9)</td>
+                        <td>Leading — implies the answer and limits exploration.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Problem 2: Solution-First Framing</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Issue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="data-row">
+                        <td>"Would you be willing to use an app or WhatsApp bot...?" (Q2.10)</td>
+                        <td>Tests a <strong>specific solution channel</strong> — premature for Phase 2.</td>
+                    </tr>
+                    <tr class="data-row">
+                        <td>"What would motivate you — reward points, UPI cashback...?" (Q1.10)</td>
+                        <td>Presents <strong>your ideas</strong> instead of letting users express their own motivations.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="replacements">
+            <h2>🔄 Recommended Replacements</h2>
+            <p>Transform surface-level questions into story-driven, open-ended prompts.</p>
+            
+            <table class="replacement-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Instead Of</th>
+                        <th width="60%">Ask This</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Would you use a drop-off bin?"</td>
+                        <td><strong>"Walk me through what happens from the moment a delivery arrives to when the box finally leaves your home."</strong></td>
+                    </tr>
+                    <tr>
+                        <td>"Would you scan a QR code?"</td>
+                        <td><strong>"What's the laziest thing you've ever done to get rid of packaging waste? No judgment."</strong></td>
+                    </tr>
+                    <tr>
+                        <td>"Tell me about the last time you needed a box urgently. Where did you go?"</td>
+                        <td><strong>"Tell me about the last time you needed a box urgently. Where did you go? What was that experience like?"</strong></td>
+                    </tr>
+                    <tr>
+                        <td>"Would your RWA support ReBox?"</td>
+                        <td><strong>"What's the last sustainability initiative your apartment tried? What happened to it — did it succeed or fizzle out? Why?"</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="summary">
+            <h2>📋 Summary Scorecard</h2>
+            <div class="score-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Count</th>
+                            <th>% of Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-success">Insight-generating</span></td>
+                            <td>~10</td>
+                            <td>~31%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-warning">Data-collecting</span></td>
+                            <td>~22</td>
+                            <td>~69%</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700;">Total Questions Analyzed</td>
+                            <td style="font-weight: 700;">32</td>
+                            <td style="font-weight: 700;">100%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="recommendations">
+            <h2>💡 Key Recommendations</h2>
+            <ul class="recommendations">
+                <li><strong>Reframe 5–6 closed questions</strong> per questionnaire into open-ended, story-driven prompts.</li>
+                <li><strong>Move solution-testing questions</strong> to a separate Phase 5 validation survey.</li>
+                <li><strong>Use the survey as a conversation guide</strong> for 1-on-1 interviews, not just a standalone form.</li>
+                <li><strong>Add observation notes</strong> — focus on what people <em>do</em>, not just what they <em>say</em>.</li>
+                <li><strong>Include a "surprise me" question:</strong> "Is there anything about cardboard waste I should have asked but didn't?"</li>
+            </ul>
+        </section>
+
+        <section id="retrospective">
+            <h2>📝 Retrospective: How We Addressed These Issues</h2>
+            <div class="alert" style="background: #f0fdf4; border-left-color: #10b981;">
+                <span class="alert-title" style="color: #065f46;">TEAM REFLECTION (May 2026)</span>
+                <p class="verdict-text" style="font-size: 1rem;">
+                    After completing the survey phase, we realized we jumped to conclusions too early in our questionnaire design. Several questions tested <em>our</em> solution (app, QR code, WhatsApp bot) rather than exploring the user's world openly.
+                </p>
+                <ul class="recommendations" style="margin-top: 16px;">
+                    <li><strong>Revised HMW Statement:</strong> We moved from <em>"How might we make giving an Amazon box to a local vendor as easy as throwing it in the garbage chute?"</em> to a general, two-sided approach: <em>"How Might We collect intact e-commerce boxes at the apartment level and give them to local vendors who need them — making it easy for residents and reliable for shopkeepers?"</em></li>
+                    <li><strong>Expanded Ideation:</strong> Instead of committing to an app, we brainstormed 10+ solution concepts across low-tech (physical bins, notice boards), mid-tech (QR + WhatsApp), and high-tech (full app) categories — then evaluated each on friction, feasibility, vendor adoption, scalability, and inclusivity.</li>
+                    <li><strong>Secondary Research Added:</strong> We supplemented our primary data with macro context — India ships ~15M parcels/day (IBEF), cardboard scrap is ₹7–9/kg but new boxes cost ₹20–35 (a ₹15–30 value gap per box), no Indian startup does consumer-to-vendor reuse, and EPR rules for paper packaging became effective April 2026.</li>
+                    <li><strong>Layered Prototype:</strong> Our prototype evolved into a 3-layer system — (1) Physical bin for everyone, (2) QR + WhatsApp for tracking, (3) App for future scale — each layer mapped to specific user personas from our empathy research.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            ReBox · RVCE · MCA427DL Design Thinking Lab · 2026
+        </footer>
+    </div>
+
+</body>
+</html>

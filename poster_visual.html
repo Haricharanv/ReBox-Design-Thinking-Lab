@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReBox - Design Thinking Lab Poster</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600&display=swap');
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        @page { 
+            size: A3 landscape; 
+            margin: 0; 
+        }
+
+        body { 
+            width: 420mm; 
+            height: 297mm; 
+            overflow: hidden; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background: #f8fafc; 
+            color: #0f172a; 
+            display: flex; 
+            flex-direction: column; 
+            -webkit-print-color-adjust: exact; 
+            print-color-adjust: exact; 
+        }
+
+        .poster-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10mm 15mm; 
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, #ffffff, #f1f5f9);
+        }
+
+        /* HEADER AREA */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 6mm;
+            border-bottom: 2px solid rgba(15, 23, 42, 0.08);
+            margin-bottom: 12mm; 
+            flex-shrink: 0;
+        }
+        .header img.logo {
+            height: 20mm;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+        .header-text {
+            text-align: center;
+            flex: 1;
+            padding: 0 30px;
+        }
+        .header-text .dept {
+            font-size: 15px;
+            font-weight: 700;
+            color: #4f46e5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .header-text .course {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e11d48;
+            margin: 2px 0 6px;
+        }
+        .header-text .title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.15;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: #475569;
+            text-align: right;
+            line-height: 1.2;
+            width: 120px;
+        }
+
+        /* MAIN GRID (STRICT CSS GRID) */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15mm 8mm; /* row-gap, col-gap */
+            flex: 1;
+            min-height: 0;
+        }
+
+        .box-empathy { grid-column: 1; grid-row: 1 / 3; }
+        .box-problem { grid-column: 2; grid-row: 1 / 2; }
+        .box-define { grid-column: 2; grid-row: 2 / 3; }
+        .box-ideate { grid-column: 3; grid-row: 1 / 2; }
+        .box-prototype { grid-column: 3; grid-row: 2 / 3; }
+        .box-test { grid-column: 4; grid-row: 1 / 3; }
+
+        /* SECTION BOXES */
+        .sec-box {
+            position: relative;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            padding: 28px 16px 14px 16px; 
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .sec-pill {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 6px 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        /* TYPOGRAPHY INSIDE BOXES */
+        h3 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+            border-bottom: 2px solid rgba(15, 23, 42, 0.05);
+            padding-bottom: 4px;
+        }
+        h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        p, li, .text-content {
+            font-size: 12.5px;
+            line-height: 1.4;
+            color: #334155;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        strong {
+            color: #0f172a;
+        }
+
+        /* DYNAMIC IMAGE CONTAINERS */
+        .flex-img-wrap {
+            flex: 1; /* Allows image wrapper to fill available vertical space */
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 6px 0;
+            width: 100%;
+        }
+        .flex-img-wrap img.contain {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.06));
+        }
+
+        .grid-photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 6px;
+            width: 100%;
+            height: 100%;
+        }
+        .grid-photos img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* CALLOUT BOXES */
+        .callout {
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: auto; /* Pushes callouts to the bottom of the flex column if space allows */
+        }
+
+        /* FOOTER */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 4mm;
+            border-top: 2px solid rgba(15, 23, 42, 0.08);
+            margin-top: 4mm;
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            flex-shrink: 0;
+        }
+        .footer div {
+            display: flex;
+            align-items: center;
+        }
+        .footer strong {
+            color: #0f172a;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-wrapper">
+        
+        <!-- HEADER -->
+        <div class="header">
+            <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/rvce_logo.png" class="logo" alt="RVCE Logo">
+            <div class="header-text">
+                <div class="dept">Department of Master of Computer Applications</div>
+                <div class="course">DESIGN THINKING LAB – MCA427DL</div>
+                <div class="title">REBOX: A CIRCULAR ECONOMY INITIATIVE<br>FOR E-COMMERCE PACKAGING REUSE</div>
+            </div>
+            <div class="tagline">Go, change<br>the world</div>
+        </div>
+
+        <!-- MAIN CONTENT (CSS GRID) -->
+        <div class="main-content">
+            
+            <!-- COLUMN 1: EMPATHY (Spans 2 rows) -->
+            <div class="sec-box box-empathy">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #6366f1, #4338ca);">EMPATHY</div>
+                
+                <div style="flex-shrink: 0;">
+                    <h3>Techniques & Evidence</h3>
+                    <p><strong>Methods:</strong> User Interviews, Market Observations, Empathy Mapping, and extensive Field Surveys.</p>
+                    <p><strong>Data Points:</strong> 50+ urban residents surveyed. Identified high vendor packaging costs and severe apartment-level accumulation.</p>
+                </div>
+                
+                <div class="flex-img-wrap" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="grid-photos">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/photos_clean/photo1.jpg" alt="Observation 1">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/photos_clean/photo2.jpg" alt="Observation 2">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/photos_clean/photo3.jpg" alt="Observation 3">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/photos_clean/photo4.jpg" alt="Observation 4">
+                    </div>
+                </div>
+                
+                <div class="callout" style="background: #f8fafc; border: 1px solid #e2e8f0; flex-shrink: 0;">
+                    <h3 style="margin-bottom: 8px; font-size: 13px; text-align: center; color: #4338ca; border-bottom: none; padding: 0;">Empathy Map Insights</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                        <div style="background: #fff; padding: 8px; border-radius: 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                            <strong style="font-size: 11px; display: block; margin-bottom: 2px;">THINKS</strong>
+                            <span style="font-size: 11px; color: #475569;">"Boxes take up too much space."</span>
+                        </div>
+                        <div style="background: #fff; padding: 8px; border-radius: 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                            <strong style="font-size: 11px; display: block; margin-bottom: 2px;">FEELS</strong>
+                            <span style="font-size: 11px; color: #475569;">"Guilty throwing perfectly good ones away."</span>
+                        </div>
+                        <div style="background: #fff; padding: 8px; border-radius: 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                            <strong style="font-size: 11px; display: block; margin-bottom: 2px;">SAYS</strong>
+                            <span style="font-size: 11px; color: #475569;">"I wish someone could use these."</span>
+                        </div>
+                        <div style="background: #fff; padding: 8px; border-radius: 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                            <strong style="font-size: 11px; display: block; margin-bottom: 2px;">DOES</strong>
+                            <span style="font-size: 11px; color: #475569;">Discards them reluctantly in dry waste.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 TOP: THE PROBLEM (Row 1) -->
+            <div class="sec-box box-problem">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">THE PROBLEM</div>
+                
+                <div class="flex-img-wrap">
+                    <img class="contain" src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/rebox_problem_diagram.png" alt="Problem Diagram">
+                </div>
+                
+                <div class="callout" style="background: #fef2f2; border-left: 4px solid #ef4444; flex-shrink: 0;">
+                    <p style="color: #991b1b; font-weight: 600; font-size: 12.5px; text-align: center; line-height: 1.4; margin: 0;">
+                        Urban residents lack a convenient system to dispose of intact e-commerce boxes. Concurrently, local vendors face high recurring costs purchasing new boxes for their daily operations.
+                    </p>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 BOTTOM: DEFINE (Row 2) -->
+            <div class="sec-box box-define">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #10b981, #047857);">DEFINE</div>
+                
+                <div style="flex-shrink: 0;">
+                    <h3>Problem Statement</h3>
+                    <p style="text-align: justify; margin-bottom: 0;">
+                        Urban residents and vendors need a hyper-local, seamless system to redirect usable e-commerce corrugated boxes from landfills directly to nearby businesses, thereby creating immediate economic and environmental value.
+                    </p>
+                </div>
+                
+                <div class="callout" style="background: #ecfdf5; border: 1px solid #6ee7b7; display: flex; gap: 10px; align-items: center; flex-shrink: 0; margin-top: 10px; margin-bottom: 10px;">
+                    <div style="background: #059669; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; font-size: 12px; box-shadow: 0 4px 8px rgba(5,150,105,0.3);">
+                        POV
+                    </div>
+                    <p style="font-weight: 700; color: #065f46; font-size: 12px; line-height: 1.3; margin: 0;">
+                        We believe that an integrated hyper-local network can redirect perfectly usable corrugated boxes from landfills directly to nearby businesses.
+                    </p>
+                </div>
+
+                <div style="flex-shrink: 0; margin-top: auto;">
+                    <h3>Key Beneficiaries</h3>
+                    <ul style="column-count: 2; column-gap: 15px; margin-bottom: 0; font-size: 12px;">
+                        <li>Urban Apartment Residents</li>
+                        <li>Local Kirana Stores</li>
+                        <li>E-commerce Platforms</li>
+                        <li>Municipal Waste Mgmt.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COLUMN 3 TOP: IDEATE (Row 1) -->
+            <div class="sec-box box-ideate">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #f59e0b, #b45309);">IDEATE</div>
+                
+                <h3 style="flex-shrink: 0;">Impact vs Feasibility Matrix</h3>
+                
+                <div class="flex-img-wrap" style="background: linear-gradient(to top right, #ffffff, #f8fafc); border-left: 2px solid #cbd5e1; border-bottom: 2px solid #cbd5e1; border-radius: 0 12px 0 0; position: relative; margin: 10px 25px 10px 30px;">
+                    <!-- Axis Labels -->
+                    <span style="position: absolute; left: -24px; top: 50%; transform: translateY(-50%) rotate(-90deg); font-size: 10px; font-weight: 800; color: #64748b; letter-spacing: 1px;">IMPACT</span>
+                    <span style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 800; color: #64748b; letter-spacing: 1px;">FEASIBILITY</span>
+                    
+                    <!-- Data Points -->
+                    <div style="position: absolute; background: #10b981; width: 14px; height: 14px; border-radius: 50%; top: 20%; right: 20%; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);"></div>
+                    <span style="position: absolute; top: 8%; right: 3%; font-size: 11px; font-weight: 800; color: #059669;">Web Platform</span>
+                    
+                    <div style="position: absolute; background: #f59e0b; width: 14px; height: 14px; border-radius: 50%; top: 50%; right: 45%; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);"></div>
+                    <span style="position: absolute; top: 40%; right: 40%; font-size: 11px; font-weight: 800; color: #b45309;">WhatsApp Bot</span>
+                    
+                    <div style="position: absolute; background: #ef4444; width: 14px; height: 14px; border-radius: 50%; bottom: 20%; left: 30%; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);"></div>
+                    <span style="position: absolute; bottom: 8%; left: 33%; font-size: 11px; font-weight: 800; color: #b91c1c;">Smart Bins</span>
+                </div>
+                
+                <div class="callout" style="background: #fffbeb; border: 1px solid #fde68a; text-align: center; flex-shrink: 0;">
+                    <h4 style="color: #d97706; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">🏆 Chosen Solution</h4>
+                    <p style="font-weight: 800; font-size: 14px; color: #92400e; line-height: 1.2; margin: 0;">Hyper-local Web Platform<br>+ WhatsApp Integration</p>
+                </div>
+            </div>
+
+            <!-- COLUMN 3 BOTTOM: PROTOTYPE (Row 2) -->
+            <div class="sec-box box-prototype">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">PROTOTYPE</div>
+                
+                <h3 style="flex-shrink: 0; margin-bottom: 6px;">Digital Wireframes</h3>
+                <div class="flex-img-wrap" style="flex-direction: row; gap: 10px; margin-top: 0; flex: 1;">
+                    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <img class="contain" src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/rebox_app_mockup.png" alt="App Mockup">
+                    </div>
+                    <div style="flex: 1; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <img class="contain" src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/rebox_whatsapp_mockup.png" alt="WhatsApp Mockup">
+                    </div>
+                </div>
+                
+                <h3 style="flex-shrink: 0; margin-top: 10px; margin-bottom: 6px;">User Journey Map</h3>
+                <div class="flex-img-wrap" style="margin-bottom: 0; flex: 1;">
+                    <img class="contain" src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/rebox_journey_map.png" alt="Journey Map">
+                </div>
+            </div>
+
+            <!-- COLUMN 4: TEST (Spans 2 rows) -->
+            <div class="sec-box box-test">
+                <div class="sec-pill" style="background: linear-gradient(135deg, #db2777, #9d174d);">TEST</div>
+                
+                <div style="flex-shrink: 0;">
+                    <h3>How Might We...</h3>
+                    <ul>
+                        <li>Make box donation effortless for residents?</li>
+                        <li>Assure quality and hygiene for vendors?</li>
+                        <li>Incentivize regular, sustainable donations?</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 15px;">User Feedback</h3>
+                    <ul style="list-style-type: '💡 '; padding-left: 20px;">
+                        <li>Ensure rigorous box hygiene standards.</li>
+                        <li>Add immediate WhatsApp status alerts.</li>
+                        <li>Update network map with live bin status.</li>
+                    </ul>
+                </div>
+                
+                <div class="callout" style="background: #fdf2f8; border: 1px solid #fbcfe8; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; margin-top: 10px;">
+                    <h4 style="color: #be185d; margin: 0 0 6px 0; font-size: 13px; font-weight: 800; text-transform: uppercase;">Vendor Willingness</h4>
+                    <div class="flex-img-wrap" style="margin: 0; height: 90px; width: 100%;">
+                        <img class="contain" src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/FinalReports/images/charts/chart_willingness.png" alt="Willingness Chart">
+                    </div>
+                </div>
+                
+                <h3 style="flex-shrink: 0; margin-top: 15px; margin-bottom: 10px;">Field Testing Evidence</h3>
+                <div class="flex-img-wrap" style="margin-bottom: 0;">
+                    <div class="grid-photos">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/Pictures%20(DTL)/WhatsApp%20Image%202026-05-13%20at%208.46.36%20PM.jpeg" alt="Field Test 1">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/Pictures%20(DTL)/WhatsApp%20Image%202026-05-13%20at%208.46.37%20PM.jpeg" alt="Field Test 2">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/Pictures%20(DTL)/WhatsApp%20Image%202026-05-13%20at%208.46.40%20PM.jpeg" alt="Field Test 3">
+                        <img src="file:///C:/Users/haric/OneDrive/Desktop/Academics/Design%20Thinking%20Lab/Pictures%20(DTL)/WhatsApp%20Image%202026-05-13%20at%208.46.41%20PM.jpeg" alt="Field Test 4">
+                    </div>
+                </div>
+            </div>
+            
+        </div> <!-- End Main Content -->
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div><strong>Name:</strong> Hari Charan V, Anjali Kumari, Jajala Lakshmi Supriya</div>
+            <div><strong>USN:</strong> 1RV25MC037, 1RV25MC013, 1RV25MC042</div>
+            <div><strong>Mentor Name:</strong> Prof. Chandrani Chakravorty</div>
+        </div>
+        
+    </div>
+</body>
+</html>

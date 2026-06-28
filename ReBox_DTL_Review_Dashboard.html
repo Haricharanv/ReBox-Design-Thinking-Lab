@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox — Design Thinking Lab: Complete Review Dashboard</title>
+    <meta name="description" content="Complete evidence dashboard for all 5 Design Thinking phases — Empathy, Define, Ideate, Prototype, Test — for the ReBox project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080c14;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --card-border: rgba(255,255,255,0.08);
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-glow: rgba(16,185,129,0.25);
+            --secondary: #3b82f6;
+            --secondary-glow: rgba(59,130,246,0.25);
+            --accent: #f59e0b;
+            --rose: #f43f5e;
+            --purple: #8b5cf6;
+            --text: #f3f4f6;
+            --text-muted: #9ca3af;
+            --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(circle at 5% 15%, var(--primary-glow) 0%, transparent 40%),
+                radial-gradient(circle at 95% 85%, var(--secondary-glow) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        h1,h2,h3,h4,h5 { font-family: 'Outfit', sans-serif; font-weight: 700; }
+
+        /* ─── TOP NAV ─── */
+        .topbar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(8,12,20,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 12px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .topbar-logo { display: flex; align-items: center; gap: 12px; }
+        .topbar-logo-icon {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; box-shadow: 0 4px 12px var(--primary-glow);
+        }
+        .topbar-logo h1 {
+            font-size: 20px; font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .topbar-logo p { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .phase-nav { display: flex; gap: 6px; }
+        .phase-nav a {
+            padding: 8px 16px; border-radius: 8px; text-decoration: none;
+            font-family: 'Outfit'; font-weight: 600; font-size: 12px;
+            color: var(--text-muted); border: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .phase-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+        .phase-nav a.p1 { border-color: rgba(16,185,129,0.3); color: var(--primary); }
+        .phase-nav a.p2 { border-color: rgba(59,130,246,0.3); color: var(--secondary); }
+        .phase-nav a.p3 { border-color: rgba(139,92,246,0.3); color: var(--purple); }
+        .phase-nav a.p4 { border-color: rgba(245,158,11,0.3); color: var(--accent); }
+        .phase-nav a.p5 { border-color: rgba(244,63,94,0.3); color: var(--rose); }
+
+        .print-btn {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted); padding: 8px 16px; border-radius: 8px;
+            font-family: 'Outfit'; font-weight: 600; font-size: 12px; cursor: pointer;
+            transition: var(--transition);
+        }
+        .print-btn:hover { background: var(--primary); color: #080c14; border-color: var(--primary); }
+
+        /* ─── HERO ─── */
+        .hero {
+            text-align: center; padding: 80px 30px 50px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.12) 0%, transparent 60%);
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 12px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 20px; }
+        .hero-meta { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .hero-meta span {
+            padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 700;
+            font-family: 'Outfit'; letter-spacing: 0.5px;
+        }
+        .badge-green { background: rgba(16,185,129,0.15); color: var(--primary); border: 1px solid rgba(16,185,129,0.25); }
+        .badge-blue { background: rgba(59,130,246,0.15); color: var(--secondary); border: 1px solid rgba(59,130,246,0.25); }
+
+        /* ─── CONTAINER ─── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ─── PHASE HEADER ─── */
+        .phase-section { padding: 60px 0 40px; }
+        .phase-header {
+            display: flex; align-items: center; gap: 18px;
+            margin-bottom: 40px; padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.06);
+        }
+        .phase-num {
+            width: 56px; height: 56px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: 800; font-family: 'Outfit';
+            flex-shrink: 0;
+        }
+        .pn-1 { background: linear-gradient(135deg, #10b981, #34d399); color: #080c14; }
+        .pn-2 { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: #080c14; }
+        .pn-3 { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: #fff; }
+        .pn-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #080c14; }
+        .pn-5 { background: linear-gradient(135deg, #f43f5e, #fb7185); color: #fff; }
+        .phase-title { font-size: 2rem; color: #fff; }
+        .phase-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* ─── GLASS CARD ─── */
+        .glass {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px); border-radius: 20px;
+            padding: 28px; margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative; overflow: hidden;
+        }
+        .glass::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        .glass.accent-purple::before { background: linear-gradient(90deg, var(--purple), #c084fc); }
+        .glass.accent-amber::before { background: linear-gradient(90deg, var(--accent), #fbbf24); }
+        .glass.accent-rose::before { background: linear-gradient(90deg, var(--rose), #fb7185); }
+
+        .glass-title {
+            font-size: 18px; font-weight: 700; color: #fff;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+        }
+        .glass-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+
+        /* ─── GRID LAYOUTS ─── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        @media (max-width: 900px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } }
+
+        /* ─── MINI CARDS ─── */
+        .mini-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 14px; padding: 18px; transition: var(--transition);
+        }
+        .mini-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
+        .mini-card h4 { font-size: 14px; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .mini-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+        .mini-card ul { padding-left: 16px; font-size: 12.5px; color: var(--text-muted); }
+        .mini-card li { margin-bottom: 4px; }
+
+        /* ─── EMPATHY MAP ─── */
+        .empathy-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .eq { border-radius: 14px; padding: 18px; }
+        .eq h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+        .eq ul { padding-left: 16px; font-size: 13px; line-height: 1.6; }
+        .eq-says { background: rgba(59,130,246,0.08); border-left: 4px solid var(--secondary); }
+        .eq-says h4 { color: var(--secondary); }
+        .eq-thinks { background: rgba(16,185,129,0.08); border-left: 4px solid var(--primary); }
+        .eq-thinks h4 { color: var(--primary); }
+        .eq-does { background: rgba(245,158,11,0.08); border-left: 4px solid var(--accent); }
+        .eq-does h4 { color: var(--accent); }
+        .eq-feels { background: rgba(244,63,94,0.08); border-left: 4px solid var(--rose); }
+        .eq-feels h4 { color: var(--rose); }
+
+        /* ─── VALUE PROP CANVAS ─── */
+        .vpc-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .vpc-side {
+            border-radius: 16px; padding: 22px;
+            border: 2px dashed rgba(255,255,255,0.1);
+        }
+        .vpc-side h4 { font-size: 16px; margin-bottom: 14px; text-align: center; }
+        .vpc-item { margin-bottom: 10px; }
+        .vpc-item strong { color: var(--primary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+        .vpc-item p, .vpc-item ul { font-size: 12.5px; color: var(--text-muted); }
+        .vpc-item ul { padding-left: 16px; }
+        .vpc-item li { margin-bottom: 3px; }
+
+        /* ─── JOURNEY MAP ─── */
+        .journey-row {
+            display: flex; gap: 0; overflow-x: auto; padding-bottom: 10px;
+        }
+        .journey-step {
+            min-width: 200px; flex: 1;
+            padding: 18px 14px; text-align: center;
+            border-right: 1px dashed rgba(255,255,255,0.08);
+            position: relative;
+        }
+        .journey-step:last-child { border-right: none; }
+        .journey-icon { font-size: 28px; margin-bottom: 8px; }
+        .journey-step h5 { font-size: 13px; color: #fff; margin-bottom: 4px; }
+        .journey-step p { font-size: 11px; color: var(--text-muted); }
+        .journey-emotion {
+            margin-top: 8px; font-size: 10px; font-weight: 700; padding: 3px 10px;
+            border-radius: 50px; display: inline-block;
+        }
+        .emotion-neg { background: rgba(244,63,94,0.15); color: var(--rose); }
+        .emotion-neu { background: rgba(245,158,11,0.15); color: var(--accent); }
+        .emotion-pos { background: rgba(16,185,129,0.15); color: var(--primary); }
+
+        /* ─── ELEVATOR SPEECH ─── */
+        .elevator-box {
+            background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(59,130,246,0.12));
+            border: 2px solid rgba(16,185,129,0.2);
+            border-radius: 20px; padding: 30px; text-align: center;
+        }
+        .elevator-box h3 { font-size: 1.6rem; color: #fff; line-height: 1.5; margin-bottom: 12px; }
+        .elevator-box p { font-size: 13px; color: var(--text-muted); }
+        .timer-badge {
+            display: inline-block; padding: 6px 18px; border-radius: 50px;
+            background: var(--primary); color: #080c14; font-weight: 700;
+            font-family: 'Outfit'; font-size: 13px; margin-bottom: 16px;
+        }
+
+        /* ─── DATA BARS ─── */
+        .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+        .bar-row span { font-size: 12px; font-weight: 600; color: #fff; display: block; margin-bottom: 3px; }
+        .bar-track { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease-out; }
+
+        /* ─── CRAZY 8 ─── */
+        .crazy8-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+        }
+        .crazy8-card {
+            background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 14px; text-align: center; min-height: 120px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .crazy8-card:hover { border-color: var(--purple); background: rgba(139,92,246,0.05); }
+        .crazy8-card .c8-icon { font-size: 28px; margin-bottom: 6px; }
+        .crazy8-card h5 { font-size: 12px; color: #fff; margin-bottom: 4px; }
+        .crazy8-card p { font-size: 10.5px; color: var(--text-muted); }
+        @media (max-width: 700px) { .crazy8-grid { grid-template-columns: 1fr 1fr; } }
+
+        /* ─── WIREFRAME SKETCH ─── */
+        .wireframe-box {
+            background: #f8fafc; border-radius: 14px; padding: 20px;
+            color: #1e293b; font-family: 'Inter'; position: relative;
+        }
+        .wf-header { background: #10b981; color: white; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-weight: 700; font-size: 14px; }
+        .wf-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .wf-placeholder {
+            background: #e2e8f0; border-radius: 8px; padding: 12px; flex: 1;
+            text-align: center; font-size: 11px; color: #64748b; font-weight: 600;
+            border: 2px dashed #cbd5e1;
+        }
+        .wf-btn {
+            background: #10b981; color: white; padding: 10px; border-radius: 8px;
+            text-align: center; font-size: 12px; font-weight: 700; cursor: pointer;
+        }
+        .wf-nav {
+            display: flex; gap: 8px; margin-top: 12px;
+            border-top: 1px solid #e2e8f0; padding-top: 10px;
+        }
+        .wf-nav-item { flex: 1; text-align: center; font-size: 10px; color: #94a3b8; font-weight: 600; }
+        .wf-nav-item.active { color: #10b981; }
+
+        /* ─── BLUEPRINT ─── */
+        .blueprint {
+            background: #0a1628; border: 2px solid rgba(59,130,246,0.2);
+            border-radius: 16px; padding: 28px; position: relative;
+            background-image:
+                linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .bp-node {
+            display: inline-block; padding: 12px 20px; border-radius: 10px;
+            font-size: 12px; font-weight: 700; font-family: 'Outfit';
+            text-align: center; border: 2px solid;
+        }
+        .bp-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+        .bp-arrow { color: var(--text-muted); font-size: 18px; }
+        .bp-user { background: rgba(16,185,129,0.1); border-color: var(--primary); color: var(--primary); }
+        .bp-system { background: rgba(59,130,246,0.1); border-color: var(--secondary); color: var(--secondary); }
+        .bp-vendor { background: rgba(245,158,11,0.1); border-color: var(--accent); color: var(--accent); }
+        .bp-guard { background: rgba(139,92,246,0.1); border-color: var(--purple); color: var(--purple); }
+
+        /* ─── QUIZ ─── */
+        .quiz-q {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; padding: 18px; margin-bottom: 14px;
+        }
+        .quiz-q h4 { font-size: 14px; color: #fff; margin-bottom: 10px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+        .quiz-opt {
+            padding: 10px 16px; border-radius: 10px; font-size: 13px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer; transition: var(--transition); color: var(--text-muted);
+        }
+        .quiz-opt:hover { background: rgba(16,185,129,0.08); border-color: var(--primary); color: #fff; }
+        .quiz-opt.correct { background: rgba(16,185,129,0.15); border-color: var(--primary); color: var(--primary); }
+        .quiz-opt.wrong { background: rgba(244,63,94,0.15); border-color: var(--rose); color: var(--rose); }
+        .quiz-result { display: none; margin-top: 20px; text-align: center; padding: 20px; border-radius: 14px; }
+
+        /* ─── ITERATION TABLE ─── */
+        .iter-table { width: 100%; border-collapse: collapse; }
+        .iter-table th, .iter-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 13px; }
+        .iter-table th { color: var(--primary); font-family: 'Outfit'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .iter-table td { color: var(--text-muted); }
+        .iter-before { color: var(--rose) !important; }
+        .iter-after { color: var(--primary) !important; }
+
+        /* ─── CALLOUT ─── */
+        .callout {
+            background: rgba(16,185,129,0.06); border-left: 4px solid var(--primary);
+            border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+        }
+        .callout p { font-size: 13px; color: var(--text-muted); }
+        .callout strong { color: #fff; }
+
+        /* ─── LINK BUTTONS ─── */
+        .link-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px; border-radius: 8px; font-size: 12px; font-weight: 700;
+            font-family: 'Outfit'; text-decoration: none; transition: var(--transition);
+            background: rgba(16,185,129,0.1); color: var(--primary);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        .link-btn:hover { background: var(--primary); color: #080c14; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center; padding: 50px 24px 30px;
+            border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px;
+        }
+        footer p { font-size: 12px; color: var(--text-muted); }
+        footer .f-logo { font-family: 'Outfit'; font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+
+        /* ─── PRINT ─── */
+        @media print {
+            body { background: white !important; color: #111 !important; }
+            .topbar, .print-btn { display: none !important; }
+            .glass { background: white !important; border: 1px solid #ddd !important; box-shadow: none !important; backdrop-filter: none !important; }
+            .glass::before { background: #10b981 !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .phase-section { page-break-before: always; }
+            .hero { page-break-before: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ TOP NAV ═══════════════════════ -->
+<nav class="topbar">
+    <div class="topbar-logo">
+        <div class="topbar-logo-icon">📦</div>
+        <div>
+            <h1>ReBox</h1>
+            <p>Design Thinking Lab Review</p>
+        </div>
+    </div>
+    <div class="phase-nav">
+        <a href="#empathy" class="p1">① Empathy</a>
+        <a href="#define" class="p2">② Define</a>
+        <a href="#ideate" class="p3">③ Ideate</a>
+        <a href="#prototype" class="p4">④ Prototype</a>
+        <a href="#test" class="p5">⑤ Test</a>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / PDF</button>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero">
+    <div class="hero-meta">
+        <span class="badge-green">SDG 9 · Industry & Innovation</span>
+        <span class="badge-green">SDG 11 · Sustainable Cities</span>
+        <span class="badge-green">SDG 12 · Responsible Consumption</span>
+        <span class="badge-blue">MCA427DL · RVCE Bengaluru</span>
+    </div>
+    <h1 style="margin-top: 24px;">ReBox <span>Review Dashboard</span></h1>
+    <p>Complete evidence portfolio across all 5 Design Thinking phases — Empathy, Define, Ideate, Prototype, Test — ready for guide review.</p>
+    <p style="font-size: 13px; color: var(--text-muted);">Hari Charan V · Anjali Kumari · Supriya &nbsp;|&nbsp; Mentor: Prof. Chandrani Chakravorty &nbsp;|&nbsp; June 2026</p>
+</section>
+
+<div class="container">
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║                PHASE 1 : EMPATHY                        ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<section class="phase-section" id="empathy">
+    <div class="phase-header">
+        <div class="phase-num pn-1">1</div>
+        <div>
+            <h2 class="phase-title">Empathy Phase</h2>
+            <p class="phase-subtitle">Understanding users deeply through primary research, interviews, surveys, and field observation.</p>
+        </div>
+    </div>
+
+    <!-- 1A: Primary & Secondary Research -->
+    <div class="glass">
+        <h3 class="glass-title">📋 Primary & Secondary Research</h3>
+        <p class="glass-sub">Our team conducted extensive on-ground research across Bengaluru, Hyderabad, Tumkur, Bidar, Kadapa, and Tirupati.</p>
+        <div class="grid-4">
+            <div class="mini-card" style="text-align:center;">
+                <h4 style="justify-content:center;"><span style="font-size:28px;">60+</span></h4>
+                <p>Total Surveys Collected<br>(Shoppers + Vendors)</p>
+            </div>
+            <div class="mini-card" style="text-align:center;">
+                <h4 style="justify-content:center;"><span style="font-size:28px;">22</span></h4>
+                <p>Audio Field Interviews<br>(WhatsApp + Phone)</p>
+            </div>
+            <div class="mini-card" style="text-align:center;">
+                <h4 style="justify-content:center;"><span style="font-size:28px;">30+</span></h4>
+                <p>Vendor Locations<br>Visited In-Person</p>
+            </div>
+            <div class="mini-card" style="text-align:center;">
+                <h4 style="justify-content:center;"><span style="font-size:28px;">20+</span></h4>
+                <p>Field Visit<br>Photographs</p>
+            </div>
+        </div>
+        <div class="callout" style="margin-top: 18px;">
+            <p><strong>Methods:</strong> 1-on-1 in-person interviews (shopkeepers & residents) · Printed questionnaire surveys (bilingual: English & Kannada) · Audio recordings of vendor conversations · On-site observation at kirana stores, fruit vendors, bakeries · Photography for evidence · Secondary research via MoEFCC reports and e-commerce industry data.</p>
+        </div>
+        <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="ReBox_Phase2_Presentation.html" class="link-btn">📊 Full Presentation</a>
+            <a href="ReBox_Questionnaires.html" class="link-btn">📝 Questionnaires</a>
+            <a href="ReBox_Survey_Analysis.html" class="link-btn">📈 Survey Analysis</a>
+            <a href="ReBox_Literature_Survey.html" class="link-btn">📚 Literature Survey</a>
+        </div>
+    </div>
+
+    <!-- 1B: Value Proposition Canvas — SHOPPER -->
+    <div class="glass">
+        <h3 class="glass-title">💎 Value Proposition Canvas</h3>
+        <p class="glass-sub">Mapping the fit between our solution and stakeholder needs using the Strategyzer framework.</p>
+
+        <h4 style="color: var(--primary); font-size: 15px; margin-bottom: 14px;">Persona 1: Online Shopper (Supply Side)</h4>
+        <div class="vpc-layout">
+            <div class="vpc-side" style="border-color: rgba(244,63,94,0.2);">
+                <h4 style="color: var(--rose);">👤 Customer Profile</h4>
+                <div class="vpc-item">
+                    <strong>Customer Jobs</strong>
+                    <ul>
+                        <li>Unbox and organize e-commerce deliveries</li>
+                        <li>Keep apartment clutter-free</li>
+                        <li>Dispose of packaging responsibly</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Pains</strong>
+                    <ul>
+                        <li>Boxes pile up, cluttering balcony/rooms (80%)</li>
+                        <li>Eco-guilt from throwing structurally intact boxes</li>
+                        <li>Kabadiwala visits are irregular and unreliable</li>
+                        <li>No convenient disposal alternative exists</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Gains</strong>
+                    <ul>
+                        <li>Instant decluttering without guilt</li>
+                        <li>Environmental impact visibility</li>
+                        <li>Community recognition / reward points</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="vpc-side" style="border-color: rgba(16,185,129,0.2);">
+                <h4 style="color: var(--primary);">📦 Value Map (ReBox)</h4>
+                <div class="vpc-item">
+                    <strong>Products & Services</strong>
+                    <ul>
+                        <li>Basement Green Bin (zero-walk, zero-app)</li>
+                        <li>QR-scan WhatsApp Bot for logging</li>
+                        <li>Eco-impact tracker & leaderboard</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Pain Relievers</strong>
+                    <ul>
+                        <li>Bin is on the way to garbage chute — zero extra effort</li>
+                        <li>No app download needed (WhatsApp only)</li>
+                        <li>Always available — drop any time, no scheduling</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Gain Creators</strong>
+                    <ul>
+                        <li>Personal carbon offset score per drop</li>
+                        <li>"Trees saved" equivalency shown on WhatsApp</li>
+                        <li>Society-level leaderboard for recognition</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h4 style="color: var(--secondary); font-size: 15px; margin: 24px 0 14px;">Persona 2: Local Vendor (Demand Side)</h4>
+        <div class="vpc-layout">
+            <div class="vpc-side" style="border-color: rgba(244,63,94,0.2);">
+                <h4 style="color: var(--rose);">👤 Customer Profile</h4>
+                <div class="vpc-item">
+                    <strong>Customer Jobs</strong>
+                    <ul>
+                        <li>Package products for customer delivery</li>
+                        <li>Organize and store inventory</li>
+                        <li>Minimize operational costs</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Pains</strong>
+                    <ul>
+                        <li>New boxes cost ₹20–35 each (2nd highest cost)</li>
+                        <li>Travel 20+ km to wholesale market for supply</li>
+                        <li>Scrap dealers sell crushed boxes, not intact ones</li>
+                        <li>Unpredictable supply chain for packaging</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Gains</strong>
+                    <ul>
+                        <li>Affordable packaging at ₹2–5/box (80% savings)</li>
+                        <li>Nearby, walkable collection point</li>
+                        <li>Consistent, reliable supply every week</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="vpc-side" style="border-color: rgba(16,185,129,0.2);">
+                <h4 style="color: var(--primary);">📦 Value Map (ReBox)</h4>
+                <div class="vpc-item">
+                    <strong>Products & Services</strong>
+                    <ul>
+                        <li>Apartment-level box collection bin (within 500m)</li>
+                        <li>WhatsApp alert when boxes are available</li>
+                        <li>Guard-verified pickup system</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Pain Relievers</strong>
+                    <ul>
+                        <li>Boxes priced at ₹2–5 vs ₹20–35 new</li>
+                        <li>No travel needed — collection point is local</li>
+                        <li>Structurally sorted (intact, not crushed)</li>
+                    </ul>
+                </div>
+                <div class="vpc-item">
+                    <strong>Gain Creators</strong>
+                    <ul>
+                        <li>Automated alerts match supply to demand</li>
+                        <li>Consistent weekly supply from 200+ apartment units</li>
+                        <li>Logos are "no problem" (96% confirmed)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1C: Focused Group Interviews -->
+    <div class="glass">
+        <h3 class="glass-title">👥 Focused Group Interviews</h3>
+        <p class="glass-sub">Group discussion sessions conducted with clusters of stakeholders to extract collective insights.</p>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>🏠 Resident Group Session (8 participants)</h4>
+                <p><strong>Setting:</strong> Common area of Bellandur apartment complex, Bangalore</p>
+                <p><strong>Duration:</strong> 45 minutes</p>
+                <p style="margin-top: 8px;"><strong>Key collective insights:</strong></p>
+                <ul>
+                    <li>"We all do the same thing — pile boxes on the balcony for days, then throw them."</li>
+                    <li>Group consensus: A bin in the basement would be used by "literally everyone"</li>
+                    <li>Debate on incentives: younger members wanted app rewards, older members said "just make it easy"</li>
+                    <li>One member suggested the bin should be "right next to the lift" for maximum adoption</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>🏪 Vendor Cluster Session (5 shopkeepers)</h4>
+                <p><strong>Setting:</strong> Tea stall near Agara Market, Bangalore</p>
+                <p><strong>Duration:</strong> 30 minutes</p>
+                <p style="margin-top: 8px;"><strong>Key collective insights:</strong></p>
+                <ul>
+                    <li>All 5 agreed: branded logos are "not an issue at all" — cost matters</li>
+                    <li>"If boxes come from 200m away instead of 20km, I'll take all of them"</li>
+                    <li>Disagreement on pricing: 3 said ₹2–5 is fair, 2 said "it should be free"</li>
+                    <li>Fruit sellers need medium boxes most; kirana owners prefer large boxes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1D: Questionnaires Summary -->
+    <div class="glass">
+        <h3 class="glass-title">📝 Questionnaires</h3>
+        <p class="glass-sub">42 structured questions across 3 stakeholder questionnaires — Urban Residents, Local Vendors, and Society RWA.</p>
+        <div class="grid-3">
+            <div class="mini-card">
+                <h4>🛒 Resident Questionnaire</h4>
+                <p>14 questions · Sections: Background, Current Behavior (Empathy), ReBox Concept Validation</p>
+            </div>
+            <div class="mini-card">
+                <h4>🏪 Vendor Questionnaire</h4>
+                <p>14 questions · Sections: Business Background, Attitude toward Reused Boxes, ReBox Logistics</p>
+            </div>
+            <div class="mini-card">
+                <h4>🏢 Society RWA Questionnaire</h4>
+                <p>14 questions · Sections: Waste Management, Bin Placement, Security Guard Workflow</p>
+            </div>
+        </div>
+        <div style="margin-top: 14px;">
+            <a href="ReBox_Questionnaires.html" class="link-btn">📄 View Full Questionnaires (42 Questions)</a>
+        </div>
+    </div>
+
+    <!-- 1E: User Journey Map -->
+    <div class="glass">
+        <h3 class="glass-title">🗺️ User Journey Map — Online Shopper</h3>
+        <p class="glass-sub">End-to-end emotional journey of an urban resident from package delivery to box reuse via ReBox.</p>
+        <div class="journey-row">
+            <div class="journey-step">
+                <div class="journey-icon">📦</div>
+                <h5>Package Arrives</h5>
+                <p>Gets Amazon/Flipkart delivery at door. Opens, extracts item.</p>
+                <span class="journey-emotion emotion-pos">😊 Excited</span>
+            </div>
+            <div class="journey-step">
+                <div class="journey-icon">😟</div>
+                <h5>Clutter Builds</h5>
+                <p>Box sits on balcony/floor for 3–7 days. Space shrinks.</p>
+                <span class="journey-emotion emotion-neg">😤 Frustrated</span>
+            </div>
+            <div class="journey-step">
+                <div class="journey-icon">😔</div>
+                <h5>Eco-Guilt Sets In</h5>
+                <p>"This box is perfectly fine... but I have no space."</p>
+                <span class="journey-emotion emotion-neg">😞 Guilty</span>
+            </div>
+            <div class="journey-step">
+                <div class="journey-icon">🟢</div>
+                <h5>Discovers ReBox Bin</h5>
+                <p>Sees green bin in basement. Flattens box, drops it in.</p>
+                <span class="journey-emotion emotion-neu">🤔 Curious</span>
+            </div>
+            <div class="journey-step">
+                <div class="journey-icon">📱</div>
+                <h5>Scans QR Code</h5>
+                <p>WhatsApp bot logs drop. Shows eco-impact score.</p>
+                <span class="journey-emotion emotion-pos">😄 Satisfied</span>
+            </div>
+            <div class="journey-step">
+                <div class="journey-icon">🌱</div>
+                <h5>Feels Good</h5>
+                <p>"I saved a tree's worth of carbon!" Shares on society group.</p>
+                <span class="journey-emotion emotion-pos">🥳 Proud</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1F: Empathy Maps -->
+    <div class="glass">
+        <h3 class="glass-title">🧠 Empathy Maps</h3>
+        <p class="glass-sub">Synthesized emotional landscape of our two primary user personas.</p>
+        <div class="grid-2">
+            <div>
+                <h4 style="color: var(--primary); font-size: 15px; margin-bottom: 12px;">Online Shopper (Priya, 28)</h4>
+                <div class="empathy-grid">
+                    <div class="eq eq-says"><h4>SAYS</h4><ul><li>"I'll give it to the scrap guy later."</li><li>"These boxes take up too much space."</li><li>"I don't have time for a recycling app."</li></ul></div>
+                    <div class="eq eq-thinks"><h4>THINKS</h4><ul><li>"I'm contributing to waste."</li><li>"Someone must need these boxes."</li><li>"Why is recycling so inconvenient?"</li></ul></div>
+                    <div class="eq eq-does"><h4>DOES</h4><ul><li>Hoards boxes on balcony until eyesore</li><li>Flattens and throws in dry waste bin</li><li>Defaults to easiest disposal method</li></ul></div>
+                    <div class="eq eq-feels"><h4>FEELS</h4><ul><li>Guilty about wasting good materials</li><li>Frustrated by clutter in small apartment</li><li>Apathetic toward complex eco-programs</li></ul></div>
+                </div>
+            </div>
+            <div>
+                <h4 style="color: var(--secondary); font-size: 15px; margin-bottom: 12px;">Local Vendor (Ramesh, 45)</h4>
+                <div class="empathy-grid">
+                    <div class="eq eq-says"><h4>SAYS</h4><ul><li>"Cardboard prices keep going up."</li><li>"My margins are disappearing."</li><li>"I pass packaging cost to customers."</li></ul></div>
+                    <div class="eq eq-thinks"><h4>THINKS</h4><ul><li>"I wish I could get cheap boxes locally."</li><li>"Scrap dealer charges too much."</li><li>"How to cut costs without losing quality?"</li></ul></div>
+                    <div class="eq eq-does"><h4>DOES</h4><ul><li>Travels to wholesale markets for new boxes</li><li>Stores excess inventory, ties up capital</li><li>Reuses boxes until they completely break</li></ul></div>
+                    <div class="eq eq-feels"><h4>FEELS</h4><ul><li>Stressed about rising supplier rates</li><li>Helpless about raw paper price dependency</li><li>Pragmatic — happy to use branded boxes</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1G: Elevator Speech -->
+    <div class="glass">
+        <h3 class="glass-title">🎤 Elevator Speech</h3>
+        <p class="glass-sub">A concise, impactful 30-second pitch for ReBox.</p>
+        <div class="elevator-box">
+            <span class="timer-badge">⏱️ 30 Seconds</span>
+            <h3>"Every day, millions of perfectly good e-commerce boxes are crushed and destroyed — while the kirana store next door pays ₹25 for a new one. <span style="color: var(--primary);">ReBox</span> places a simple green bin in your apartment basement. You drop your Amazon box in — zero effort, zero apps. Within hours, a local vendor picks it up for ₹5. <strong>Your clutter becomes their savings. Your guilt becomes their profit.</strong> It's not recycling — it's <em>reuse</em>. And it starts with your next delivery."</h3>
+            <p style="margin-top: 14px;">Target: Investors · RWA Presidents · Civic Administrators · Academic Evaluators</p>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║                PHASE 2 : DEFINE                         ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<section class="phase-section" id="define">
+    <div class="phase-header">
+        <div class="phase-num pn-2">2</div>
+        <div>
+            <h2 class="phase-title">Define Phase</h2>
+            <p class="phase-subtitle">Synthesizing raw data into actionable problem statements through analysis, clustering, and voting.</p>
+        </div>
+    </div>
+
+    <!-- 2A: Data Analysis -->
+    <div class="glass">
+        <h3 class="glass-title">📊 Data Analysis</h3>
+        <p class="glass-sub">Quantitative findings from 60+ primary research surveys across two stakeholder groups.</p>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>Shoppers: Reason for Disposal</h4>
+                <div class="bar-chart">
+                    <div class="bar-row"><span>Space Constraint / Clutter (80%)</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ef4444;"></div></div></div>
+                    <div class="bar-row"><span>No secondary use (15%)</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:#f59e0b;"></div></div></div>
+                    <div class="bar-row"><span>Damaged (5%)</span><div class="bar-track"><div class="bar-fill" style="width:5%;background:#94a3b8;"></div></div></div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <h4>Vendors: Would you buy used boxes?</h4>
+                <div class="bar-chart">
+                    <div class="bar-row"><span>Yes, if structurally intact (92%)</span><div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--primary);"></div></div></div>
+                    <div class="bar-row"><span>No, prefer new (8%)</span><div class="bar-track"><div class="bar-fill" style="width:8%;background:#ef4444;"></div></div></div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <h4>Shoppers: Willingness for Bin Drop-off</h4>
+                <div class="bar-chart">
+                    <div class="bar-row"><span>Would definitely use (72%)</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--primary);"></div></div></div>
+                    <div class="bar-row"><span>Might use (20%)</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--secondary);"></div></div></div>
+                    <div class="bar-row"><span>Unlikely (8%)</span><div class="bar-track"><div class="bar-fill" style="width:8%;background:#94a3b8;"></div></div></div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <h4>Vendors: Do e-commerce logos matter?</h4>
+                <div class="bar-chart">
+                    <div class="bar-row"><span>No problem / Don't care (96%)</span><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--primary);"></div></div></div>
+                    <div class="bar-row"><span>Yes, it matters (4%)</span><div class="bar-track"><div class="bar-fill" style="width:4%;background:#f59e0b;"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2B: Affinity Mapping -->
+    <div class="glass">
+        <h3 class="glass-title">🗂️ Affinity Mapping</h3>
+        <p class="glass-sub">Clustering 60+ data points into 4 theme categories for pattern recognition.</p>
+        <div class="grid-4">
+            <div class="mini-card" style="border-top: 3px solid #fef08a;"><h4>📦 Shopper Behaviors</h4><p>Clutter stress · Eco-guilt · 3–7 day hoarding · 100% want a bin · Age-split incentives</p></div>
+            <div class="mini-card" style="border-top: 3px solid #bae6fd;"><h4>🏪 Vendor Needs</h4><p>₹500–5000/mo on boxes · 96% don't care about logos · Willing to pay ₹2–5 · Self-pickup preferred</p></div>
+            <div class="mini-card" style="border-top: 3px solid #fbcfe8;"><h4>♻️ System Gaps</h4><p>Linear pipeline (not circular) · Kabadiwala destroys for pulp · No apartment-level collection · No matchmaking</p></div>
+            <div class="mini-card" style="border-top: 3px solid #bbf7d0;"><h4>💰 Economics</h4><p>₹3 scrap vs ₹25 reuse value · 5–7 reuse cycles · 15M parcels/day in India · EPR regulations tailwind</p></div>
+        </div>
+        <div style="margin-top: 12px;"><a href="ReBox_Affinity_Diagram.html" class="link-btn">🗂️ View Interactive Affinity Diagram</a></div>
+    </div>
+
+    <!-- 2C: Mind Mapping -->
+    <div class="glass">
+        <h3 class="glass-title">🧠 Mind Mapping</h3>
+        <p class="glass-sub">Hierarchical visual exploration of the ReBox ecosystem — stakeholders, layers, value, and lifecycle.</p>
+        <div class="callout">
+            <p><strong>Interactive Mind Map:</strong> Our mind map includes 4 major branches — Stakeholders (Shoppers, Vendors, Guards, RWA), Solution Layers (Physical Bin, WhatsApp Bot, App Dashboard), Value Proposition (Cost savings, Eco-impact, Convenience), and Box Lifecycle (7-cycle reuse model).</p>
+        </div>
+        <div style="margin-top: 8px;"><a href="ReBox_MindMap_STP_Analysis.html" class="link-btn">🧠 View Interactive Mind Map</a></div>
+    </div>
+
+    <!-- 2D: Multi-Voting -->
+    <div class="glass">
+        <h3 class="glass-title">🗳️ Multi-Voting</h3>
+        <p class="glass-sub">Team convergence exercise to select the best solution approach from generated ideas.</p>
+        <table class="iter-table" style="margin-top: 8px;">
+            <thead>
+                <tr><th>Solution Idea</th><th>Hari (Votes)</th><th>Anjali (Votes)</th><th>Supriya (Votes)</th><th>Total</th><th>Decision</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Physical Bins Only (Low-Tech)</td><td>2</td><td>3</td><td>2</td><td>7</td><td>Incorporate as Base Layer</td></tr>
+                <tr style="background: rgba(16,185,129,0.06);"><td><strong>WhatsApp Bot + QR Bins (Mid-Tech)</strong></td><td><strong>5</strong></td><td><strong>5</strong></td><td><strong>4</strong></td><td style="color:var(--primary);"><strong>14</strong></td><td style="color:var(--primary);"><strong>✅ Selected (Core)</strong></td></tr>
+                <tr><td>Dedicated Mobile App (High-Tech)</td><td>1</td><td>1</td><td>2</td><td>4</td><td>Deferred (Future Vision)</td></tr>
+                <tr><td>SMS-only Broadcast System</td><td>2</td><td>1</td><td>2</td><td>5</td><td>Rejected (Limited interaction)</td></tr>
+            </tbody>
+        </table>
+        <div class="callout" style="margin-top: 16px;">
+            <p><strong>Outcome:</strong> The team voted overwhelmingly for a <strong>Layered Circular System</strong> — combining the physical bin (zero-friction entry) with a WhatsApp bot (automated logging) as the core, with the full app deferred as a future vision. This ensures adoption across all tech-literacy levels.</p>
+        </div>
+    </div>
+
+    <!-- 2E: Problem Definition + HMW -->
+    <div class="glass">
+        <h3 class="glass-title">🎯 Defined Problem & HMW Statement</h3>
+        <p class="glass-sub">Root cause analysis (5 Whys + Fishbone) converging into a single actionable HMW statement.</p>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>5 Whys Analysis</h4>
+                <ul>
+                    <li><strong>Why landfill?</strong> → Thrown in dry waste.</li>
+                    <li><strong>Why throw?</strong> → No space, no alternative (80%).</li>
+                    <li><strong>Why no alternative?</strong> → Irregular Kabadiwala.</li>
+                    <li><strong>Why no redirection?</strong> → Weight-based selling to pulp.</li>
+                    <li><strong>ROOT:</strong> System optimized for RECYCLING not REUSE.</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>POV Statements</h4>
+                <p><strong>Shopper:</strong> Urban residents who shop online frequently NEED a zero-friction way to dispose of packaging BECAUSE space constraints force rapid disposal while eco-guilt makes them wish for better.</p>
+                <p style="margin-top: 10px;"><strong>Vendor:</strong> Local vendors NEED consistent, hyper-local affordable boxes BECAUSE new packaging at ₹20–35/box consumes 10–15% of margins.</p>
+            </div>
+        </div>
+        <div class="elevator-box" style="margin-top: 20px; border-color: rgba(59,130,246,0.3);">
+            <span class="timer-badge" style="background: var(--secondary);">HMW Statement</span>
+            <h3 style="font-size: 1.4rem;">"How Might We intercept structurally intact e-commerce boxes at the apartment level and redirect them to local vendors who need them — making disposal effortless for residents and supply reliable for shopkeepers?"</h3>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║                PHASE 3 : IDEATE                          ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<section class="phase-section" id="ideate">
+    <div class="phase-header">
+        <div class="phase-num pn-3">3</div>
+        <div>
+            <h2 class="phase-title">Ideate Phase</h2>
+            <p class="phase-subtitle">Divergent idea generation using brainstorming, brain activities, crazy 8s, and storm techniques.</p>
+        </div>
+    </div>
+
+    <!-- 3A: Brainstorming -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">💡 Brainstorming (3-Tier System)</h3>
+        <p class="glass-sub">Divergent generation of solutions across three technology tiers to ensure inclusivity.</p>
+        <div class="grid-3">
+            <div class="mini-card" style="border-top: 3px solid var(--primary);">
+                <h4>🟢 Tier 1: Low-Tech</h4>
+                <ul>
+                    <li>Physical Green Bins in lobbies</li>
+                    <li>Signage & pamphlets near bins</li>
+                    <li>WhatsApp groups for manual claiming</li>
+                </ul>
+            </div>
+            <div class="mini-card" style="border-top: 3px solid var(--secondary);">
+                <h4>🔵 Tier 2: Mid-Tech</h4>
+                <ul>
+                    <li>QR-enabled bins → WhatsApp chat</li>
+                    <li>WhatsApp Bot for scheduling</li>
+                    <li>SMS broadcasts to vendors</li>
+                </ul>
+            </div>
+            <div class="mini-card" style="border-top: 3px solid var(--accent);">
+                <h4>🟡 Tier 3: High-Tech</h4>
+                <ul>
+                    <li>Dedicated ReBox mobile app</li>
+                    <li>Vendor portal with demand broadcasts</li>
+                    <li>Admin dashboard for society management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3B: Brain Activities -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">🧠 Brain Activities</h3>
+        <p class="glass-sub">Three distinct ideation exercises to push creative boundaries.</p>
+        <div class="grid-3">
+            <div class="mini-card">
+                <h4>🧨 Brain Dump</h4>
+                <p><strong>Method:</strong> 5-minute unfiltered individual idea dump on sticky notes.</p>
+                <p style="margin-top: 8px;"><strong>Output:</strong> 47 raw ideas generated across all team members. Key themes: bin placement, incentive systems, vendor notification, quality control, gamification.</p>
+                <p style="margin-top: 6px;"><strong>Top ideas surfaced:</strong> "Bin near lift," "WhatsApp-only interface," "Box condition stickers," "Carbon points."</p>
+            </div>
+            <div class="mini-card">
+                <h4>🔗 Brain Wired</h4>
+                <p><strong>Method:</strong> Connecting unrelated concepts to force novel solutions. We paired "Uber" + "Cardboard" and "Instagram" + "Recycling."</p>
+                <p style="margin-top: 8px;"><strong>Output:</strong></p>
+                <ul>
+                    <li>"Uber for Boxes" → On-demand vendor pickup alerts</li>
+                    <li>"Instagram for Recycling" → Visual eco-impact stories shared on WhatsApp status</li>
+                    <li>"Swiggy for Packaging" → Hyperlocal delivery matching</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>🚶 Brain Walk</h4>
+                <p><strong>Method:</strong> Physical walk around HSR Layout observing real vendor and apartment behavior.</p>
+                <p style="margin-top: 8px;"><strong>Output:</strong></p>
+                <ul>
+                    <li>Noticed vendors stacking branded e-com boxes already</li>
+                    <li>Saw apartment dry waste bins overflowing with cardboard</li>
+                    <li>Observed guards sorting boxes informally</li>
+                    <li>Insight: Guards are natural "system operators"</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3C: Crazy 8s -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">⚡ Crazy 8s — 8 Ideas in 8 Minutes</h3>
+        <p class="glass-sub">Rapid sketching exercise: each team member produced 8 solution concepts in 8 minutes.</p>
+        <div class="crazy8-grid">
+            <div class="crazy8-card"><div class="c8-icon">🗑️</div><h5>Smart Bin</h5><p>Weight sensor alerts vendor when bin is 80% full</p></div>
+            <div class="crazy8-card"><div class="c8-icon">📱</div><h5>QR Drop Log</h5><p>Scan QR → WhatsApp auto-logs box count + size</p></div>
+            <div class="crazy8-card"><div class="c8-icon">🏆</div><h5>Eco-Leaderboard</h5><p>Society-wide competition for most boxes reused</p></div>
+            <div class="crazy8-card"><div class="c8-icon">🛵</div><h5>Vendor Pickup Run</h5><p>Scheduled daily vendor "box pickup" route</p></div>
+            <div class="crazy8-card"><div class="c8-icon">🏷️</div><h5>Condition Stickers</h5><p>Color-coded stickers: Green = intact, Yellow = fair, Red = recycle</p></div>
+            <div class="crazy8-card"><div class="c8-icon">🤖</div><h5>Auto-Match Bot</h5><p>AI matches box size to vendor's current need</p></div>
+            <div class="crazy8-card"><div class="c8-icon">🌳</div><h5>Tree Counter</h5><p>Display: "This bin has saved 14 trees this month"</p></div>
+            <div class="crazy8-card"><div class="c8-icon">👮</div><h5>Guard Dashboard</h5><p>Simple tablet for guard to verify vendor pickups</p></div>
+        </div>
+    </div>
+
+    <!-- 3D: Worst Possible Idea + Challenge Assumptions -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">💀 Worst Possible Idea + Challenge Assumptions</h3>
+        <p class="glass-sub">Reverse brainstorming: design the WORST solution, then flip insights into design principles.</p>
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--rose);">
+                <h4 style="color: var(--rose);">🗑️ The Worst Idea</h4>
+                <ul>
+                    <li>Require users to download a 200MB app</li>
+                    <li>Force them to weigh each box on a postal scale</li>
+                    <li>Schedule a 2-hour pickup window they must stay home for</li>
+                    <li>Charge residents ₹50/box for "eco-processing"</li>
+                    <li>Print a 3-page form for each drop-off</li>
+                </ul>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4 style="color: var(--primary);">✅ Flipped Design Principles</h4>
+                <ul>
+                    <li>❌ 200MB app → ✅ Zero app download (WhatsApp only)</li>
+                    <li>❌ Weigh each box → ✅ Just drop, no measurement needed</li>
+                    <li>❌ 2-hour window → ✅ 24/7 bin access, drop anytime</li>
+                    <li>❌ Charge ₹50 → ✅ Free for residents, vendor pays ₹5</li>
+                    <li>❌ 3-page form → ✅ One QR scan, 3 seconds</li>
+                </ul>
+            </div>
+        </div>
+        <div class="callout" style="margin-top: 16px;">
+            <p><strong>Challenged Assumption:</strong> "People will download a new app for recycling." Our data showed <strong>zero tolerance</strong> for app downloads. The worst-idea exercise confirmed our layered approach: physical bin first, WhatsApp bot second, app never forced.</p>
+        </div>
+    </div>
+
+    <!-- 3E: Storm Techniques -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">🌪️ Storm Techniques</h3>
+        <p class="glass-sub">Four storm-based ideation methods applied to push solution boundaries.</p>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>🏃 Body Storm</h4>
+                <p><strong>Activity:</strong> Team members physically enacted the box drop-off journey in a real apartment basement — walking from flat to lift to bin location to guard desk.</p>
+                <p style="margin-top: 6px;"><strong>Insight:</strong> The bin MUST be visible from the lift lobby. If it requires walking to a different section, adoption drops. "Out of sight = out of mind."</p>
+            </div>
+            <div class="mini-card">
+                <h4>🎮 Game Storm</h4>
+                <p><strong>Activity:</strong> Designed a points-based game: residents earn "ReBox Points" per drop, unlock badges ("Green Hero," "Box Champion"), and compete on a society leaderboard.</p>
+                <p style="margin-top: 6px;"><strong>Insight:</strong> Gamification works for young users (20–30) but older users (40+) prefer intrinsic motivation ("it's the right thing") over points.</p>
+            </div>
+            <div class="mini-card">
+                <h4>🃏 Cheat Storm</h4>
+                <p><strong>Activity:</strong> Asked: "What if we could cheat the laws of physics/economics?" Generated impossible-but-inspiring ideas.</p>
+                <p style="margin-top: 6px;"><strong>Ideas:</strong> "What if Amazon pre-paid ₹5 reverse deposit per box?" → Led to exploring EPR credit integration. "What if boxes teleported to vendors?" → Led to the WhatsApp instant-alert system.</p>
+            </div>
+            <div class="mini-card">
+                <h4>👥 Crowd Storm</h4>
+                <p><strong>Activity:</strong> Posted the problem statement on our class WhatsApp group (45 students) and collected 23 unique suggestions in 48 hours.</p>
+                <p style="margin-top: 6px;"><strong>Top suggestions adopted:</strong> "Partner with society maintenance staff," "Add a box flattener tool to the bin," "Monthly vendor 'thank you' card to top contributors."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3F: Storyboard -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">🦋 Storyboard / Analogies</h3>
+        <p class="glass-sub">Butterfly metamorphosis analogy mapping to the 5 DT phases and the ReBox box lifecycle.</p>
+        <div class="callout">
+            <p><strong>The Butterfly Analogy:</strong> Just as a butterfly transforms through Egg → Caterpillar → Chrysalis → Emergence → Flight, the ReBox journey transforms a discarded box through Empathy → Define → Ideate → Prototype → Test — emerging as a sustainable, circular solution.</p>
+        </div>
+        <div style="margin-top: 10px;"><a href="Butterfly_Storyboard.html" class="link-btn">🦋 View Interactive Butterfly Storyboard</a></div>
+    </div>
+
+    <!-- 3G: Solutions -->
+    <div class="glass accent-purple">
+        <h3 class="glass-title">✅ Final Solution: The Layered Circular System</h3>
+        <p class="glass-sub">A 3-layer solution designed for universal adoption across all tech-literacy levels.</p>
+        <div class="grid-3">
+            <div class="mini-card" style="border-top: 3px solid var(--primary);">
+                <h4>Layer 1: Physical Green Bin</h4>
+                <p>Dedicated corrugated-only bin in apartment basements. Zero tech required. Users like Swarna (45) who values simplicity.</p>
+            </div>
+            <div class="mini-card" style="border-top: 3px solid var(--secondary);">
+                <h4>Layer 2: WhatsApp Bot</h4>
+                <p>QR scan opens WhatsApp chat. Auto-logs drops, alerts vendors, tracks impact. No app download. Core interface.</p>
+            </div>
+            <div class="mini-card" style="border-top: 3px solid var(--accent);">
+                <h4>Layer 3: Dashboard App</h4>
+                <p>Future vision: full app for power users. Shopper/Vendor/Guard portals with analytics and leaderboards.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║                PHASE 4 : PROTOTYPE                      ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<section class="phase-section" id="prototype">
+    <div class="phase-header">
+        <div class="phase-num pn-4">4</div>
+        <div>
+            <h2 class="phase-title">Prototype Phase</h2>
+            <p class="phase-subtitle">Translating ideas into tangible, testable artifacts — from paper sketches to interactive demos.</p>
+        </div>
+    </div>
+
+    <!-- 4A: Paper Interface Sketches -->
+    <div class="glass accent-amber">
+        <h3 class="glass-title">✏️ Paper Interface & Sketch Diagrams</h3>
+        <p class="glass-sub">Low-fidelity wireframes sketched during ideation to quickly visualize the user interface before coding.</p>
+        <div class="grid-3">
+            <div>
+                <h4 style="font-size: 13px; color: var(--accent); margin-bottom: 10px; text-align: center;">Shopper App Screen</h4>
+                <div class="wireframe-box">
+                    <div class="wf-header">📦 ReBox — My Dashboard</div>
+                    <div class="wf-row">
+                        <div class="wf-placeholder">24<br><small>Boxes Dropped</small></div>
+                        <div class="wf-placeholder">1.2 kg<br><small>CO₂ Saved</small></div>
+                    </div>
+                    <div class="wf-btn">📲 Scan QR to Drop</div>
+                    <div style="margin-top: 10px;">
+                        <div class="wf-placeholder">Nearby Vendors Need: 5 Medium, 3 Large</div>
+                    </div>
+                    <div class="wf-nav">
+                        <div class="wf-nav-item active">🏠 Home</div>
+                        <div class="wf-nav-item">📊 Stats</div>
+                        <div class="wf-nav-item">🏆 Rank</div>
+                        <div class="wf-nav-item">👤 Profile</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size: 13px; color: var(--accent); margin-bottom: 10px; text-align: center;">Vendor App Screen</h4>
+                <div class="wireframe-box">
+                    <div class="wf-header" style="background: var(--secondary);">🏪 Vendor Portal</div>
+                    <div class="wf-placeholder" style="margin-bottom: 10px;">📍 Nearest Bins with Stock</div>
+                    <div class="wf-row">
+                        <div class="wf-placeholder">Bin A<br><small>12 boxes ready</small></div>
+                        <div class="wf-placeholder">Bin B<br><small>8 boxes ready</small></div>
+                    </div>
+                    <div class="wf-btn" style="background: var(--secondary);">📢 Request 10 Medium Boxes</div>
+                    <div class="wf-placeholder" style="margin-top: 10px;">💰 Savings this month: ₹450</div>
+                </div>
+            </div>
+            <div>
+                <h4 style="font-size: 13px; color: var(--accent); margin-bottom: 10px; text-align: center;">Guard Verification Screen</h4>
+                <div class="wireframe-box">
+                    <div class="wf-header" style="background: var(--purple);">👮 Guard Dashboard</div>
+                    <div class="wf-placeholder" style="margin-bottom: 10px;">Pending Pickups: 2</div>
+                    <div class="wf-row">
+                        <div class="wf-placeholder" style="flex: 2;">Ramesh Fruits — 5 boxes</div>
+                        <div class="wf-btn" style="flex: 1; background: var(--primary); font-size: 11px;">✓ Verify</div>
+                    </div>
+                    <div class="wf-row">
+                        <div class="wf-placeholder" style="flex: 2;">Sri Sai Packers — 3 boxes</div>
+                        <div class="wf-btn" style="flex: 1; background: var(--primary); font-size: 11px;">✓ Verify</div>
+                    </div>
+                    <div class="wf-placeholder" style="margin-top: 10px;">Today's verified: 4 pickups</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4B: MVP -->
+    <div class="glass accent-amber">
+        <h3 class="glass-title">🚀 MVP — Interactive Prototype</h3>
+        <p class="glass-sub">Fully interactive 3-layer prototype simulating the entire ReBox ecosystem.</p>
+        <div class="grid-3">
+            <div class="mini-card" style="text-align: center;">
+                <h4 style="justify-content: center;">🟢 Layer 1</h4>
+                <p>Green Bin poster mockup with instructional steps and interactive dropoff simulator.</p>
+            </div>
+            <div class="mini-card" style="text-align: center;">
+                <h4 style="justify-content: center;">💬 Layer 2</h4>
+                <p>WhatsApp chatbot simulator with scripted conversation flows for drop-off logging.</p>
+            </div>
+            <div class="mini-card" style="text-align: center;">
+                <h4 style="justify-content: center;">📊 Layer 3</h4>
+                <p>Mobile app dashboard with Shopper, Vendor, and Guard portals (switchable views).</p>
+            </div>
+        </div>
+        <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="ReBox_App_Prototype.html" class="link-btn">🚀 Launch Interactive Prototype</a>
+            <a href="ReBox_Lifecycle_Simulator.html" class="link-btn">♻️ 7-Cycle Lifecycle Simulator</a>
+        </div>
+    </div>
+
+    <!-- 4C: System Blueprint -->
+    <div class="glass accent-amber">
+        <h3 class="glass-title">🏗️ System Architecture Blueprint</h3>
+        <p class="glass-sub">Technical blueprint showing data flow and stakeholder interaction architecture.</p>
+        <div class="blueprint">
+            <div class="bp-row">
+                <div class="bp-node bp-user">📦 Resident<br><small>Drops box in bin</small></div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-system">🟢 Green Bin<br><small>QR Code on face</small></div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-system">📱 WhatsApp Bot<br><small>Logs drop, counts</small></div>
+            </div>
+            <div class="bp-row">
+                <div class="bp-node bp-system">📱 WhatsApp Bot</div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-system">🔔 Alert System<br><small>Bin 80% full</small></div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-vendor">🏪 Local Vendor<br><small>Gets notification</small></div>
+            </div>
+            <div class="bp-row">
+                <div class="bp-node bp-vendor">🏪 Vendor</div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-guard">👮 Society Guard<br><small>Verifies pickup</small></div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-system">✅ System Log<br><small>Updates inventory</small></div>
+                <span class="bp-arrow">→</span>
+                <div class="bp-node bp-user">📊 Impact Score<br><small>Resident sees update</small></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║                PHASE 5 : TEST                            ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<section class="phase-section" id="test">
+    <div class="phase-header">
+        <div class="phase-num pn-5">5</div>
+        <div>
+            <h2 class="phase-title">Test Phase</h2>
+            <p class="phase-subtitle">Validating the prototype through user feedback, iteration, and knowledge assessment.</p>
+        </div>
+    </div>
+
+    <!-- 5A: Feedback -->
+    <div class="glass accent-rose">
+        <h3 class="glass-title">💬 Feedback Collection</h3>
+        <p class="glass-sub">Structured feedback gathered from prototype demonstrations to 3 stakeholder groups.</p>
+        <div class="grid-3">
+            <div class="mini-card">
+                <h4>🏠 Resident Feedback (12 users)</h4>
+                <ul>
+                    <li><strong>Positive:</strong> "This is exactly what my society needs" (10/12)</li>
+                    <li><strong>Positive:</strong> "WhatsApp is perfect — no new app to learn" (11/12)</li>
+                    <li><strong>Concern:</strong> "Will the bin get dirty or smelly?" (3/12)</li>
+                    <li><strong>Suggestion:</strong> "Add a small flattener tool attached to the bin" (2/12)</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>🏪 Vendor Feedback (8 shopkeepers)</h4>
+                <ul>
+                    <li><strong>Positive:</strong> "₹5 per box? I'll take 50 a week" (7/8)</li>
+                    <li><strong>Positive:</strong> "WhatsApp alert when boxes ready — very convenient" (8/8)</li>
+                    <li><strong>Concern:</strong> "What if sizes I need aren't available?" (4/8)</li>
+                    <li><strong>Suggestion:</strong> "Allow me to specify size requests" (5/8)</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>👮 Guard Feedback (3 guards)</h4>
+                <ul>
+                    <li><strong>Positive:</strong> "Simple verification — just click one button" (3/3)</li>
+                    <li><strong>Concern:</strong> "Who cleans the bin area?" (2/3)</li>
+                    <li><strong>Concern:</strong> "What if vendor comes when I'm not at desk?" (1/3)</li>
+                    <li><strong>Suggestion:</strong> "Fixed pickup time slots would help" (2/3)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="callout" style="margin-top: 16px;">
+            <p><strong>Net Promoter Score (NPS):</strong> When asked "How likely are you to recommend ReBox to your society?" — <strong>87% scored 8 or above</strong> (out of 10). This indicates strong product-market fit.</p>
+        </div>
+    </div>
+
+    <!-- 5B: Iteration -->
+    <div class="glass accent-rose">
+        <h3 class="glass-title">🔄 Iteration Log</h3>
+        <p class="glass-sub">Changes made to the prototype based on user feedback — Before vs After.</p>
+        <table class="iter-table">
+            <thead>
+                <tr><th>Feedback Source</th><th>Before (v1)</th><th>After (v2)</th><th>Impact</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Residents</td>
+                    <td class="iter-before">Bin placed in parking area</td>
+                    <td class="iter-after">Bin placed near lift lobby (visible from lift)</td>
+                    <td>↑ Expected adoption from 72% to 90%+</td>
+                </tr>
+                <tr>
+                    <td>Vendors</td>
+                    <td class="iter-before">Random box sizes in notification</td>
+                    <td class="iter-after">Size-categorized alerts (S/M/L)</td>
+                    <td>↓ Vendor rejection rate by ~40%</td>
+                </tr>
+                <tr>
+                    <td>Guards</td>
+                    <td class="iter-before">Anytime vendor pickup</td>
+                    <td class="iter-after">Fixed 2-hour pickup window slots</td>
+                    <td>↓ Guard operational burden</td>
+                </tr>
+                <tr>
+                    <td>Residents</td>
+                    <td class="iter-before">QR scan required for every drop</td>
+                    <td class="iter-after">QR scan optional (bin works without it)</td>
+                    <td>↑ Removes friction for tech-averse users</td>
+                </tr>
+                <tr>
+                    <td>Crowd Storm</td>
+                    <td class="iter-before">No flattening guidance</td>
+                    <td class="iter-after">Added visual poster with flatten instructions</td>
+                    <td>↑ Space efficiency in bin by ~60%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 5C: Quiz -->
+    <div class="glass accent-rose">
+        <h3 class="glass-title">🧪 Knowledge Assessment Quiz</h3>
+        <p class="glass-sub">Test your understanding of the ReBox solution and Design Thinking process.</p>
+
+        <div id="quiz-container">
+            <div class="quiz-q" data-answer="2">
+                <h4>Q1: What is the root cause identified by the 5 Whys analysis?</h4>
+                <div class="quiz-options">
+                    <div class="quiz-opt" onclick="checkAnswer(this, 0, 2)">A) Residents are lazy about recycling</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 1, 2)">B) E-commerce companies use too much packaging</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 2, 2)">C) The scrap system is optimized for recycling (destroying), not reuse (redirecting)</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 3, 2)">D) Vendors don't want used boxes</div>
+                </div>
+            </div>
+            <div class="quiz-q" data-answer="1">
+                <h4>Q2: What percentage of vendors said e-commerce logos are "No problem"?</h4>
+                <div class="quiz-options">
+                    <div class="quiz-opt" onclick="checkAnswer(this, 0, 1)">A) 72%</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 1, 1)">B) 96%</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 2, 1)">C) 80%</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 3, 1)">D) 50%</div>
+                </div>
+            </div>
+            <div class="quiz-q" data-answer="1">
+                <h4>Q3: Which technology tier was selected as the core solution layer?</h4>
+                <div class="quiz-options">
+                    <div class="quiz-opt" onclick="checkAnswer(this, 0, 1)">A) Low-Tech (Physical bins only)</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 1, 1)">B) Mid-Tech (WhatsApp Bot + QR Bins)</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 2, 1)">C) High-Tech (Dedicated Mobile App)</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 3, 1)">D) SMS-only Broadcast System</div>
+                </div>
+            </div>
+            <div class="quiz-q" data-answer="0">
+                <h4>Q4: How many reuse cycles can a corrugated box survive?</h4>
+                <div class="quiz-options">
+                    <div class="quiz-opt" onclick="checkAnswer(this, 0, 0)">A) 5–7 cycles</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 1, 0)">B) 1–2 cycles</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 2, 0)">C) 10–15 cycles</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 3, 0)">D) 3 cycles</div>
+                </div>
+            </div>
+            <div class="quiz-q" data-answer="2">
+                <h4>Q5: What is the key difference between ReBox and existing scrap systems?</h4>
+                <div class="quiz-options">
+                    <div class="quiz-opt" onclick="checkAnswer(this, 0, 2)">A) ReBox uses AI to sort boxes</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 1, 2)">B) ReBox charges more than scrap dealers</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 2, 2)">C) ReBox redirects intact boxes for REUSE instead of destroying for RECYCLING</div>
+                    <div class="quiz-opt" onclick="checkAnswer(this, 3, 2)">D) ReBox only works with Amazon boxes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-result" id="quiz-result">
+            <h3 style="margin-bottom: 8px;">Quiz Complete!</h3>
+            <p id="quiz-score" style="font-size: 18px; color: var(--primary); font-weight: 700;"></p>
+        </div>
+
+        <div style="text-align: center; margin-top: 16px;">
+            <button class="print-btn" onclick="resetQuiz()" style="display: inline-flex;">🔄 Reset Quiz</button>
+        </div>
+    </div>
+</section>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+    <div class="f-logo">ReBox</div>
+    <p>Towards a Circular Economy for E-Commerce Packaging</p>
+    <p style="margin-top: 8px; opacity: 0.5;">© 2026 RVCE MCA Design Thinking Lab · Hari Charan V · Anjali Kumari · Supriya</p>
+</footer>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+    // Quiz Logic
+    let quizScore = 0;
+    let answeredCount = 0;
+    const totalQuestions = 5;
+
+    function checkAnswer(el, selectedIdx, correctIdx) {
+        const parent = el.closest('.quiz-q');
+        if (parent.classList.contains('answered')) return;
+        parent.classList.add('answered');
+
+        const options = parent.querySelectorAll('.quiz-opt');
+        options.forEach((opt, i) => {
+            opt.style.pointerEvents = 'none';
+            if (i === correctIdx) opt.classList.add('correct');
+        });
+
+        if (selectedIdx === correctIdx) {
+            quizScore++;
+        } else {
+            el.classList.add('wrong');
+        }
+
+        answeredCount++;
+        if (answeredCount === totalQuestions) {
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = quizScore >= 4 ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)';
+            document.getElementById('quiz-score').textContent = `Score: ${quizScore} / ${totalQuestions} ${quizScore === 5 ? '🎉 Perfect!' : quizScore >= 3 ? '👍 Good job!' : '📚 Review the phases above!'}`;
+        }
+    }
+
+    function resetQuiz() {
+        quizScore = 0;
+        answeredCount = 0;
+        document.querySelectorAll('.quiz-q').forEach(q => {
+            q.classList.remove('answered');
+            q.querySelectorAll('.quiz-opt').forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+                opt.style.pointerEvents = '';
+            });
+        });
+        document.getElementById('quiz-result').style.display = 'none';
+    }
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('.phase-nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+</script>
+
+</body>
+</html>

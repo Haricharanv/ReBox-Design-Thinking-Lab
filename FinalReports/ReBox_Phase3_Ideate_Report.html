@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Phase 3: Divergent Ideation & Storyboarding Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #0f172a;
+    --secondary-light: #1e293b;
+    --accent: #3b82f6;
+    --text-main: #1e293b;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    --border: #e2e8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.65;
+    padding: 0;
+}
+
+h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', sans-serif;
+    color: var(--secondary);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* Cover Page */
+.cover-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
+    border-bottom: 8px solid var(--primary);
+    position: relative;
+}
+
+.cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rvce-logo-img {
+    height: 90px;
+    width: auto;
+}
+
+.sdg-badges {
+    display: flex;
+    gap: 12px;
+}
+
+.sdg-badge {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+}
+
+.sdg-9 { background-color: #f26a2e; }
+.sdg-11 { background-color: #f99d1c; }
+.sdg-12 { background-color: #cf8d2e; }
+
+.cover-body {
+    margin: auto 0;
+    text-align: center;
+    max-width: 800px;
+    align-self: center;
+}
+
+.cover-title-group h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, var(--secondary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cover-title-group p.subtitle {
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.cover-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+    font-size: 0.95rem;
+}
+
+.team-list {
+    list-style: none;
+}
+
+.team-list li {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.mentor-info {
+    text-align: right;
+}
+
+/* Navigation & Header */
+.report-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+    color: var(--primary-dark);
+}
+
+/* Sections */
+section.main-section {
+    padding: 70px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+section.main-section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-bottom: 3px solid var(--primary);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.subsection-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 35px 0 15px;
+    color: var(--secondary-light);
+}
+
+.subsubsection-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    color: var(--text-main);
+}
+
+p {
+    margin-bottom: 15px;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+ul, ol {
+    margin: 15px 0 20px 25px;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 12px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: var(--secondary);
+    color: var(--white);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+}
+
+tr:nth-child(even) {
+    background-color: var(--bg-light);
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Cards & Layouts */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .cover-footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .mentor-info {
+        text-align: center;
+    }
+}
+
+.card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Callouts */
+.callout {
+    background-color: #eff6ff;
+    border-left: 5px solid var(--accent);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 25px 0;
+}
+
+.callout-success {
+    background-color: #ecfdf5;
+    border-left-color: var(--primary);
+}
+
+.callout h4 {
+    margin-bottom: 8px;
+    color: var(--secondary);
+    font-size: 1.1rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    color: var(--text-light);
+}
+
+.badge-primary {
+    background-color: #d1fae5;
+    color: var(--primary-dark);
+}
+
+/* Figures / Images */
+.figure-container {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.figure-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.figure-container img:hover {
+    transform: scale(1.02);
+}
+
+.figure-caption {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Interactive elements */
+.interactive-tab-container {
+    background-color: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin: 25px 0;
+    box-shadow: var(--shadow);
+}
+
+.tab-nav {
+    display: flex;
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary);
+    background-color: var(--white);
+}
+
+.tab-panel {
+    padding: 30px;
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* Floating print button */
+.print-floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.print-floating-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px -5px rgba(16, 185, 129, 0.5);
+}
+
+/* Print CSS */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background-color: var(--white) !important;
+        color: #000000 !important;
+    }
+    
+    .cover-page {
+        height: 100vh;
+        page-break-after: always;
+        background: none !important;
+        border: none !important;
+    }
+    
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .page-break {
+        page-break-before: always;
+    }
+    
+    section.main-section {
+        padding: 40px 0 !important;
+        page-break-inside: avoid;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        page-break-inside: avoid;
+    }
+    
+    table {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        page-break-inside: auto;
+    }
+    
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    .figure-container img {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        max-height: 350px !important;
+        object-fit: contain !important;
+        page-break-inside: avoid;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    
+<div class="cover-page">
+    <div class="cover-header">
+        <img class="rvce-logo-img" src="images/rvce_logo.png" alt="RVCE Logo" onerror="this.style.display='none'">
+        <div class="sdg-badges">
+            <span class="sdg-badge sdg-9">SDG 9: Industry & Innovation</span>
+            <span class="sdg-badge sdg-11">SDG 11: Sustainable Cities</span>
+            <span class="sdg-badge sdg-12">SDG 12: Responsible Consumption</span>
+        </div>
+    </div>
+    <div class="cover-body">
+        <div class="cover-title-group">
+            <h1>ReBox: Gated Community Circular Packaging Loop</h1>
+            <p class="subtitle">Phase 3: Divergent Ideation & Storyboarding Report</p>
+            <div style="margin: 20px 0;">
+                <span class="badge badge-primary" style="font-size: 1.1rem; padding: 6px 16px;">Phase 3: Ideate</span>
+            </div>
+        </div>
+    </div>
+    <div class="cover-footer">
+        <div>
+            <p style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Prepared By</p>
+            <ul class="team-list">
+                <li>Hari Charan V (1RV25MC037)</li>
+                <li>Anjali Kumari (1RV25MC013)</li>
+                <li>Jajala Lakshmi Supriya (1RV25MC042)</li>
+            </ul>
+        </div>
+        <div class="mentor-info">
+            <p style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Under the Guidance of</p>
+            <p style="font-weight: 600; color: var(--secondary);">Prof. Chandrani Chakravorty</p>
+            <p style="font-size: 0.9rem; color: var(--text-light);">MCA427DL — Design Thinking Lab</p>
+            <p style="font-size: 0.9rem; color: var(--text-light);">Department of MCA, R.V. College of Engineering</p>
+            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">June 2026</p>
+        </div>
+    </div>
+</div>
+
+
+    <header class="report-header no-print">
+        <div class="container header-content">
+            <div style="font-weight: 800; font-family: 'Outfit'; font-size: 1.4rem; color: var(--primary-dark);">ReBox.</div>
+            <div style="font-size: 0.9rem; color: var(--text-light); font-weight: 500;">RVCE Design Thinking Lab Report</div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+        
+<nav class="interactive-tab-container no-print" id="toc-nav">
+    <div style="padding: 15px 25px; border-bottom: 1px solid var(--border); background-color: var(--bg-light);">
+        <h3 style="font-size: 1.1rem; color: var(--secondary); font-family: 'Outfit'; font-weight: 700;">📂 Table of Contents</h3>
+    </div>
+    <div style="padding: 15px 25px;">
+        <ul style="list-style: none; margin: 0; padding: 0;">
+            <li><a href="#exec-summary">1. Executive Summary</a></li>
+<li><a href="#brainstorming">2. Brainstorming: 3-Tier System</a></li>
+<li><a href="#brain-activities">3. Brain Activity (Dump, Wired, Walk)</a></li>
+<li><a href="#crazy-8s">4. Crazy 8 Ideas Matrix</a></li>
+<li><a href="#worst-idea">5. Worst Possible Idea & Challenging Assumptions</a></li>
+<li><a href="#storm-techniques">6. Storm Techniques</a></li>
+<li><a href="#storyboard">7. Storyboard: Butterfly Analogy</a></li>
+<li><a href="#final-solution">8. Final Solution: Layered Circular System</a></li>
+<li><a href="#references">9. References</a></li>
+        </ul>
+    </div>
+</nav>
+
+        
+        
+<section class="main-section" id="exec-summary">
+    <h2 class="section-title">1. Executive Summary</h2>
+    <p>ReBox is an innovative, high-impact circular economy system designed to address the massive packaging waste generated by the e-commerce boom in urban India. By intercepting structurally intact cardboard boxes at the apartment level and redirecting them to local micro-vendors, ReBox bridges a critical resource gap. Every day, approximately 15 million e-commerce parcels are shipped across India, resulting in millions of single-use corrugated cardboard boxes being discarded. The current waste management pipeline is almost entirely linear: residents discard boxes, municipal waste handlers or informal scrap dealers collect them, and they are eventually sold to pulp recycling mills for a meager Rs. 3 per box (calculated by weight). This process is energy-intensive, chemical-heavy, and downcycles high-quality long fibers after only a single use. Meanwhile, local retail vendors, kirana store owners, bakeries, and hyper-local couriers routinely pay Rs. 20–35 for a brand new cardboard box of equivalent size.</p>
+    <p>The ReBox platform provides a closed-loop alternative that prioritizes <strong>REUSE</strong> over recycling. The system consists of three integrated layers: (1) <strong>Physical Collection Bins:</strong> Weather-proof green bins placed in gated apartment basements adjacent to elevator lobbies, providing a zero-friction disposal point; (2) <strong>Twilio WhatsApp Bot:</strong> A lightweight, QR-enabled mobile interface that allows residents to log drops in under 15 seconds and alerts registered vendors when boxes are ready for pickup, eliminating the need to download dedicated mobile applications; and (3) <strong>Analytics Dashboard:</strong> A web-based portal that tracks community leaderboards, RWA waste audits, and individualized carbon offset metrics (saving approximately 1.1 tonnes of CO₂ equivalent and 26,000 liters of water per tonne of corrugated paper reused). This report documents the complete, five-phase Design Thinking lifecycle of ReBox, demonstrating its viability, operational feasibility, and high user acceptance through extensive on-ground testing across Bengaluru, Hyderabad, Tumkur, Bidar, Kadapa, and Tirupati.</p>
+    <div style="margin: 30px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;" class="no-print">
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">Rs.3</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Scrap Value (Recycle)</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">Rs.25</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Vendor Cost (New)</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">5-7x</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Reuse Cycles</div>
+        </div>
+        <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.8rem; font-weight: 800; color: #059669; font-family: 'Outfit';">96%</div>
+            <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">Logo Neutrality</div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" id="brainstorming">
+    <h2 class="section-title">2. Brainstorming: 3-Tier System</h2>
+    <p>During the Ideate phase, our team brainstormed solutions across three technology tiers to ensure the ReBox system works for all users, regardless of tech literacy or budget constraints. The brainstorming process was structured around the core objective of maximizing community adoption while keeping the operational overhead extremely low. Since gated communities feature diverse demographics—ranging from tech-savvy young professionals to elderly residents who prefer simple physical routines—we realized that a single monolithic software solution would fail. A tiered tech strategy ensures that the system provides immediate, low-friction touchpoints (like physical collection bins) while leveraging automated communication tools (like WhatsApp chatbots) and cloud analytics dashboards for long-term tracking and gamification. By separating features into Low-Tech, Mid-Tech, and High-Tech tiers, we designed a resilient system where a failure in the digital layer does not halt the physical flow of cardboard reuse:</p>
+    
+    <div class="grid-2">
+        <div class="card" style="border-top: 4px solid var(--text-light);">
+            <h3>Tier 1: Low-Tech Options</h3>
+            <p>Focuses on physical, near-zero cost solutions:</p>
+            <ul>
+                <li>Dedicated physical green collection bins placed in apartment basement elevator lobbies adjacent to walking paths.</li>
+                <li>Bilingual educational posters next to bins explaining acceptable box sizes (S/M/L) and flattening steps.</li>
+                <li>Local society WhatsApp groups where residents list boxes and vendors claim them manually.</li>
+                <li>A mechanical box flattener and tape cutter are anchored directly to the bin to help residents prepare materials in under 10 seconds.</li>
+            </ul>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--accent);">
+            <h3>Tier 2: Mid-Tech Options</h3>
+            <p>Adds lightweight, automated scheduling without app downloads:</p>
+            <ul>
+                <li>QR-enabled bins. Scanning the QR code opens a chat session with a Twilio WhatsApp Bot.</li>
+                <li>WhatsApp Bot registers drops, logs box count, and notifies gate security guards automatically.</li>
+                <li>Hyper-local SMS/WhatsApp broadcasts to registered shopkeepers within 500m walkshed when bins are 80% full.</li>
+                <li>Unique QR metadata that auto-identifies the society name, tower block, and basement location automatically.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="card" style="border-top: 4px solid var(--primary); margin-top: 20px;">
+        <h3>Tier 3: High-Tech Options</h3>
+        <p>Scalable, data-driven cloud dashboards for future expansion:</p>
+        <ul>
+            <li><strong>Resident Dashboard:</strong> An interactive portal tracking carbon offset statistics, trees saved, and community leaderboard ranks.</li>
+            <li><strong>Vendor Portal:</strong> A map-based dashboard showing box inventory at nearby apartment complexes with batch reservation buttons.</li>
+            <li><strong>Society Admin Portal:</strong> An RWA audit dashboard tracking paper waste diverted from landfills and carbon credits earned.</li>
+            <li><strong>Smart Weight Sensors:</strong> IoT-based sensors inside bins that transmit fill levels to a central cloud database in real-time.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="main-section" id="brain-activities">
+    <h2 class="section-title">3. Brain Activity (Dump, Wired, Walk)</h2>
+    <p>We used three collaborative design thinking activities to generate a wide range of ideas and gain practical context. These activities helped us move from abstract sustainability concepts to specific operational mechanics:</p>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Brain Dump</h3>
+            <p>A 5-minute silent, unfiltered generation session where we wrote down 47 raw ideas. The primary rule of this exercise was to suspend judgment and prioritize volume over feasibility. The resulting ideas ranged from highly speculative (e.g., drone-based packaging delivery and automated cardboard sorting robotics) to extremely practical (e.g., placing green bins in basements and using WhatsApp bots). By sorting these dump notes, we realized that the central friction point for residents was storage space, which led us to prioritize basement collection as a core requirement.</p>
+        </div>
+        <div class="card">
+            <h3>Brain Wired</h3>
+            <p>We connected unrelated service models to our challenge, borrowing mechanics from successful digital platforms. The 'Uber for Boxes' analogy helped us design an on-demand routing and pickup system where local merchants are notified only when a nearby bin has enough boxes to justify a short walk. Similarly, we applied 'Instagram/Duolingo gamification' to design a community dashboard that converts dry paper weight into clear, gamified milestones (e.g., 'Your block saved 1.5 trees this week!') to sustain engagement.</p>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 20px;">
+        <h3>Brain Walk (Field Observations)</h3>
+        <p>A field walk around HSR Layout, Bengaluru, which revealed that local shopkeepers stack boxes on pavements and that security guards are the natural operators of gated complex delivery gates. We observed that guards already manage a complex check-in process for visitors and delivery agents. Integrating a quick barcode scan or validation step into their daily routine was highly feasible, as it did not require them to learn complex new workflows.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top: 25px;">
+        <div class="figure-container">
+            <img src="images/rebox_brain_dump.png" alt="ReBox Consolidated Brain Dump" style="max-width: 100%; border-radius: 8px;">
+            <div class="figure-caption">Figure 3.1: Consolidated DTL team Brain Dump session sticky notes</div>
+        </div>
+        <div class="figure-container">
+            <img src="images/braindump_shopper.png" alt="Shopper Behavior Brain Dump" style="max-width: 100%; border-radius: 8px;">
+            <div class="figure-caption">Figure 3.2: Shopper pain points and clutter behavioral mapping notes</div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" id="crazy-8s">
+    <h2 class="section-title">4. Crazy 8 Ideas</h2>
+    <p>Each team member sketched 8 distinct ideas in 8 minutes. We consolidated these sketches into a table of 8 core system concepts. These concepts formed the functional blueprint for our physical prototypes and interactive clickable UI mockups:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Idea #</th>
+                <th>Concept</th>
+                <th>Description</th>
+                <th>System Layer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1</strong></td>
+                <td><strong>Smart Bins</strong></td>
+                <td>Weight sensor alerts the system when the bin is 80% full.</td>
+                <td>Physical Layer (L1)</td>
+            </tr>
+            <tr>
+                <td><strong>2</strong></td>
+                <td><strong>QR Drop Log</strong></td>
+                <td>Scanning QR code opens a WhatsApp chat to log box counts.</td>
+                <td>Digital Interface (L2)</td>
+            </tr>
+            <tr>
+                <td><strong>3</strong></td>
+                <td><strong>Eco-Leaderboard</strong></td>
+                <td>Society ranking of blocks based on boxes saved.</td>
+                <td>Engagement Layer (L3)</td>
+            </tr>
+            <tr>
+                <td><strong>4</strong></td>
+                <td><strong>Scheduled Vendor Run</strong></td>
+                <td>Local vendors set a weekly schedule for box pickups.</td>
+                <td>Logistics Layer</td>
+            </tr>
+            <tr>
+                <td><strong>5</strong></td>
+                <td><strong>Condition Labels</strong></td>
+                <td>Stickers indicating box reuse cycles (sturdy vs. ready for recycling).</td>
+                <td>Physical Layer (L1)</td>
+            </tr>
+            <tr>
+                <td><strong>6</strong></td>
+                <td><strong>Auto-Match Bot</strong></td>
+                <td>System automatically matches box sizes to vendor needs.</td>
+                <td>Orchestration Layer</td>
+            </tr>
+            <tr>
+                <td><strong>7</strong></td>
+                <td><strong>Trees Saved Counter</strong></td>
+                <td>A screen on the bin showing environmental impact metrics.</td>
+                <td>Physical Layer (L1)</td>
+            </tr>
+            <tr>
+                <td><strong>8</strong></td>
+                <td><strong>Guard Portal</strong></td>
+                <td>A simple dashboard for guards to verify vendor pickups.</td>
+                <td>Interface Layer (L2)</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="figure-container">
+        <img src="images/rebox_crazy8s.png" alt="Crazy 8s sheet" style="max-width: 100%;" onerror="this.style.display='none'">
+        <div class="figure-caption">Figure 3.3: Consolidated team Crazy 8s sketches mapping physical and digital interfaces</div>
+    </div>
+</section>
+
+<section class="main-section" id="worst-idea">
+    <h2 class="section-title">5. Worst Possible Idea & Challenging Assumptions</h2>
+    <p>To break free from conventional design patterns, we executed a 'Worst Possible Idea' session. We intentionally designed the most inconvenient, expensive, and bureaucratic recycling system imaginable. For instance, we suggested requiring residents to download a 200MB app just to drop off a single box, weighing each box on a postal scale, and charging residents a fee. By flipping these absurd scenarios, we established our core design constraints: the user experience must be WhatsApp-first, box sorting must rely on simple visual sizes, and external pick-ups must run through pre-approved security gates:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Worst Possible Idea</th>
+                <th>System Failure Mode</th>
+                <th>Flipped Design Principle (ReBox Strategy)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Require a 200MB app download for every box drop.</strong></td>
+                <td>Zero resident participation due to download friction.</td>
+                <td><strong>WhatsApp-only interface.</strong> Immediate QR launch, no downloads. Ensures instant accessibility for all user groups.</td>
+            </tr>
+            <tr>
+                <td><strong>Weigh each box on a postal scale before dropping it off.</strong></td>
+                <td>Residents abandon sorting due to effort.</td>
+                <td><strong>Visual sorting.</strong> Just drop and state box sizes (S/M/L) in chatbot interface. Simplifies operational overhead.</td>
+            </tr>
+            <tr>
+                <td><strong>Force vendors to pick up boxes during a strict 2-hour window.</strong></td>
+                <td>Vendors miss pickups due to shop hours.</td>
+                <td><strong>Guard storage handover.</strong> Guards verify releases, allowing flexible pickup times. Secures inventory and eases scheduling.</td>
+            </tr>
+            <tr>
+                <td><strong>Charge residents Rs.50 per box dropped off.</strong></td>
+                <td>Residents default to garbage chutes to avoid costs.</td>
+                <td><strong>Free to drop.</strong> Residents receive eco-points as incentives. Drives proactive sorting behavior.</td>
+            </tr>
+            <tr>
+                <td><strong>Print a 3-page form for every drop-off.</strong></td>
+                <td>Disposal takes minutes, causing lobby delays.</td>
+                <td><strong>One QR scan.</strong> Logging takes less than 15 seconds. Maximizes convenience and resident retention.</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="main-section" id="storm-techniques">
+    <h2 class="section-title">6. Storm Techniques</h2>
+    <p>We used four collaborative brainstorming techniques to refine our system mechanics. These simulation exercises highlighted critical real-world challenges that we addressed in our physical and digital designs:</p>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Body Storm</h3>
+            <p>We physically simulated dropping off boxes in a real basement parking lot. We discovered that <strong>bin placement is critical:</strong> if it's placed behind parking columns, residents won't see it. Bins must sit directly in front of the elevator lobby exit, ensuring zero-friction routines.</p>
+        </div>
+        <div class="card">
+            <h3>Game Storm</h3>
+            <p>We designed a points system called "ReBox Points" to reward drops. We realized gamification works well for younger residents (ages 20–30) but older residents (ages 45+) prefer direct, simple recycling tools. This kept the QR scan step optional.</p>
+        </div>
+    </div>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Cheat Storm</h3>
+            <p>We asked, "What if Amazon pre-paid a Rs.5 deposit on every box?" This helped design the Twilio WhatsApp alert system, which alerts nearby vendors when bins are full to ensure boxes are cleared quickly and prevent basements from cluttering.</p>
+        </div>
+        <div class="card">
+            <h3>Crowd Storm</h3>
+            <p>We shared our ideas on our class WhatsApp group (45 students). We received suggestions to include a box flattener next to the bin and partner with maintenance staff to check box quality, which improved bin volume efficiency by 60%.</p>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" id="storyboard">
+    <h2 class="section-title">7. Storyboard: Butterfly Analogy</h2>
+    <p>We mapped the life cycle of a reusable box to the metamorphosis of a butterfly to illustrate how waste is transformed into value. This metaphor helped explain the structural preservation flow to the society committee and local vendors:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Butterfly Stage</th>
+                <th>Design Thinking Phase</th>
+                <th>Cardboard Lifecycle Metaphor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Egg</strong></td>
+                <td>Empathize</td>
+                <td>Observe residents unboxing orders and struggling with balcony clutter. The box sits unused and dormant.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Caterpillar</strong></td>
+                <td>Define</td>
+                <td>Gather survey data and identify the core recycling problem. The box is seen as a waste product ready for crushing.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Chrysalis</strong></td>
+                <td>Ideate</td>
+                <td>Brainstorm ideas to redirect boxes from landfills to local stores. The design team shapes the circular loop strategy.</td>
+            </tr>
+            <tr>
+                <td><strong>4. Butterfly Emergence</strong></td>
+                <td>Prototype</td>
+                <td>Build the green collection bin and launch the WhatsApp bot. The physical box is flattened and placed in the lobby bin.</td>
+            </tr>
+            <tr>
+                <td><strong>5. Flight</strong></td>
+                <td>Test</td>
+                <td>Launch the local circular loop, saving vendors money on packaging. The box is picked up, reused, and flies across the neighborhood.</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="figure-container">
+        <img src="images/rebox_storyboard.png" alt="Storyboard diagram" onerror="this.style.display='none'">
+        <div class="figure-caption">Figure 3.4: Storyboard illustrations mapping the resident-to-vendor circular packaging handover</div>
+    </div>
+</section>
+
+<section class="main-section" id="final-solution">
+    <h2 class="section-title">8. Final Solution: Layered Circular System</h2>
+    <p>The ReBox platform is built as a <strong>three-layer circular loop</strong>, combining physical drop-off points with simple digital coordination. Each layer acts as an essential pillar of our user experience, ensuring that residents, vendors, and security guards have distinct, optimized portals:</p>
+    
+    <div class="card" style="margin-bottom: 20px;">
+        <h3>Layer 1: The Physical Green Bin</h3>
+        <p>Placed in apartment basement lift lobbies. This provides a convenient, zero-friction disposal point for residents on their daily routines. A physical poster provides visual instructions on how to flatten boxes and drop them in, alongside a manual box flattener and tape cutter tool.</p>
+    </div>
+    <div class="card" style="margin-bottom: 20px;">
+        <h3>Layer 2: Interactive Mobile App (Simulated UI Mockups)</h3>
+        <p>The core digital coordinator. The resident opens the ReBox app mockups to log their boxes. The simulated backend automatically alerts registered local vendors via the vendor interface when boxes are ready for pickup. This serves as our interactive prototype to prove the circular loop feasibility without writing complex code.</p>
+    </div>
+    <div class="card">
+        <h3>Layer 3: Analytics Dashboard Portal</h3>
+        <p>A web dashboard compiling society leaderboards, carbon offset metrics, and pickup histories. It rewards residents with eco-points and helps RWAs track their community's environmental impact (CO2 and water saved).</p>
+    </div>
+</section>
+
+<section class="main-section" id="references">
+    <h2 class="section-title">9. References</h2>
+    <ol>
+        <li>Ministry of Environment, Forest and Climate Change (MoEFCC) — Extended Producer Responsibility Guidelines, 2022.</li>
+        <li>Indian Institute of Packaging — Corrugated Box Lifecycle Assessment Report, 2023.</li>
+        <li>CPCB Annual Report on Solid Waste Management in India, 2023–24.</li>
+        <li>Stanford d.school — Design Thinking Process Model.</li>
+        <li>IDEO — Human-Centered Design Toolkit.</li>
+        <li>Corrugated Packaging Alliance — Environmental Footprint of Corrugated Containers, 2021.</li>
+        <li>RedSeer Consulting — Indian E-Commerce Logistics Overview, 2024.</li>
+        <li>WhatsApp Business API Documentation — Meta for Developers.</li>
+    </ol>
+</section>
+
+    </main>
+
+    <button id="print-btn" onclick="window.print()" class="no-print print-floating-btn" aria-label="Print or Save PDF">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+        </svg>
+        <span>Print Report / Save PDF</span>
+    </button>
+
+    <footer class="no-print" style="background-color: var(--secondary); color: white; padding: 40px 0; margin-top: 60px; border-radius: 8px 8px 0 0;">
+        <div class="container" style="text-align: center;">
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 10px;">ReBox Circular System</h3>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin: 0;">Department of Computer Applications, R.V. College of Engineering, Bengaluru</p>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">&copy; 2026 ReBox. Gated Community Cardboard Packaging Circular Loop.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab system for interactive elements
+        function switchTab(containerId, tabId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // Remove active classes
+            container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            container.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            // Add active classes
+            container.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
+            container.querySelector('#panel-' + tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+*.txt
+*.py
+*.js
+~$*
+Survey/
+reports/
+presentations/
+scripts/
+scratch/
+mail/

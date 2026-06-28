@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Phase 3: Ideation & Prototyping Review</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #94a3b8; color: var(--text-main); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--secondary); }
+        
+        .slides { display: flex; flex-direction: column; align-items: center; padding: 40px 0; gap: 40px; }
+        .slide { 
+            width: 1024px; min-height: 768px; 
+            background: var(--bg-light); padding: 60px 80px; 
+            display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            position: relative;
+            background-color: white;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+        
+        .slide-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        
+        /* Typography & Components */
+        .slide-title { font-size: 3rem; margin-bottom: 2rem; color: var(--primary-dark); border-bottom: 3px solid var(--primary); padding-bottom: 10px; display: inline-block;}
+        .subtitle { font-size: 1.5rem; color: var(--text-light); margin-bottom: 2rem; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
+        
+        .card { background: var(--white); padding: 25px; border-radius: 16px; box-shadow: var(--shadow); border-top: 4px solid var(--primary); border: 1px solid #e2e8f0; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--primary-dark); }
+        
+        ul { padding-left: 20px; font-size: 1.15rem; line-height: 1.6; }
+        li { margin-bottom: 10px; }
+        p { font-size: 1.15rem; line-height: 1.6; margin-bottom: 15px; }
+        
+        blockquote { font-size: 1.35rem; font-style: italic; border-left: 5px solid var(--accent); padding-left: 20px; margin: 15px 0; color: var(--secondary); background: #eff6ff; padding: 18px; border-radius: 8px;}
+        
+        .badge { display: inline-block; padding: 6px 14px; background: var(--primary); color: white; border-radius: 50px; font-weight: 600; margin-bottom: 20px; font-size: 1rem;}
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid #e2e8f0;}
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 1.05rem;}
+        th { background: var(--secondary); color: white; font-family: 'Outfit', sans-serif; font-size: 1.1rem;}
+        tr:last-child td { border-bottom: none; }
+        
+        /* Specific Slides */
+        .title-slide { background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%); color: white; text-align: center; justify-content: center; align-items: center; border: none; }
+        .title-slide h1 { font-size: 4.2rem; color: white; border: none; margin-bottom: 20px; }
+        .title-slide h1 span { color: var(--primary); }
+        .title-slide .subtitle { color: #cbd5e1; font-size: 1.8rem; max-width: 800px; margin: 0 auto 30px; }
+        .title-slide p { font-size: 1.15rem; color: #94a3b8; }
+        
+        .highlight { color: var(--primary); font-weight: 700; }
+        .alert-box { background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .alert-box h4 { color: #b91c1c; font-size: 1.4rem; margin-bottom: 8px; }
+        
+        .print-btn { position: fixed; top: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; z-index: 1000; font-family: 'Outfit'; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.3s; }
+        .print-btn:hover { background: var(--primary-dark); }
+        
+        @media print {
+            body { background: white !important; margin: 0; padding: 0; }
+            .slides { padding: 0; gap: 0; display: block; }
+            .print-btn { display: none !important; }
+            .slide { 
+                width: 100% !important; 
+                height: 100vh !important; 
+                min-height: 100vh !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border: none !important;
+                padding: 40px !important;
+                page-break-after: always !important;
+            }
+            .title-slide { background: white !important; color: black !important; }
+            .title-slide h1, .title-slide h1 span, .title-slide .subtitle, .title-slide p { color: black !important; text-shadow: none !important; }
+            .card { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-top: 4px solid var(--primary) !important; }
+            table { box-shadow: none !important; }
+            th { color: black !important; background: #f1f5f9 !important; border-bottom: 2px solid #cbd5e1 !important;}
+            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Print to PDF</button>
+
+    <div class="slides">
+        <!-- Slide 1 -->
+        <div class="slide title-slide">
+            <div class="slide-inner" style="align-items: center;">
+                <div style="margin-bottom: 30px;">
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; margin-right: 10px;">SDG 9: Industry & Innovation</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; margin-right: 10px;">SDG 11: Sustainable Cities</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399;">SDG 12: Responsible Consumption</span>
+                </div>
+                <h1>ReBox <span>Phase 3 Review</span></h1>
+                <div class="subtitle">Ideate & Prototype Phase<br>Building a Layered Circular Packaging Network</div>
+                <p style="margin-top: 40px;">Hari Charan V, Anjali Kumari, Supriya</p>
+                <p>Mentor: Prof. Chandrani Chakravorty | MCA427DL Design Thinking Lab</p>
+                <p>6th June 2026</p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">1. Empathy to Ideation (HMW Statement)</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Our Guiding HMW Question:</h3>
+                        <blockquote style="margin-top: 10px; font-size: 1.15rem;">
+                            "How Might We intercept structurally intact e-commerce boxes at the apartment level and redirect them to local vendors who need them — making disposal effortless for residents and supply reliable for shopkeepers?"
+                        </blockquote>
+                    </div>
+                    <div class="card">
+                        <h3>Design Directives:</h3>
+                        <ul>
+                            <li><strong>Zero-Friction for Shoppers:</strong> Must fit into their existing routines (discarding on the way out).</li>
+                            <li><strong>Financial Value for Vendors:</strong> Lower their packaging overhead from ₹25 to &lt;₹5 per box.</li>
+                            <li><strong>No Large Downloads:</strong> Avoid asking users to download heavy apps initially.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">2. Divergent Brainstorming Matrix</h2>
+                <p>Exploring multiple ideas across low, mid, and high-tech spectrums.</p>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="card">
+                        <h3>Low-Tech Tier</h3>
+                        <ul>
+                            <li>Physical Basement Green Bins</li>
+                            <li>Instructional Signage/Posters</li>
+                            <li>Society WhatsApp claiming groups</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Mid-Tech Tier</h3>
+                        <ul>
+                            <li>Bin QR code scanner</li>
+                            <li>Automated WhatsApp Bot for logistics</li>
+                            <li>Vendor SMS notifications</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: #f59e0b;">
+                        <h3>High-Tech Tier</h3>
+                        <ul>
+                            <li>Dedicated ReBox Mobile App</li>
+                            <li>Custom Vendor Demand dashboard</li>
+                            <li>Security Guard web admin portal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">3. Concept Selection & Evaluation</h2>
+                <p>Evaluating concepts against core Design Thinking metrics (scores 1-5):</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept Intervention</th>
+                            <th>Desirability (Friction)</th>
+                            <th>Feasibility (Tech Dev)</th>
+                            <th>Viability (Adoption)</th>
+                            <th>Total</th>
+                            <th>Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Low-Tech Green Bins Only</strong></td>
+                            <td>4 / 5 (Simple)</td>
+                            <td>5 / 5 (No tech)</td>
+                            <td>3 / 5 (Manual errors)</td>
+                            <td>12 / 15</td>
+                            <td>Incorporate as base layer</td>
+                        </tr>
+                        <tr style="background: #ecfdf5;">
+                            <td><strong>Mid-Tech WhatsApp Bot + QR</strong></td>
+                            <td>5 / 5 (Convenient)</td>
+                            <td>4 / 5 (Simple API)</td>
+                            <td>5 / 5 (Highly familiar)</td>
+                            <td><strong>14 / 15</strong></td>
+                            <td><strong>Selected Core Layer</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>High-Tech Native App</strong></td>
+                            <td>2 / 5 (High barrier)</td>
+                            <td>2 / 5 (Heavy dev)</td>
+                            <td>3 / 5 (Requires marketing)</td>
+                            <td>7 / 15</td>
+                            <td>Defer to future roadmap</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">4. The Selected Layered Solution</h2>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="card">
+                        <h3>Layer 1: The Green Bin</h3>
+                        <p style="font-size: 0.95rem;">Basement drop-off bins + posters. Zero technology barriers. Ensures 100% accessibility for elderly or non-tech residents.</p>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Layer 2: WhatsApp Bot</h3>
+                        <p style="font-size: 0.95rem;">QR code on bin triggers WhatsApp. Users logs box drops and earns points. Guards log vendor pickups via automated chat prompts.</p>
+                    </div>
+                    <div class="card" style="border-top-color: #f59e0b;">
+                        <h3>Layer 3: Digital App</h3>
+                        <p style="font-size: 0.95rem;">Future mobile portal. Tracks community diversion stats, vendor demand broadcasts, and carbon emission scorecard dashboards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">5. Storyboard & User Flow</h2>
+                <p>The cycle of corrugated cardboard reuse in the local community:</p>
+                <table>
+                    <tr><th>Stage</th><th>User Path</th><th>System Event</th></tr>
+                    <tr><td><strong>1. Supply</strong></td><td>Resident flattens box, takes to basement bin.</td><td>None.</td></tr>
+                    <tr><td><strong>2. Log</strong></td><td>Resident scans Bin QR, logs drop on WhatsApp.</td><td>WhatsApp Bot updates inventory, assigns points.</td></tr>
+                    <tr><td><strong>3. Broadcast</strong></td><td>Vendor searches for boxes or requests supply.</td><td>System alerts nearby vendors of stock.</td></tr>
+                    <tr><td><strong>4. Collect</strong></td><td>Vendor visits society, picks up boxes.</td><td>Security guard verifies collection via WhatsApp button.</td></tr>
+                    <tr><td><strong>5. Close Loop</strong></td><td>Vendor reuses boxes for fruit/groceries.</td><td>Database logs a successful circle of reuse.</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">6. High-Fidelity Interactive Prototype</h2>
+                <p style="margin-bottom: 20px;">Built directly as an interactive web demo mapping the three circular views:</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Resident & Shopper Portal</h3>
+                        <ul>
+                            <li>Scan QR to simulate society green bin drop-off.</li>
+                            <li>Shows real-time carbon offset tracker and points leaderboard.</li>
+                            <li>Simulated WhatsApp Bot prompts.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Shopkeeper & Guard Portal</h3>
+                        <ul>
+                            <li>Interactive list of nearby vendor packaging demands.</li>
+                            <li>Verification button for guards to dispatch inventory.</li>
+                            <li>Toggle views easily to demo to stakeholders.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">7. Demonstrating the 5-7 Reuse Lifecycle</h2>
+                <p>How we prove box durability and tracking in our presentation:</p>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card">
+                        <h3>1. Interactive Digital Simulator</h3>
+                        <ul>
+                            <li>Live demonstration of a single box's 7-cycle custody chain.</li>
+                            <li>Visualizes progressive wear-and-tear (tape layering, stamps, scuffs).</li>
+                            <li>Calculates cumulative savings: <strong>7.7 kg CO₂</strong>, <strong>1,400 L Water</strong>, <strong>116 kWh Energy</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>2. Physical Classroom Props</h3>
+                        <ul>
+                            <li><strong>"Box Passport" Tracker:</strong> Physical box with printed checkboxes R1 to R7 for tracking cycle counts.</li>
+                            <li><strong>Gummed Paper Tape Demo:</strong> Show how water-activated tape seals flaps securely without tearing kraft fibers upon opening.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">8. Testing & Pilot Validation Plan</h2>
+                <p>Launching a 2-week pilot at Bellandur Green Society (200 flats) and 5 local vendors:</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Key Evaluation Metrics:</h3>
+                        <ul>
+                            <li><strong>Diverted Cardboard %:</strong> Bins vs municipal dry waste.</li>
+                            <li><strong>Vendor Savings:</strong> Reduction in packaging costs.</li>
+                            <li><strong>User Dropoff Time:</strong> Duration to complete WhatsApp drop logs.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: #ef4444;">
+                        <h3>Feedback Mechanism:</h3>
+                        <ul>
+                            <li>Resident post-use WhatsApp feedback.</li>
+                            <li>Bi-weekly vendor check-ins regarding box structural qualities.</li>
+                            <li>Security guard operational review sessions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">9. Roadmap & Next Steps</h2>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="card">
+                        <h3>Phase 3 (Now)</h3>
+                        <p>High-fidelity interactive prototype, slide deck, detailed report compilation.</p>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Phase 4 (Pilot)</h3>
+                        <p>Place physical green bins, launch beta WhatsApp bot, train security guards.</p>
+                    </div>
+                    <div class="card" style="border-top-color: #f59e0b;">
+                        <h3>Phase 5 (Scale)</h3>
+                        <p>Release full mobile app, introduce gamified rewards, onboard local MSME vendors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide title-slide">
+            <div class="slide-inner" style="align-items: center;">
+                <h1 style="font-size: 5rem;">Thank You</h1>
+                <div class="subtitle" style="color: white; margin-bottom: 20px;"><strong>ReBox</strong> — Towards a Circular Economy for E-Commerce Packaging</div>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; display: inline-block; text-align: left; margin-top: 30px;">
+                    <p style="color: white; margin-bottom: 10px;"><strong>Team:</strong> Hari Charan V | Anjali Kumari | Supriya</p>
+                    <p style="color: white; margin-bottom: 10px;"><strong>Mentor:</strong> Prof. Chandrani Chakravorty</p>
+                    <p style="color: #cbd5e1; margin-bottom: 5px;">Course: MCA427DL Design Thinking Lab</p>
+                    <p style="color: #cbd5e1; margin-bottom: 0;">R.V. College of Engineering, Bengaluru — 2026</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

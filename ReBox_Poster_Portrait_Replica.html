@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Design Thinking Poster (Exact Portrait Replica)</title>
+    <style>
+        @page {
+            size: A3 portrait;
+            margin: 0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: "Times New Roman", Times, serif;
+            width: 297mm;
+            height: 420mm;
+            overflow: hidden;
+            background: #ffffff;
+            color: #000000;
+            position: relative;
+            padding: 10mm; /* Margin around the entire page */
+        }
+
+        /* Double border surrounding the content */
+        .page-border {
+            position: absolute;
+            top: 6mm;
+            left: 6mm;
+            right: 6mm;
+            bottom: 6mm;
+            border: 4px double #1a2b4c;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .poster-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid #1a2b4c;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            background: #1b2a4a;
+            color: #ffffff;
+            height: 40mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10mm;
+            border-bottom: 2px solid #000000;
+            position: relative;
+        }
+
+        .header-left {
+            width: 35mm;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .rvce-logo-circle {
+            width: 20mm;
+            height: 20mm;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 1.5mm;
+        }
+        .rvce-logo-circle svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-center {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1px;
+        }
+
+        .header-center h1 {
+            font-size: 21pt;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .header-center h2 {
+            font-size: 13.5pt;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .header-center h3 {
+            font-size: 14.5pt;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .header-center .project-title {
+            font-size: 15.5pt;
+            font-weight: bold;
+            color: #ffffff;
+            margin-top: 1.5mm;
+        }
+
+        .header-center .project-domain {
+            font-size: 13.5pt;
+            color: #ffffff;
+            margin-top: 1px;
+            font-weight: normal;
+        }
+
+        .header-right {
+            width: 35mm;
+            font-size: 11pt;
+            font-style: italic;
+            text-align: right;
+            color: #ffffff;
+            padding-right: 2mm;
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr 1.15fr;
+            height: calc(420mm - 40mm - 12mm - 20mm); /* Adjusted for outer margin */
+            background: #ffffff;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-right: 1.5px solid #1a2b4c;
+        }
+        .column:last-child {
+            border-right: none;
+        }
+
+        /* ─── SECTION BLOCKS ─── */
+        .section-block {
+            padding: 4mm 5mm;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1.5px solid #1a2b4c;
+        }
+        .section-block:last-child {
+            border-bottom: none;
+        }
+
+        .section-block h2 {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 2.5mm;
+            text-align: left;
+        }
+
+        .block-body {
+            font-size: 10.5pt;
+            line-height: 1.35;
+            color: #000000;
+            text-align: justify;
+        }
+
+        .block-body p {
+            margin-bottom: 1.5mm;
+        }
+        .block-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .block-body ul {
+            margin-left: 5mm;
+            margin-bottom: 2mm;
+        }
+        .block-body li {
+            margin-bottom: 1mm;
+        }
+
+        .highlight {
+            font-weight: bold;
+        }
+
+        .quote-box {
+            font-style: italic;
+            margin: 2mm 0;
+            padding: 1.5mm 3mm;
+            background: #f8fafc;
+            border-left: 3px solid #1a2b4c;
+            font-size: 10pt;
+        }
+
+        /* ─── CUSTOM THEMES MATCHING THE TEMPLATE ─── */
+        /* Left Column Section Themes */
+        .sec-intro h2 { color: #d35400; }
+        
+        .sec-empathy { background: #e0f2f1; } /* Light teal card */
+        .sec-empathy h2 { color: #004d40; }
+        .sec-empathy .quote-box { border-left-color: #004d40; background: #e0f2f1; padding-left: 0; border-left: none; font-weight: bold; }
+
+        .sec-define { border: 1.5px solid #b91c1c; border-radius: 2mm; margin: 3mm 4mm; padding: 3mm; } /* Highlight box */
+        .sec-define h2 { color: #b91c1c; margin-bottom: 1.5mm; }
+
+        /* Center Column Section Themes */
+        .sec-ideate h2 { color: #6d28d9; }
+        
+        .sec-prototype { border: 1.5px solid #c2410c; border-radius: 2mm; margin: 3mm 4mm; padding: 3mm; }
+        .sec-prototype h2 { color: #c2410c; }
+        
+        .sec-workflow h2 { color: #000000; text-align: center; }
+
+        /* Right Column Section Themes */
+        .sec-test { border: 1.5px solid #1d4ed8; border-radius: 2mm; margin: 3mm 4mm; padding: 3mm; }
+        .sec-test h2 { color: #1d4ed8; }
+        
+        .sec-conclusion h2 { color: #6d28d9; }
+        
+        .sec-results h2 { color: #c2410c; text-align: center; }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2mm 0;
+            font-size: 9.5pt;
+        }
+        .table th {
+            background: #1b2a4a;
+            color: #ffffff;
+            padding: 1.2mm;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #1a2b4c;
+        }
+        .table td {
+            padding: 1mm;
+            border: 1px solid #1a2b4c;
+            text-align: center;
+        }
+        .table tr:nth-child(even) td {
+            background: #f1f5f9;
+        }
+
+        /* SVG Workflow Chart */
+        .workflow-svg {
+            width: 100%;
+            height: 42mm;
+            margin-top: 1mm;
+        }
+
+        /* Image formats */
+        .img-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 2mm;
+            gap: 4mm;
+        }
+        .img-container img {
+            height: 28mm;
+            object-fit: contain;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            padding: 0.5mm;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            background: #1b2a4a;
+            color: #ffffff;
+            height: 12mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10mm;
+            border-top: 2px solid #000000;
+        }
+        .footer-left {
+            font-size: 11pt;
+            font-weight: bold;
+        }
+        .footer-right {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-border"></div>
+    <div class="poster-container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <div class="rvce-logo-circle">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#003366" stroke-width="4"/>
+                        <polygon points="50,15 80,35 80,75 50,90 20,75 20,35" fill="none" stroke="#003366" stroke-width="3"/>
+                        <text x="50" y="47" font-family="'Outfit', sans-serif" font-size="28" font-weight="900" fill="#003366" text-anchor="middle">RV</text>
+                        <line x1="25" y1="55" x2="75" y2="55" stroke="#003366" stroke-width="3"/>
+                        <text x="50" y="77" font-family="'Inter', sans-serif" font-size="12" font-weight="700" fill="#003366" text-anchor="middle">COLLEGE</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="header-center">
+                <h1>RV COLLEGE OF ENGINEERING®</h1>
+                <h2>DEPARTMENT OF MASTER OF COMPUTER APPLICATIONS</h2>
+                <h3>DESIGN THINKING LAB – II SEMESTER</h3>
+                <div class="project-title">ReBox: A Circular Economy Initiative for E-Commerce Packaging Reuse</div>
+                <div class="project-domain">PROJECT DOMAIN: Waste Management and Circular Economy</div>
+            </div>
+            <div class="header-right">
+                Go change the world
+            </div>
+        </header>
+
+        <!-- CONTENT CONTAINER -->
+        <main class="content">
+            <!-- LEFT COLUMN -->
+            <div class="column" style="flex: 28%;">
+                <!-- INTRODUCTION -->
+                <div class="section-block sec-intro" style="flex: 30%;">
+                    <h2>Introduction</h2>
+                    <div class="block-body">
+                        <p>High cardboard packaging waste is generated by the e-commerce boom in urban areas, leading to millions of structurally intact corrugated boxes being discarded daily.</p>
+                        <p>The current scrap pipeline is linear: residents throw boxes in dry waste, municipal scrap dealers collect them, and pulp mills recycle them at a low rate (₹3/box).</p>
+                        <p>Meanwhile, local retail vendors pay ₹20–35 for new packaging. <span class="highlight">ReBox</span> intercepts intact boxes at apartments and redirects them to local vendors, establishing a neighborhood-level reuse network.</p>
+                    </div>
+                </div>
+
+                <!-- EMPATHY PHASE -->
+                <div class="section-block sec-empathy" style="flex: 40%;">
+                    <h2>Empathy Phase</h2>
+                    <div class="block-body">
+                        <p><span class="highlight">Methods Used:</span> Primary research was conducted via bilingual questionnaires and field interviews at local retail nodes.</p>
+                        <p><span class="highlight">Key Insights:</span></p>
+                        <ul>
+                            <li><span class="highlight">65%</span> of shoppers throw boxes in dry waste.</li>
+                            <li><span class="highlight">50%</span> hoard boxes at home before disposal.</li>
+                            <li>Vendors spend <span class="highlight">₹3,000–5,000/month</span> on boxes.</li>
+                            <li><span class="highlight">83.9%</span> of vendors are willing to buy pre-used boxes.</li>
+                            <li><span class="highlight">96%</span> of vendors are completely brand-neutral.</li>
+                        </ul>
+                        <div class="quote-box">
+                            "A box is a box. My customer doesn't look at who sent it. They just want something to carry groceries in." — Ramesh, Kirana Owner
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEFINE PROBLEM -->
+                <div class="section-block sec-define" style="flex: 30%;">
+                    <h2>Define Problem</h2>
+                    <div class="block-body">
+                        <p><span class="highlight">Problem Statement:</span></p>
+                        <p style="font-weight: bold; color: #b91c1c; font-style: italic; margin-bottom: 2mm;">
+                            "Structurally intact e-commerce boxes are destroyed daily while nearby vendors pay premium for new ones — because zero infrastructure connects box-generators with box-needers at the neighbourhood level."
+                        </p>
+                        <p><span class="highlight">Key Challenges:</span></p>
+                        <ul>
+                            <li>Scrap pipeline is optimized for destruction (recycling) rather than direct redirection (reuse).</li>
+                            <li>Significant value gap between scrap value (₹3) and new box cost (₹25).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER COLUMN -->
+            <div class="column" style="flex: 37%;">
+                <!-- IDEATION PHASE -->
+                <div class="section-block sec-ideate" style="flex: 25%;">
+                    <h2>Ideation Phase</h2>
+                    <div class="block-body">
+                        <p><span class="highlight">Ideas Generated:</span></p>
+                        <ul>
+                            <li>Centralized WhatsApp groups for collection alerts.</li>
+                            <li>Basement cardboard collection bins.</li>
+                            <li>QR-enabled bot for automated logging and vendor dispatch.</li>
+                        </ul>
+                        <p style="margin-top: 2mm;"><span class="highlight">Pinned Idea:</span> A layered circular system combining physical basement green bins (zero-tech) with an automated WhatsApp Bot + QR log (mid-tech) for local shop retrieval.</p>
+                    </div>
+                </div>
+
+                <!-- PROTOTYPE -->
+                <div class="section-block sec-prototype" style="flex: 43%;">
+                    <h2>Prototype</h2>
+                    <div class="block-body">
+                        <p><span class="highlight">Objective:</span> Transform ideas into a testable model to intercept boxes at source and route them directly to retail vendors.</p>
+                        <p><span class="highlight">Prototype Features:</span></p>
+                        <ul>
+                            <li><strong>Green Bin (Layer 1):</strong> Cardboard-only basement bins with instructions to flatten boxes.</li>
+                            <li><strong>WhatsApp Bot (Layer 2):</strong> QR code scans trigger a 15-second drop-off log, broadcasting alerts to micro-vendors.</li>
+                        </ul>
+                        <div class="img-container">
+                            <img src="rebox_whatsapp_mockup.png" alt="WhatsApp Bot Mockup">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORKFLOW OF THE PROJECT -->
+                <div class="section-block sec-workflow" style="flex: 32%;">
+                    <h2>Workflow of the Project</h2>
+                    <div class="block-body" style="display:flex; flex-direction:column; align-items:center;">
+                        <svg class="workflow-svg" viewBox="0 0 400 130">
+                            <!-- Circular flow representation -->
+                            <!-- Node 1: Empathy -->
+                            <circle cx="50" cy="65" r="28" fill="#e0f2f1" stroke="#004d40" stroke-width="1.5"/>
+                            <text x="50" y="62" font-family="sans-serif" font-size="8" font-weight="bold" fill="#004d40" text-anchor="middle">EMPATHY</text>
+                            <text x="50" y="72" font-family="sans-serif" font-size="6.5" fill="#00796b" text-anchor="middle">Field Surveys</text>
+                            
+                            <!-- Arrow 1 -->
+                            <path d="M 85 65 L 105 65" stroke="#1a2b4c" stroke-width="1.5" marker-end="url(#arrow)"/>
+                            
+                            <!-- Node 2: Define -->
+                            <circle cx="150" cy="65" r="28" fill="#ffebee" stroke="#c2185b" stroke-width="1.5"/>
+                            <text x="150" y="62" font-family="sans-serif" font-size="8" font-weight="bold" fill="#880e4f" text-anchor="middle">DEFINE</text>
+                            <text x="150" y="72" font-family="sans-serif" font-size="6.5" fill="#c2185b" text-anchor="middle">Root Causes</text>
+                            
+                            <!-- Arrow 2 -->
+                            <path d="M 185 65 L 205 65" stroke="#1a2b4c" stroke-width="1.5"/>
+                            
+                            <!-- Node 3: Ideate & Proto -->
+                            <circle cx="250" cy="65" r="28" fill="#fff3e0" stroke="#f57c00" stroke-width="1.5"/>
+                            <text x="250" y="62" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#e65100" text-anchor="middle">PROTOTYPE</text>
+                            <text x="250" y="72" font-family="sans-serif" font-size="6.5" fill="#f57c00" text-anchor="middle">WhatsApp Bot</text>
+                            
+                            <!-- Arrow 3 -->
+                            <path d="M 285 65 L 305 65" stroke="#1a2b4c" stroke-width="1.5"/>
+                            
+                            <!-- Node 4: Test -->
+                            <circle cx="350" cy="65" r="28" fill="#e8eaf6" stroke="#303f9f" stroke-width="1.5"/>
+                            <text x="350" y="62" font-family="sans-serif" font-size="8" font-weight="bold" fill="#1a237e" text-anchor="middle">TEST</text>
+                            <text x="350" y="72" font-family="sans-serif" font-size="6.5" fill="#303f9f" text-anchor="middle">Pilot Savings</text>
+                            
+                            <!-- Marker -->
+                            <defs>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a2b4c"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                        <p style="font-size:8.5pt; color:#475569; text-align:center; margin-top:2mm; font-style:italic;">Project moves from primary fieldwork to root-cause synthesis, layered bot prototyping, and micro-vendor savings evaluation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="column" style="flex: 35%;">
+                <!-- TESTING PHASE -->
+                <div class="section-block sec-test" style="flex: 30%;">
+                    <h2>Testing Phase</h2>
+                    <div class="block-body">
+                        <p><strong>Pilot Conducted:</strong> 2-week pilot conducted at Bellandur Green Society (200 apartments) paired with 5 local micro-vendors.</p>
+                        <table class="table">
+                            <thead>
+                                <tr><th>Metric Evaluated</th><th>Target</th><th>Achieved</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td style="text-align:left">Box Divert Rate</td><td>≥ 40%</td><td><strong>46%</strong></td></tr>
+                                <tr><td style="text-align:left">Vendor Cost Savings</td><td>≥ 30%</td><td><strong>34%</strong></td></tr>
+                                <tr><td style="text-align:left">WhatsApp Bot Logging</td><td>≥ 50%</td><td><strong>52%</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CONCLUSION -->
+                <div class="section-block sec-conclusion" style="flex: 34%;">
+                    <h2>Conclusion</h2>
+                    <div class="block-body">
+                        <p>The ReBox initiative successfully validates that a localized circular loop can intercept corrugated boxes at the apartment level and redirect them directly to retail micro-vendors before they are destroyed by weight-optimized recycling pipelines.</p>
+                        <p>This closed-loop reuse architecture saves micro-vendors significant overhead costs, declutters apartment basements, and significantly reduces carbon emissions and water usage footprints relative to pulp downcycling.</p>
+                    </div>
+                </div>
+
+                <!-- RESULTS -->
+                <div class="section-block sec-results" style="flex: 36%;">
+                    <h2>Results & Impact</h2>
+                    <div class="block-body">
+                        <p><strong>Projected Annual Impact (per 100 boxes/month):</strong></p>
+                        <table class="table">
+                            <thead>
+                                <tr><th>Environmental Impact</th><th>Economic Impact</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>6 Tonnes</strong> CO₂ Saved</td><td><strong>₹1.68 Lakhs</strong> Saved / Vendor</td></tr>
+                                <tr><td><strong>29 Trees</strong> Saved from Pulping</td><td><strong>₹140</strong> Saved / 7-cycle Box</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="img-container">
+                            <img src="rebox_circular_loop.png" alt="Circular Loop">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-left">
+                Hari Charan V (1RV25MC037), Anjali Kumari (1RV25MC013), Jajala Lakshmi Supriya (1RV25MC042)
+            </div>
+            <div class="footer-right">
+                MENTOR: Prof. Chandrani Chakravorty
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox WhatsApp Prototype</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ece9e6 0%, #ffffff 100%);
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #e5ddd5; /* WhatsApp chat background color */
+            border: 14px solid #1a1a1a;
+            border-radius: 45px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Phone notch */
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1a1a1a;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 10;
+        }
+
+        /* WA Header */
+        .wa-header {
+            background: #075e54;
+            color: white;
+            padding: 40px 15px 10px 15px; /* Extra top padding for notch */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .wa-back { font-size: 20px; cursor: pointer; }
+        
+        .wa-avatar {
+            width: 40px;
+            height: 40px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .wa-info { flex: 1; }
+        .wa-name { font-weight: 600; font-size: 16px; }
+        .wa-status { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+
+        .wa-actions { font-size: 18px; display: flex; gap: 15px; }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            padding: 20px 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); /* WA pattern */
+            background-size: cover;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14.5px;
+            line-height: 1.4;
+            position: relative;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            word-wrap: break-word;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .msg-bot {
+            background: #ffffff;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .msg-bot::before {
+            content: ''; position: absolute; top: 0; left: -8px;
+            border: 8px solid transparent; border-top-color: #ffffff; border-left: 0;
+        }
+
+        .msg-user {
+            background: #dcf8c6;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .msg-user::after {
+            content: ''; position: absolute; top: 0; right: -8px;
+            border: 8px solid transparent; border-top-color: #dcf8c6; border-right: 0;
+        }
+
+        .msg-time {
+            font-size: 10px;
+            color: #999;
+            float: right;
+            margin-top: 5px;
+            margin-left: 10px;
+        }
+
+        /* Interactive Buttons */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .wa-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            color: #0ea5e9;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .wa-btn:hover { background: #e0e0e0; }
+
+        /* Typing Indicator */
+        .typing {
+            display: none;
+            background: #ffffff;
+            align-self: flex-start;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            align-items: center;
+            gap: 4px;
+        }
+        .dot {
+            width: 6px; height: 6px; background: #999; border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* WA Footer Input */
+        .wa-footer {
+            background: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-bar {
+            flex: 1;
+            background: white;
+            border-radius: 25px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .send-btn-circle {
+            width: 40px; height: 40px;
+            background: #008f68;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 18px; cursor: pointer;
+            border: none;
+        }
+
+        /* Trigger Button outside phone */
+        .start-btn {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s;
+        }
+        .start-btn:hover { transform: translateY(-50%) scale(1.05); }
+
+    </style>
+</head>
+<body>
+
+    <button class="start-btn" onclick="startFlow()" id="qrBtn">📸 Scan QR on Bin</button>
+
+    <div class="phone-frame">
+        <div class="wa-header">
+            <div class="wa-back">←</div>
+            <div class="wa-avatar">📦</div>
+            <div class="wa-info">
+                <div class="wa-name">ReBox Bot</div>
+                <div class="wa-status" id="status-text">online</div>
+            </div>
+            <div class="wa-actions">
+                <span>📹</span>
+                <span>📞</span>
+            </div>
+        </div>
+
+        <div class="chat-area" id="chat">
+            <!-- Messages go here -->
+            <div class="typing" id="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div class="wa-footer">
+            <div class="input-bar">
+                <span>😊</span>
+                <input type="text" id="userInput" placeholder="Type a message" disabled onkeypress="handleKeyPress(event)">
+                <span>📎</span>
+                <span>📷</span>
+            </div>
+            <button class="send-btn-circle" id="sendBtn" onclick="sendInput()" disabled>➤</button>
+        </div>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const statusText = document.getElementById('status-text');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const qrBtn = document.getElementById('qrBtn');
+
+        let currentStep = 0;
+
+        function getTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            return hours + ':' + minutes + ' ' + ampm;
+        }
+
+        function scrollToBottom() {
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function showTyping() {
+            statusText.innerText = 'typing...';
+            typingIndicator.style.display = 'flex';
+            chat.appendChild(typingIndicator); 
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            statusText.innerText = 'online';
+            typingIndicator.style.display = 'none';
+        }
+
+        function addUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg msg-user';
+            msgDiv.innerHTML = `${text} <span class="msg-time">${getTime()} ✓✓</span>`;
+            chat.insertBefore(msgDiv, typingIndicator);
+            scrollToBottom();
+        }
+
+        function addBotMessage(text, buttons = []) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg msg-bot';
+            
+            let html = `${text} <span class="msg-time">${getTime()}</span>`;
+            
+            if (buttons.length > 0) {
+                html += `<div class="btn-group">`;
+                buttons.forEach(btn => {
+                    html += `<button class="wa-btn" onclick="handleButtonClick('${btn}')">${btn}</button>`;
+                });
+                html += `</div>`;
+            }
+
+            msgDiv.innerHTML = html;
+            chat.insertBefore(msgDiv, typingIndicator);
+            scrollToBottom();
+        }
+
+        function startFlow() {
+            qrBtn.style.display = 'none';
+            addUserMessage("Hi ReBox! I want to drop off a box. 📦");
+            
+            setTimeout(() => { showTyping(); }, 500);
+
+            setTimeout(() => {
+                hideTyping();
+                addBotMessage(
+                    "Hello! Welcome to ReBox ♻️. Thanks for saving boxes!<br><br>What size box are you dropping off today?",
+                    ["Small (Like a shoe box)", "Medium (Appliance box)", "Large (TV/Fridge box)"]
+                );
+            }, 2000);
+        }
+
+        function handleButtonClick(selection) {
+            // Disable all buttons to prevent double clicking
+            document.querySelectorAll('.wa-btn').forEach(b => b.disabled = true);
+            
+            addUserMessage(selection);
+            
+            setTimeout(() => { showTyping(); }, 500);
+
+            setTimeout(() => {
+                hideTyping();
+                addBotMessage("Great! 🏢 Please enter your **Flat Number** so we can track your impact:");
+                
+                // Enable input
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                userInput.focus();
+                currentStep = 1;
+            }, 1800);
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendInput();
+            }
+        }
+
+        function sendInput() {
+            const val = userInput.value.trim();
+            if(!val) return;
+
+            addUserMessage(val);
+            userInput.value = '';
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+
+            setTimeout(() => { showTyping(); }, 500);
+
+            setTimeout(() => {
+                hideTyping();
+                addBotMessage(`✅ Drop-off recorded for Flat **${val.toUpperCase()}**!<br><br>🎉 You just saved <b>0.72 kg of CO2</b> and <b>37 Liters of water</b>!<br><br>The local vendor has been notified and will collect it from the Green Bin shortly. Have a great day!`);
+            }, 2000);
+        }
+
+    </script>
+</body>
+</html>

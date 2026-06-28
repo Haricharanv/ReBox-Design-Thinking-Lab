@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Interactive Prototype Demo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.25);
+            --secondary: #3b82f6;
+            --secondary-glow: rgba(59, 130, 246, 0.25);
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, var(--secondary-glow) 0%, transparent 45%);
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        /* Container Layout */
+        .wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            min-height: calc(100vh - 40px);
+        }
+
+        @media (max-width: 1024px) {
+            .wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Selector */
+        aside {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            color: #fff;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .logo-text p {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .nav-item:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Workspace View */
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .view-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-panel.active {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphic Panel Cards */
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Layer 1: Poster & Bin styling */
+        .poster-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .poster-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .instructional-poster {
+            background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+            border: 3px solid var(--primary);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            color: #ecfdf5;
+        }
+
+        .poster-title {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: 'Outfit', sans-serif;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            letter-spacing: 1.5px;
+            border-bottom: 2px dashed rgba(16, 185, 129, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .rule-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
+        }
+
+        .bin-visualizer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .green-bin {
+            width: 140px;
+            height: 200px;
+            background: linear-gradient(180deg, #059669, #047857);
+            border: 4px solid #34d399;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .green-bin:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(52, 211, 153, 0.4);
+        }
+
+        .green-bin::after {
+            content: 'REBOX';
+            position: absolute;
+            color: white;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 2px;
+            bottom: 30px;
+        }
+
+        /* Layer 2: WhatsApp Chat simulator */
+        .chat-simulator {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #075e54;
+            border: 4px solid #111b21;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            background: #075e54;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .bot-name h4 {
+            font-size: 15px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .bot-name p {
+            font-size: 11px;
+            color: #d1fae5;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            background: #efeae2;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .msg-in {
+            background: white;
+            color: #111b21;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+
+        .msg-out {
+            background: #d9fdd3;
+            color: #111b21;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+
+        .chat-options-panel {
+            background: white;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .chat-btn {
+            background: #f0f2f5;
+            color: #075e54;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .chat-btn:hover {
+            background: #075e54;
+            color: white;
+        }
+
+        /* Layer 3: App Dashboard Mockup */
+        .phone-frame {
+            width: 375px;
+            height: 740px;
+            background: #0f172a;
+            border: 8px solid #334155;
+            border-radius: 36px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .phone-notch {
+            height: 24px;
+            background: #334155;
+            width: 140px;
+            margin: 0 auto;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 5;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 40px 20px 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .app-body {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            background: #020617;
+        }
+
+        .stat-grid-app {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card-app {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 14px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .stat-card-app h3 {
+            font-size: 20px;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-card-app p {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* General Buttons */
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Lists */
+        .list-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .list-item-app {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info h4 {
+            font-size: 13.5px;
+            color: white;
+        }
+
+        .item-info p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .badge-app {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        /* Leaderboard and portals sub-views */
+        .subview-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 2px;
+            margin-bottom: 18px;
+        }
+
+        .subview-btn {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .subview-btn.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .phone-nav {
+            background: #0f172a;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            padding: 10px 0 18px;
+            justify-content: space-around;
+        }
+
+        .phone-nav-item {
+            color: var(--text-muted);
+            font-size: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .phone-nav-item.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .phone-nav-icon {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- SIDEBAR SELECTOR -->
+        <aside>
+            <div class="logo-area">
+                <div class="logo-icon">📦</div>
+                <div class="logo-text">
+                    <h1>ReBox</h1>
+                    <p>Circular Design Lab</p>
+                </div>
+            </div>
+
+            <p style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; font-weight: 700; margin-top: 10px;">Select Prototype Layer:</p>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="switchView('layer1', this)">
+                    <span>🟢</span> Layer 1: Green Bin
+                </li>
+                <li class="nav-item" onclick="switchView('layer2', this)">
+                    <span>💬</span> Layer 2: WhatsApp Bot
+                </li>
+                <li class="nav-item" onclick="switchView('layer3', this)">
+                    <span>📊</span> Layer 3: ReBox App
+                </li>
+            </ul>
+
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; font-size: 12px; margin-top: auto; color: var(--text-muted);">
+                <p><strong>Design Thinking Lab</strong></p>
+                <p style="margin-top: 4px;">Phase 3: Ideate & Prototype interactive simulation. Test local circular flows.</p>
+            </div>
+        </aside>
+
+        <!-- WORKSPACE -->
+        <main>
+            <!-- LAYER 1 VIEW -->
+            <div class="view-panel active" id="view-layer1">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">🟢 Layer 1: Basement Green Bin & Poster Mockup</div>
+                        <span style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase;">Low-Tech Tier</span>
+                    </div>
+
+                    <div class="poster-container">
+                        <!-- Poster -->
+                        <div class="instructional-poster">
+                            <div class="poster-title">ReBox Green Bin</div>
+                            <div class="rule-step">
+                                <span class="step-num">1</span>
+                                <div>
+                                    <h4 style="color: white; margin-bottom: 2px;">Extract & Flatten</h4>
+                                    <p style="font-size: 12px; color: #a7f3d0; margin-bottom: 0;">Unpack your e-commerce delivery parcel and flatten the cardboard structure completely to conserve society basement storage space.</p>
+                                </div>
+                            </div>
+                            <div class="rule-step">
+                                <span class="step-num">2</span>
+                                <div>
+                                    <h4 style="color: white; margin-bottom: 2px;">Slide into ReBox Bin</h4>
+                                    <p style="font-size: 12px; color: #a7f3d0; margin-bottom: 0;">Only slide clean, dry corrugated boxes into the green ReBox slot. No plastic packaging wrap or sticky food containers.</p>
+                                </div>
+                            </div>
+                            <div class="rule-step">
+                                <span class="step-num">3</span>
+                                <div>
+                                    <h4 style="color: white; margin-bottom: 2px;">Scan society QR Code</h4>
+                                    <p style="font-size: 12px; color: #a7f3d0; margin-bottom: 0;">Point your phone camera at the QR code printed on the Green Bin's front face to claim point rewards via the automated WhatsApp chat.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropoff Simulator -->
+                        <div class="bin-visualizer">
+                            <h4 style="margin-bottom: 10px;">Dropoff Simulator</h4>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Tapping the Green Bin simulates drop-off event. It will trigger a transition to Layer 2 to log the drop.</p>
+                            
+                            <div class="green-bin" onclick="simulateDrop()">
+                                📥
+                            </div>
+                            
+                            <p style="font-size: 12px; font-style: italic; color: var(--primary); margin-top: 15px;">Tap green bin to slide cardboard in.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAYER 2 VIEW -->
+            <div class="view-panel" id="view-layer2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">💬 Layer 2: WhatsApp Chatbot Simulator</div>
+                        <span style="font-size: 11px; font-weight: 700; color: #3b82f6; text-transform: uppercase;">Mid-Tech Tier</span>
+                    </div>
+
+                    <div class="chat-simulator">
+                        <div class="chat-header">
+                            <div class="bot-avatar">🤖</div>
+                            <div class="bot-name">
+                                <h4>ReBox Helper</h4>
+                                <p>Online (Automated Bot)</p>
+                            </div>
+                        </div>
+
+                        <div class="chat-body" id="chat-stream">
+                            <div class="msg msg-in">
+                                Welcome to <strong>ReBox</strong>! 📦 <br><br>Scan society QR Code to log box drops, or choose options below to fetch boxes.
+                            </div>
+                        </div>
+
+                        <div class="chat-options-panel" id="chat-options">
+                            <button class="chat-btn" onclick="sendChatMessage('Log Dropoff of 2 Medium Boxes')">Simulate Scan dropoff (2 boxes)</button>
+                            <button class="chat-btn" onclick="sendChatMessage('Check current community impact metrics')">Check my carbon points balance</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAYER 3 VIEW -->
+            <div class="view-panel" id="view-layer3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">📊 Layer 3: ReBox Mobile Dashboard App Mockup</div>
+                        <span style="font-size: 11px; font-weight: 700; color: #ec4899; text-transform: uppercase;">High-Tech Tier (Vision)</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center;">
+                        <div>
+                            <p style="margin-bottom: 15px;">This prototype demonstrates the <strong>shopper</strong>, <strong>vendor</strong>, and <strong>guard</strong> view modules within the high-fidelity app mockup. Toggle the portal buttons within the phone screen to interact with the dashboards.</p>
+                            
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; font-size: 13px;">
+                                <h4 style="color: var(--primary); margin-bottom: 8px;">Simulated society variables:</h4>
+                                <p>• Location: <strong>Bellandur Society, Bangalore</strong></p>
+                                <p>• Active Bins: <strong>2 Green Bins (Basement A & B)</strong></p>
+                                <p>• Total Diversion: <strong>1,250 kg corrugated board</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- Phone Frame -->
+                        <div class="phone-frame">
+                            <div class="phone-notch"></div>
+                            
+                            <div class="app-header">
+                                <h3 style="font-size: 18px; font-weight: 800; font-family: 'Outfit';">ReBox</h3>
+                                <p style="font-size: 11px; opacity: 0.9;">Bellandur Green Society Node</p>
+                            </div>
+
+                            <div class="app-body" id="app-body-content">
+                                <!-- Subview toggles -->
+                                <div class="subview-toggle">
+                                    <div class="subview-btn active" id="sb-shopper" onclick="toggleAppView('shopper')">Shopper</div>
+                                    <div class="subview-btn" id="sb-vendor" onclick="toggleAppView('vendor')">Vendor</div>
+                                    <div class="subview-btn" id="sb-guard" onclick="toggleAppView('guard')">Guard</div>
+                                </div>
+
+                                <!-- Dynamic content based on view -->
+                                <div id="app-dynamic-view">
+                                    <!-- Shopper view initially -->
+                                    <div class="stat-grid-app">
+                                        <div class="stat-card-app">
+                                            <h3 id="app-box-count">24</h3>
+                                            <p>Boxes Recycled</p>
+                                        </div>
+                                        <div class="stat-card-app">
+                                            <h3 id="app-impact-val">1.2kg</h3>
+                                            <p>Carbon Saved</p>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn-action" style="margin-bottom: 20px;" onclick="simulateAppScan()">📲 Scan QR to Drop</button>
+
+                                    <p class="list-title">Nearby Demands (Vendors)</p>
+                                    <div class="list-container">
+                                        <div class="list-item-app">
+                                            <div class="item-info">
+                                                <h4>Ramesh Fruits</h4>
+                                                <p>Needs 5 Medium Boxes</p>
+                                            </div>
+                                            <span class="badge-app">200m away</span>
+                                        </div>
+                                        <div class="list-item-app">
+                                            <div class="item-info">
+                                                <h4>Sri Sai Packers</h4>
+                                                <p>Needs Any Large Boxes</p>
+                                            </div>
+                                            <span class="badge-app">400m away</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="phone-nav">
+                                <div class="phone-nav-item active"><span class="phone-nav-icon">🏡</span>Home</div>
+                                <div class="phone-nav-item"><span class="phone-nav-icon">🗺️</span>Map</div>
+                                <div class="phone-nav-item"><span class="phone-nav-icon">👤</span>Profile</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Main layer view switching
+        function switchView(viewId, element) {
+            document.querySelectorAll('.view-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById('view-' + viewId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // Layer 1 bin dropoff simulator
+        function simulateDrop() {
+            alert("📦 Box successfully slid into the Green Bin! Let's log it on the WhatsApp Bot interface now.");
+            const whatsappNavItem = document.querySelectorAll('.nav-item')[1];
+            switchView('layer2', whatsappNavItem);
+            
+            // Add automatic chat conversation
+            setTimeout(() => {
+                sendChatMessage("Log Dropoff of 2 Medium Boxes");
+            }, 500);
+        }
+
+        // Layer 2 Chatbot scripts
+        function sendChatMessage(text) {
+            const stream = document.getElementById('chat-stream');
+            
+            // User message bubble
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg msg-out';
+            userMsg.innerHTML = text;
+            stream.appendChild(userMsg);
+            stream.scrollTop = stream.scrollHeight;
+
+            // Simple automated response generator
+            setTimeout(() => {
+                const reply = document.createElement('div');
+                reply.className = 'msg msg-in';
+                
+                if (text.includes('Dropoff')) {
+                    reply.innerHTML = "✅ <strong>Dropoff Successful!</strong> <br><br>We logged <strong>2 Medium Boxes</strong> dropped at Bellandur basement Green Bin.<br><br>🪙 <strong>+20 reward points</strong> added to your account! Total offset tracker: <strong>+0.8 kg CO2</strong> saved.";
+                } else if (text.includes('metrics')) {
+                    reply.innerHTML = "📊 <strong>Your Impact Metrics:</strong><br><br>• Boxes Diverted: <strong>24</strong><br><br>• Carbon Saved: <strong>1.2 kg CO2 equivalent</strong><br><br>• Reward Balance: <strong>240 points</strong>";
+                } else {
+                    reply.innerHTML = "Sorry, I didn't catch that. Type <strong>/drop</strong> or check metrics.";
+                }
+                
+                stream.appendChild(reply);
+                stream.scrollTop = stream.scrollHeight;
+            }, 1000);
+        }
+
+        // Layer 3 dashboard views
+        let boxesDroppedVal = 24;
+        let co2OffsetVal = 1.2;
+
+        function simulateAppScan() {
+            alert("📲 QR Scan successful! Added 2 boxes to your balance.");
+            boxesDroppedVal += 2;
+            co2OffsetVal += 0.8;
+            
+            document.getElementById('app-box-count').innerText = boxesDroppedVal;
+            document.getElementById('app-impact-val').innerText = co2OffsetVal.toFixed(1) + "kg";
+        }
+
+        function toggleAppView(viewName) {
+            // Remove active classes
+            document.querySelectorAll('.subview-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Set active class on clicked btn
+            document.getElementById('sb-' + viewName).classList.add('active');
+
+            const contentDiv = document.getElementById('app-dynamic-view');
+            
+            if (viewName === 'shopper') {
+                contentDiv.innerHTML = `
+                    <div class="stat-grid-app">
+                        <div class="stat-card-app">
+                            <h3 id="app-box-count">${boxesDroppedVal}</h3>
+                            <p>Boxes Recycled</p>
+                        </div>
+                        <div class="stat-card-app">
+                            <h3 id="app-impact-val">${co2OffsetVal.toFixed(1)}kg</h3>
+                            <p>Carbon Saved</p>
+                        </div>
+                    </div>
+
+                    <button class="btn-action" style="margin-bottom: 20px;" onclick="simulateAppScan()">📲 Scan QR to Drop</button>
+
+                    <p class="list-title">Nearby Demands (Vendors)</p>
+                    <div class="list-container">
+                        <div class="list-item-app">
+                            <div class="item-info">
+                                <h4>Ramesh Fruits</h4>
+                                <p>Needs 5 Medium Boxes</p>
+                            </div>
+                            <span class="badge-app">200m away</span>
+                        </div>
+                        <div class="list-item-app">
+                            <div class="item-info">
+                                <h4>Sri Sai Packers</h4>
+                                <p>Needs Any Large Boxes</p>
+                            </div>
+                            <span class="badge-app">400m away</span>
+                        </div>
+                    </div>
+                `;
+            } else if (viewName === 'vendor') {
+                contentDiv.innerHTML = `
+                    <div class="stat-card-app" style="margin-bottom: 18px; text-align: left;">
+                        <h4 style="color: white; font-size: 14px;">Broadcasting demands for Ramesh Fruits</h4>
+                        <p style="font-size: 11px; margin-top: 4px;">Post packaging requirements to receive notifications when local residents drop boxes.</p>
+                    </div>
+
+                    <button class="btn-action" style="margin-bottom: 20px; background: linear-gradient(135deg, var(--secondary), var(--accent));">➕ Post Box Demand</button>
+
+                    <p class="list-title">Available Bins Inventory</p>
+                    <div class="list-container">
+                        <div class="list-item-app">
+                            <div class="item-info">
+                                <h4>Green Bin A (Basement)</h4>
+                                <p>8 Medium, 3 Large boxes ready</p>
+                            </div>
+                            <span class="badge-app" style="background: rgba(59, 130, 246, 0.2); color: var(--secondary);">Claim Batch</span>
+                        </div>
+                        <div class="list-item-app">
+                            <div class="item-info">
+                                <h4>Green Bin B (Block C Lobby)</h4>
+                                <p>12 Small, 2 Medium boxes ready</p>
+                            </div>
+                            <span class="badge-app" style="background: rgba(59, 130, 246, 0.2); color: var(--secondary);">Claim Batch</span>
+                        </div>
+                    </div>
+                `;
+            } else if (viewName === 'guard') {
+                contentDiv.innerHTML = `
+                    <div class="stat-card-app" style="margin-bottom: 18px; text-align: left;">
+                        <h4 style="color: white; font-size: 14px;">Gate Security Verification</h4>
+                        <p style="font-size: 11px; margin-top: 4px;">Confirm collection runs to verify that boxes were successfully claimed by vendors.</p>
+                    </div>
+
+                    <p class="list-title">Pending Claims</p>
+                    <div class="list-container">
+                        <div class="list-item-app" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="item-info">
+                                    <h4>Ramesh Fruits</h4>
+                                    <p>Claimed 8 Medium from Bin A</p>
+                                </div>
+                                <span class="badge-app" style="background: rgba(245, 158, 11, 0.2); color: var(--warning);">Pending Pickup</span>
+                            </div>
+                            <button class="btn-action" style="padding: 8px; font-size: 12px;" onclick="confirmGuardVerification(this)">Confirm Handover</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function confirmGuardVerification(button) {
+            alert("✅ Gate handover verified successfully! Verification notification dispatched to Ramesh Fruits.");
+            const container = button.closest('.list-item-app');
+            container.innerHTML = `
+                <div style="display: flex; justify-content: space-between; width:100%; align-items: center;">
+                    <div class="item-info">
+                        <h4>Ramesh Fruits</h4>
+                        <p>Claimed 8 Medium from Bin A</p>
+                    </div>
+                    <span class="badge-app" style="background: rgba(16, 185, 129, 0.2); color: var(--primary);">✓ Dispatched</span>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
