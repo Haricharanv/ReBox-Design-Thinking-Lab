@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Empathy & Define Review</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #94a3b8; color: var(--text-main); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--secondary); }
+        
+        .slides { display: flex; flex-direction: column; align-items: center; padding: 40px 0; gap: 40px; }
+        .slide { 
+            width: 1024px; min-height: 768px; 
+            background: var(--bg-light); padding: 60px 80px; 
+            display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            position: relative;
+            background-color: white;
+            background-image: url('assets/rvce_logo.png');
+            background-repeat: no-repeat;
+            background-position: top 25px left 35px;
+            background-size: 80px auto;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+        
+        .slide-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        
+        /* Typography & Components */
+        .slide-title { font-size: 3rem; margin-bottom: 2rem; color: var(--primary-dark); border-bottom: 3px solid var(--primary); padding-bottom: 10px; display: inline-block;}
+        .subtitle { font-size: 1.5rem; color: var(--text-light); margin-bottom: 2rem; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; }
+        
+        .card { background: var(--white); padding: 30px; border-radius: 16px; box-shadow: var(--shadow); border-top: 4px solid var(--primary); border: 1px solid #e2e8f0; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--primary-dark); }
+        
+        ul { padding-left: 20px; font-size: 1.2rem; line-height: 1.6; }
+        li { margin-bottom: 15px; }
+        p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 15px; }
+        
+        blockquote { font-size: 1.4rem; font-style: italic; border-left: 5px solid var(--accent); padding-left: 20px; margin: 20px 0; color: var(--secondary); background: #eff6ff; padding: 20px; border-radius: 8px;}
+        
+        .bar-chart { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .bar-row span { font-size: 1rem; font-weight: 600; color: var(--secondary); margin-bottom: 4px; display: block; }
+        .bar-track { width: 100%; height: 16px; background: #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 8px; }
+        
+        .badge { display: inline-block; padding: 8px 16px; background: var(--primary); color: white; border-radius: 50px; font-weight: 600; margin-bottom: 20px; font-size: 1.1rem;}
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid #e2e8f0;}
+        th, td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 1.1rem;}
+        th { background: var(--secondary); color: white; font-family: 'Outfit', sans-serif; font-size: 1.2rem;}
+        tr:last-child td { border-bottom: none; }
+        
+        /* Specific Slides */
+        .title-slide { 
+            background-color: var(--secondary);
+            background-image: url('assets/rvce_logo.png'), linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            background-repeat: no-repeat, no-repeat;
+            background-position: top 30px left 40px, center;
+            background-size: 100px auto, cover;
+            color: white; text-align: center; justify-content: center; align-items: center; border: none; 
+        }
+        .title-slide h1 { font-size: 4.5rem; color: white; border: none; margin-bottom: 20px; }
+        .title-slide h1 span { color: var(--primary); }
+        .title-slide .subtitle { color: #cbd5e1; font-size: 2rem; max-width: 800px; margin: 0 auto 40px; }
+        .title-slide p { font-size: 1.2rem; color: #94a3b8; }
+        
+        .img-grid img { width: 100%; height: 240px; object-fit: contain; background: #f1f5f9; border-radius: 12px; box-shadow: var(--shadow); border: 4px solid white; }
+        .img-grid-large { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .img-grid-large img { width: 100%; height: 320px; object-fit: contain; background: #f1f5f9; border-radius: 12px; box-shadow: var(--shadow); border: 4px solid white; }
+        
+        .highlight { color: var(--primary); font-weight: 700; }
+        .alert-box { background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .alert-box h4 { color: #b91c1c; font-size: 1.5rem; margin-bottom: 10px; }
+        
+        /* Slide numbering */
+        .slides { counter-reset: slide-counter; }
+        .slide { counter-increment: slide-counter; }
+        .slide::after { content: counter(slide-counter); position: absolute; bottom: 15px; right: 25px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: #94a3b8; font-weight: 600; }
+        .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 12px 12px 0 0; }
+        .title-slide::before { display: none; }
+        .title-slide::after { color: rgba(255,255,255,0.3); }
+
+        /* Enhanced card hover */
+        .card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(0,0,0,0.15); }
+
+        /* Animated bar fills */
+        .bar-fill { transition: width 1s ease-out; }
+
+        /* Stat callout */
+        .stat-big { font-size: 3rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); line-height: 1; }
+        .stat-label { font-size: 1rem; color: var(--text-light); margin-top: 5px; }
+
+        .action-buttons { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 15px; }
+        .print-btn, .ppt-btn { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-family: 'Outfit'; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: all 0.3s; }
+        .ppt-btn { background: linear-gradient(135deg, #8b5cf6, #3b82f6); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
+        .print-btn:hover, .ppt-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+        /* Presentation Mode Styles */
+        body.ppt-mode { overflow: hidden; background: #0f172a; }
+        body.ppt-mode .slides { padding: 0; }
+        body.ppt-mode .print-btn { display: none; }
+        body.ppt-mode .ppt-btn { opacity: 0; pointer-events: none; }
+        
+        .ppt-controls { display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px; z-index: 2000; color: white; gap: 15px; align-items: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        body.ppt-mode .ppt-controls { display: flex; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { bottom: -100px; } to { bottom: 30px; } }
+        .ppt-controls button { background: rgba(255,255,255,0.1); border: none; color: white; font-size: 1.2rem; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .ppt-controls button:hover { background: var(--primary); transform: scale(1.1); }
+        .slide-indicator { font-family: 'Outfit'; font-weight: 600; min-width: 60px; text-align: center; }
+        
+        @media print {
+            @page { size: A4 landscape; margin: 0; }
+            body, html { background: white !important; margin: 0 !important; padding: 0 !important; }
+            .slides { padding: 0 !important; gap: 0 !important; display: block !important; }
+            .print-btn { display: none !important; }
+            .slide { 
+                width: 297mm !important; 
+                height: 209mm !important; /* Strictly less than A4 height to prevent blank pages */
+                box-sizing: border-box !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border: none !important;
+                padding: 10mm 15mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+            .card { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-top: 4px solid var(--primary) !important; padding: 10px !important; margin-bottom: 10px !important; }
+            table { box-shadow: none !important; margin-top: 5px !important; }
+            th, td { padding: 5px 10px !important; font-size: 0.9rem !important; }
+            th { color: black !important; background: #f1f5f9 !important; border-bottom: 2px solid #cbd5e1 !important;}
+            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
+            
+            /* Aggressive Shrinking for Print */
+            .img-grid img { height: 140px !important; }
+            .img-grid-large img { height: 180px !important; }
+            .slide-title { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; padding-bottom: 5px !important; }
+            h1 { font-size: 2rem !important; margin-bottom: 10px !important; }
+            h2 { font-size: 1.5rem !important; margin-bottom: 10px !important; }
+            h3 { font-size: 1.2rem !important; margin-bottom: 5px !important; }
+            p, li { font-size: 0.9rem !important; margin-bottom: 5px !important; line-height: 1.3 !important; }
+            .subtitle { font-size: 1.1rem !important; margin-bottom: 1rem !important; }
+            .grid-2 { gap: 15px !important; }
+            .grid-3 { gap: 10px !important; }
+            
+            /* Force HMW slide and Alert boxes to shrink */
+            div[style*="padding: 40px"] { padding: 15px !important; margin: 15px 0 !important; }
+            h1[style*="font-size: 2.5rem"] { font-size: 1.4rem !important; line-height: 1.2 !important; }
+            .alert-box { padding: 10px !important; margin-top: 10px !important; }
+            .alert-box h4 { font-size: 1.2rem !important; margin-bottom: 5px !important; }
+            .slide::before { display: none !important; }
+            .slide::after { font-size: 0.8rem !important; bottom: 5px !important; right: 10px !important; }
+            .card { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="action-buttons">
+        <button class="ppt-btn" onclick="startPPTMode()">▶️ Present Mode</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print to PDF</button>
+    </div>
+
+    <div class="ppt-controls">
+        <button onclick="prevSlide()" title="Previous (Left Arrow)">◀</button>
+        <span class="slide-indicator"><span id="current-slide-num">1</span> / <span id="total-slide-num">X</span></span>
+        <button onclick="nextSlide()" title="Next (Right Arrow or Space)">▶</button>
+        <button onclick="stopPPTMode()" title="Exit (Esc)" style="background: rgba(239, 68, 68, 0.5); margin-left: 10px;">✖</button>
+    </div>
+
+    <div class="slides">
+        <!-- Slide 1 -->
+        <div class="slide title-slide">
+            <div class="slide-inner" style="align-items: center;">
+                <div style="margin-bottom: 30px;">
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; margin-right: 10px;">SDG 9: Industry & Innovation</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; margin-right: 10px;">SDG 11: Sustainable Cities</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399; margin-right: 10px;">SDG 12: Responsible Consumption</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #34d399;">SDG 13: Climate Action</span>
+                </div>
+                <h1>ReBox <span>Empathy & Define Phase</span></h1>
+                <div class="subtitle">A Local Reuse Network for E-Commerce Packaging</div>
+                <p style="margin-top: 40px;">Hari Charan V, Anjali Kumari, Supriya</p>
+                <p>Mentor: Prof. Chandrani Chakravorty | MCA427DL Design Thinking Lab</p>
+                <p>14th May 2026</p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">1. Research Overview (Data at a Glance)</h2>
+                <div class="grid-2">
+                    <div>
+                        <table style="margin-top: 0;">
+                            <tr><th>Metric</th><th>Count</th></tr>
+                            <tr><td>Online Shopper Surveys</td><td><span class="highlight">30+</span></td></tr>
+                            <tr><td>Shopkeeper Surveys (English & Kannada)</td><td><span class="highlight">30+</span></td></tr>
+                            <tr><td>Audio Recordings (Field Interviews)</td><td><span class="highlight">22</span></td></tr>
+                            <tr><td>Field Visit Photographs</td><td>20+</td></tr>
+                            <tr><td>Vendor Locations Visited</td><td><span class="highlight">30+</span></td></tr>
+                        </table>
+                    </div>
+                    <div class="card">
+                        <h3>Methods Used:</h3>
+                        <ul>
+                            <li>1-on-1 in-person interviews (shopkeepers & residents)</li>
+                            <li>Printed questionnaire surveys (both stakeholder groups)</li>
+                            <li>Audio recording of vendor conversations (WhatsApp + Phone)</li>
+                            <li>On-site observation at kirana stores, fruit vendors, bakeries</li>
+                            <li>Photography for visual evidence documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">User Interviews: Online Shoppers</h2>
+                <p><strong>Target:</strong> Urban residents (21–45 yrs) from Bangalore, Hyderabad, Tumkur, Bidar, Kadapa, Tirupati</p>
+                <div class="grid-2">
+                    <div>
+                        <blockquote>"I feel guilty… but boxes take up too much space."<br>— Bhargavi, 28</blockquote>
+                        <blockquote>"Convenience is the biggest motivation for me."<br>— Harsha, 23</blockquote>
+                        <blockquote>"Carrying large boxes downstairs is very difficult."<br>— Swarna, 45</blockquote>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>What we observed:</h3>
+                        <ul>
+                            <li>Balconies cluttered with flattened Amazon/Flipkart boxes</li>
+                            <li>Boxes sitting for 3–7 days before disposal</li>
+                            <li>Kabadiwala visits are irregular (once a month or less)</li>
+                            <li>Residents default to the easiest disposal — municipal dry waste bin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">User Interviews: Shopkeepers & Vendors</h2>
+                <p><strong>Target:</strong> Kirana stores, fruit sellers, bakeries, stationery shops across 15+ areas in Bangalore</p>
+                <div class="grid-2">
+                    <div>
+                        <blockquote>"A box is a box. My customer doesn't look at who sent it before."<br>— Local Vendor</blockquote>
+                        <blockquote>"If someone brings me good boxes for ₹5, I'll take all of them."<br>— Fruit Seller</blockquote>
+                        <blockquote>"We reuse boxes until they fall apart."<br>— Kirana Store Owner</blockquote>
+                        <div class="badge" style="background: var(--accent); margin-top: 20px;">22 Audio Recordings Captured</div>
+                    </div>
+                    <div class="card" style="border-top-color: var(--primary);">
+                        <h3>Vendor Feedback on Logos:</h3>
+                        <ul>
+                            <li>96% of vendors surveyed stated that Amazon/Flipkart logos are "No problem"</li>
+                            <li>Primary concern is structural integrity, not branding.</li>
+                            <li>Cost reduction overrides any branding concerns.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5 - Field Evidence: Vendor Interactions -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Field Evidence: Vendor Interviews</h2>
+                <p>Authentic documentation of our on-ground interviews with local shopkeepers.</p>
+                <div class="img-grid-large">
+                    <img src="assets/IMG20260502175611.jpg.jpeg" alt="Vendor Interview 1">
+                    <img src="assets/IMG20260502180039.jpg.jpeg" alt="Vendor Interview 2">
+                    <img src="assets/IMG20260502203740.jpg.jpeg" alt="Vendor Interview 3">
+                    <img src="assets/IMG20260505143450.jpg.jpeg" alt="Team with Vendor">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5B - Field Evidence: Survey Process -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Field Evidence: Survey Data Collection</h2>
+                <p>Gathering quantitative and qualitative data from stakeholders.</p>
+                <div class="grid-3 img-grid">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.36 PM.jpeg" alt="Survey Process 1">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.37 PM.jpeg" alt="Survey Process 2">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.39 PM.jpeg" alt="Survey Process 3">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.40 PM.jpeg" alt="Survey Process 4">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.41 PM.jpeg" alt="Survey Process 5">
+                    <img src="Pictures (DTL)/WhatsApp Image 2026-05-13 at 8.46.42 PM.jpeg" alt="Survey Process 6">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6 - Field Evidence: Boxes -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Field Evidence: Packaging & Environment</h2>
+                <p>Visual documentation of the clutter problem and packaging usage in stores.</p>
+                <div class="grid-3 img-grid">
+                    <img src="assets/IMG20260502194044.jpg.jpeg" alt="Vendor Box Storage">
+                    <img src="assets/WhatsApp Image 2026-05-07 at 1.05.19 AM.jpeg" alt="Cluttered Store">
+                    <img src="assets/WhatsApp Image 2026-05-07 at 1.05.20 AM (2).jpeg" alt="Box Pile">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Key Findings: Online Shoppers</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Finding 1: Space is the #1 Pain Point</h3>
+                        <ul>
+                            <li>80%+ of shoppers cited clutter / "no storage space" as the primary reason for quick disposal</li>
+                            <li>Most discard boxes within 3–7 days</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Finding 2: Eco-Guilt is Overridden</h3>
+                        <ul>
+                            <li>Users feel guilty throwing structurally perfect boxes</li>
+                            <li>But convenience always wins over guilt</li>
+                            <li>"I prioritize a clean house over the guilt"</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Finding 3: 100% Demand a Bin</h3>
+                        <ul>
+                            <li>100% would use a basement drop-off bin</li>
+                            <li>Zero-effort, nearby collection point resonated universally</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Finding 4: Incentive Split by Age</h3>
+                        <ul>
+                            <li>Young (20–30): Prefer cashback, app rewards</li>
+                            <li>Older (40+): Prefer doorstep pickup, no apps</li>
+                            <li>Leads to our LAYERED solution approach</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Key Findings: Shopkeepers</h2>
+                <div class="grid-2">
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Finding 1: Packaging is a Major Cost</h3>
+                        <ul>
+                            <li>Vendors spend ₹20–₹35 per NEW box</li>
+                            <li>Monthly spend: ₹500 to ₹5,000+</li>
+                            <li>2nd largest operational cost after inventory</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Finding 2: Brand Neutrality</h3>
+                        <ul>
+                            <li>96% said Amazon/Flipkart logos are "No problem"</li>
+                            <li>Only requirement: clean, dry, intact</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Finding 3: High Willingness to Adopt</h3>
+                        <ul>
+                            <li>90%+ would use second-hand boxes</li>
+                            <li>Preferred price: ₹1–₹5 per box or free</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>Finding 4: Preferred Logistics</h3>
+                        <ul>
+                            <li>Most willing to self-pick up from a nearby point</li>
+                            <li>Can't stockpile due to limited shop space</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Quantitative Data Analysis -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Quantitative Data Analysis</h2>
+                <p>Visualizing the results from 50+ primary research surveys.</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Shoppers: Reason for Disposal</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>Space Constraint / Clutter (80%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 80%; background: #ef4444;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>No secondary use (15%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 15%; background: #f59e0b;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Damaged (5%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 5%; background: #94a3b8;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Shoppers: Willingness for Bin Drop-off</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>High (Would definitely use) (72%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 72%; background: var(--primary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Medium (Might use) (20%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 20%; background: var(--accent);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Low (Unlikely) (8%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 8%; background: #94a3b8;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Vendors: Would you buy used boxes?</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>Yes, if structural integrity is good (92%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 92%; background: var(--primary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>No, prefer new boxes (8%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 8%; background: #ef4444;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Vendors: Do e-commerce logos matter?</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>No problem / Don't care (96%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 96%; background: var(--primary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Yes, it matters (4%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 4%; background: #f59e0b;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9B: Quantitative Data Analysis (Part 2) -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Quantitative Data Analysis (Part 2)</h2>
+                <p>Behavioral patterns and economic thresholds driving the ReBox solution.</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Shoppers: Package Frequency (Monthly)</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>1-4 Packages (35%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 35%; background: var(--secondary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>5-10 Packages (50%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 50%; background: var(--primary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>10+ Packages (15%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 15%; background: var(--accent);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Shoppers: Current Disposal Method</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>Municipal Dry Waste (65%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 65%; background: #ef4444;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Kabadiwala / Scrap (25%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 25%; background: #f59e0b;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Reuse / Storage (10%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 10%; background: var(--primary);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Vendors: Acceptable Price for Reused Box</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>₹2 - ₹5 per box (60%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 60%; background: var(--primary);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Free only (30%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 30%; background: var(--accent);"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>₹5 - ₹10 per box (10%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 10%; background: #94a3b8;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Vendors: Current Sourcing Method</h3>
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span>Wholesale Market (New) (70%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 70%; background: #ef4444;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Scrap Dealers (Used) (20%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 20%; background: #f59e0b;"></div></div>
+                            </div>
+                            <div class="bar-row">
+                                <span>Informal (Neighbours/Other shops) (10%)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 10%; background: var(--primary);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9C: Data-Driven Insights -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Actionable Insights & Directives</h2>
+                <p>Translating quantitative survey data into core system requirements.</p>
+                <div class="grid-2">
+                    <div class="card" style="border-top-color: var(--primary);">
+                        <h3>1. The "Volume vs. Effort" Insight</h3>
+                        <p><strong>Data:</strong> 65% of users rely on dry waste bins, yet 72% are highly willing to use a drop-box.</p>
+                        <p><strong>Design Directive:</strong> The solution MUST mimic the zero-friction experience of a garbage bin. If ReBox requires an app download or waiting for a pickup, 65% of the target market will default back to the trash bin.</p>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <h3>2. The "Price Gap" Insight</h3>
+                        <p><strong>Data:</strong> 70% of vendors buy new boxes, but 60% are willing to pay ₹2-₹5 for used ones.</p>
+                        <p><strong>Design Directive:</strong> There is a massive arbitrage opportunity. A new box costs ₹25. ReBox can easily price boxes at ₹5 (an 80% discount for vendors) and still generate revenue to sustain the collection logistics.</p>
+                    </div>
+                    <div class="card" style="border-top-color: #f59e0b;">
+                        <h3>3. The "Aesthetic Apathy" Insight</h3>
+                        <p><strong>Data:</strong> 96% of vendors do not care about e-commerce logos.</p>
+                        <p><strong>Design Directive:</strong> We do NOT need to invest in de-branding, repainting, or physically altering the boxes. The operational focus should be purely on structural sorting (intact vs. crushed), minimizing processing costs to nearly zero.</p>
+                    </div>
+                    <div class="card" style="border-top-color: #ef4444;">
+                        <h3>4. The "Continuous Supply" Insight</h3>
+                        <p><strong>Data:</strong> 50% of households receive 5-10 packages monthly.</p>
+                        <p><strong>Design Directive:</strong> A single apartment complex of 200 units generates ~1,500 boxes a month. The supply is highly concentrated. Collection bins must be designed with significant volume capacity to prevent overflow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">2. Empathy Map: Online Shopper</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid var(--accent); border-top: none;">
+                        <h3 style="color: var(--accent);">SAYS</h3>
+                        <ul>
+                            <li>"I'll give it to the scrap guy later."</li>
+                            <li>"These boxes take up too much space."</li>
+                            <li>"I don't have time to use a recycling app."</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid var(--primary); border-top: none;">
+                        <h3 style="color: var(--primary);">THINKS</h3>
+                        <ul>
+                            <li>"I am contributing to environmental waste."</li>
+                            <li>"There must be someone who needs these."</li>
+                            <li>"Why is recycling so inconvenient?"</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid #f59e0b; border-top: none;">
+                        <h3 style="color: #f59e0b;">DOES</h3>
+                        <ul>
+                            <li>Hoards boxes in the balcony until they become an eyesore</li>
+                            <li>Flattens them and throws in municipal dry waste</li>
+                            <li>Defaults to the easiest disposal method available</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #fef2f2; border-left: 4px solid #ef4444; border-top: none;">
+                        <h3 style="color: #ef4444;">FEELS</h3>
+                        <ul>
+                            <li>Guilty about wasting good materials</li>
+                            <li>Frustrated by the clutter in small apartment</li>
+                            <li>Apathetic toward complex recycling programs</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert-box" style="margin-top: 30px; background: #ecfdf5; border-color: var(--primary);">
+                    <h4 style="color: var(--primary-dark); margin:0;">Core Need:</h4>
+                    <p style="margin:0; font-weight:600;">A zero-effort, nearby way to dispose of boxes that actually leads to reuse — not guilt-inducing destruction.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Empathy Map: Local Vendor</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid var(--accent); border-top: none;">
+                        <h3 style="color: var(--accent);">SAYS</h3>
+                        <ul>
+                            <li>"Cardboard prices keep going up."</li>
+                            <li>"My margins are disappearing."</li>
+                            <li>"I have to pass the packaging cost to the customer."</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid var(--primary); border-top: none;">
+                        <h3 style="color: var(--primary);">THINKS</h3>
+                        <ul>
+                            <li>"I wish I could get cheap, strong boxes locally."</li>
+                            <li>"The scrap dealer charges too much for old boxes."</li>
+                            <li>"How can I cut operational costs without losing quality?"</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #f8fafc; border-left: 4px solid #f59e0b; border-top: none;">
+                        <h3 style="color: #f59e0b;">DOES</h3>
+                        <ul>
+                            <li>Travels to wholesale markets to buy new boxes in bulk</li>
+                            <li>Stores excess box inventory, tying up working capital</li>
+                            <li>Reuses boxes until they completely break apart</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="background: #fef2f2; border-left: 4px solid #ef4444; border-top: none;">
+                        <h3 style="color: #ef4444;">FEELS</h3>
+                        <ul>
+                            <li>Stressed about rising wholesale supplier rates</li>
+                            <li>Helpless regarding dependency on raw paper prices</li>
+                            <li>Pragmatic — happy to use branded boxes if they lower costs</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert-box" style="margin-top: 30px; background: #ecfdf5; border-color: var(--primary);">
+                    <h4 style="color: var(--primary-dark); margin:0;">Core Need:</h4>
+                    <p style="margin:0; font-weight:600;">A consistent, hyper-local, affordable supply of structurally intact boxes — brand doesn't matter, cost and reliability do.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Personas -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">User Personas</h2>
+                <p>Humanizing our target stakeholders based on collected survey data.</p>
+                <div class="grid-2">
+                    <div class="card" style="border-top-color: var(--primary);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #34d399); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; margin-right: 15px; flex-shrink:0;">P1</div>
+                            <div><h3 style="margin: 0;">"The Convenience Seeker"</h3><p style="margin: 0; font-size: 0.9rem; color: var(--text-light);">Priya, 28, IT Professional</p></div>
+                        </div>
+                        <p><strong>Goal:</strong> Get rid of accumulated e-commerce boxes without hoarding them.</p>
+                        <p><strong>Frustration:</strong> Municipal waste collectors often refuse large cardboard, leaving boxes cluttering her balcony.</p>
+                        <p><strong>Behavior:</strong> Receives 5-8 packages/month. Will walk to a basement drop-bin, but will NOT download an app.</p>
+                    </div>
+                    <div class="card" style="border-top-color: var(--accent);">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #60a5fa); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; margin-right: 15px; flex-shrink:0;">P2</div>
+                            <div><h3 style="margin: 0;">"The Pragmatic Vendor"</h3><p style="margin: 0; font-size: 0.9rem; color: var(--text-light);">Ramesh, 45, Kirana Store Owner</p></div>
+                        </div>
+                        <p><strong>Goal:</strong> Source cheap, sturdy packaging for customer deliveries and organizing inventory.</p>
+                        <p><strong>Frustration:</strong> Buying new boxes cuts into thin profit margins. Scrap dealers are unreliable on quality.</p>
+                        <p><strong>Behavior:</strong> Needs 30-50 boxes/month. Doesn't care if the box says "Amazon" — pays ₹3-₹5/box.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slide: POV Statements -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">3. Point of View (POV) Statements</h2>
+                
+                <div class="card" style="margin-bottom: 30px;">
+                    <h3>Shopper POV</h3>
+                    <p>Urban apartment residents who shop online frequently <strong>NEED</strong> a zero-friction way to dispose of their accumulating e-commerce packaging <strong>BECAUSE</strong> space constraints force rapid disposal, while eco-guilt makes them wish for a better option than the garbage bin.</p>
+                </div>
+                
+                <div class="card" style="border-top-color: var(--accent);">
+                    <h3>Vendor POV</h3>
+                    <p>Local kirana store owners and small vendors <strong>NEED</strong> a consistent, hyper-local supply of affordable corrugated boxes <strong>BECAUSE</strong> purchasing new packaging at ₹20–35/box is consuming 10–15% of their already thin margins, and the current scrap ecosystem channels all used boxes to pulp factories instead of back to vendors who could reuse them.</p>
+                </div>
+                
+                <div class="badge" style="background: #f1f5f9; color: var(--text-light); border: 1px solid #cbd5e1; display: block; text-align: center; margin-top: 20px;">
+                    Format: [USER] needs [NEED] because [INSIGHT]
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Root Cause Analysis (5 Whys)</h2>
+                <p><strong>Problem:</strong> Perfectly good e-commerce boxes are destroyed while nearby vendors pay premium for new ones.</p>
+                
+                <table>
+                    <tr><th style="width: 10%;">#</th><th style="width: 35%;">WHY?</th><th>ANSWER (Evidence-Based)</th></tr>
+                    <tr><td><strong>1</strong></td><td>Why do good boxes end up in landfills?</td><td>Because residents throw them in dry waste bins.</td></tr>
+                    <tr><td><strong>2</strong></td><td>Why do residents throw them away?</td><td>Because they lack space AND have no easy alternative (80% of shoppers confirmed).</td></tr>
+                    <tr><td><strong>3</strong></td><td>Why is there no easy alternative?</td><td>Because kabadiwala visits are irregular, and no local collection system exists.</td></tr>
+                    <tr><td><strong>4</strong></td><td>Why doesn't the kabadiwala redirect boxes to vendors?</td><td>Because he sells by WEIGHT to pulp factories — crushing is more profitable than preserving.</td></tr>
+                    <tr><td><strong>5</strong></td><td>Why don't vendors collect directly from apartments?</td><td>Because NO organized system connects box-generators (residents) with box-needers (vendors).</td></tr>
+                </table>
+
+                <div class="alert-box">
+                    <h4>🎯 ROOT CAUSE:</h4>
+                    <p style="margin:0; font-weight: 500;">The scrap ecosystem is optimized for <strong>RECYCLING</strong> (destroy → pulp → new box), not <strong>REUSE</strong> (redirect intact box). There is zero infrastructure connecting apartment residents with local vendors at the neighborhood level.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Fishbone Diagram Categories</h2>
+                <p><strong>PROBLEM:</strong> E-commerce boxes are destroyed instead of reused locally.</p>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>🧑‍🤝‍🧑 PEOPLE</h3>
+                        <ul>
+                            <li>Residents prioritize convenience over eco-guilt</li>
+                            <li>Vendors don't know apartments generate box surplus</li>
+                            <li>Kabadiwala is incentivized to destroy, not preserve</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>⚙️ PROCESS</h3>
+                        <ul>
+                            <li>No organized collection mechanism at apartment level</li>
+                            <li>Scrap pipeline is linear, not circular (Consumer → Kabadiwala → Pulp Factory)</li>
+                            <li>Municipal waste mixes cardboard with other waste</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>💰 ECONOMICS</h3>
+                        <ul>
+                            <li>Scrap value: ₹3/box vs. Reuse value: ₹20–35/box</li>
+                            <li>Kabadiwala earns more from weight-based selling</li>
+                            <li>Vendors can't compete with factory bulk-buying prices</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>🏗️ INFRASTRUCTURE</h3>
+                        <ul>
+                            <li>No collection bins for reusable boxes in apartments</li>
+                            <li>No matchmaking platform between supply and demand</li>
+                            <li>No tracking/quality assurance system for reused boxes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Problem Definition</h2>
+                <div class="grid-2">
+                    <div>
+                        <p><strong>The Macro Problem:</strong><br>India ships ~15 million e-commerce parcels per day. These structurally perfect boxes enter a broken pipeline: consumer → kabadiwala → pulp factory → DESTROYED. Meanwhile, 12–15 million local vendors pay ₹20–35 per NEW box.</p>
+                        
+                        <div class="alert-box" style="background: #eff6ff; border-color: var(--accent);">
+                            <h4 style="color: var(--accent);">Key Insight: REUSE ≠ RECYCLING</h4>
+                            <ul style="margin: 0; font-size: 1.1rem;">
+                                <li>Current system RECYCLES (destroys)</li>
+                                <li>ReBox proposes REUSE (redirects intact)</li>
+                                <li>A box can be reused 5–7 times</li>
+                                <li>Each reuse avoids manufacturing carbon</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" style="padding: 20px;">
+                            <h3 style="font-size: 1.2rem; margin-bottom: 10px;">The Value Gap</h3>
+                            <table>
+                                <tr><td>Scrap value of 1 used box</td><td><span class="highlight">₹2–4.50</span></td></tr>
+                                <tr><td>Cost of 1 new box for vendor</td><td><span class="highlight">₹20–35</span></td></tr>
+                                <tr style="background: #f0fdf4;"><td><strong>Price gap (Opportunity)</strong></td><td><strong style="color: var(--primary-dark);">₹15–30 / box</strong></td></tr>
+                                <tr><td>Vendor Savings Potential</td><td><span class="highlight">80–100%</span></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">How Might We (HMW) Statement</h2>
+                
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 40px; border-radius: 20px; color: white; margin: 40px 0; text-align: center; box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);">
+                    <h1 style="font-size: 2.5rem; line-height: 1.4; color: white;">"How Might We intercept structurally intact e-commerce boxes at the apartment level and redirect them to local vendors who need them — making disposal effortless for residents and supply reliable for shopkeepers?"</h1>
+                </div>
+                
+                <div class="card">
+                    <h3>Why this HMW works:</h3>
+                    <ul>
+                        <li>✅ <strong>Solution-agnostic:</strong> Doesn't prescribe app, QR, or specific tech</li>
+                        <li>✅ <strong>Dual-sided:</strong> Addresses both stakeholder groups</li>
+                        <li>✅ <strong>Grounded:</strong> Focuses on the key insight (reuse > recycling)</li>
+                        <li>✅ <strong>Data-driven:</strong> Derived from 50+ primary research data points</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">4. Insights Summary & Justification</h2>
+                
+                <table>
+                    <tr><th>#</th><th>Insight</th><th>Evidence Source</th><th>Data Point</th></tr>
+                    <tr><td>1</td><td><strong>Space stress drives disposal</strong></td><td>25+ shopper surveys</td><td>80%+ cited clutter as #1 reason</td></tr>
+                    <tr><td>2</td><td><strong>Convenience wins over eco-guilt</strong></td><td>In-depth interviews</td><td>"I prioritize clean house over guilt"</td></tr>
+                    <tr><td>3</td><td><strong>Vendors are desperate for cheap boxes</strong></td><td>25+ shopkeeper surveys</td><td>₹500 to ₹5,000+/month on packaging</td></tr>
+                    <tr><td>4</td><td><strong>Brand logos are NOT a barrier</strong></td><td>Shopkeeper surveys (Q7)</td><td>96% said "no problem" or "okay"</td></tr>
+                    <tr><td>5</td><td><strong>Scrap ecosystem destroys reuse value</strong></td><td>Secondary research + audio</td><td>₹3 scrap vs ₹25 reuse value per box</td></tr>
+                    <tr><td>6</td><td><strong>No competitor does consumer-to-vendor</strong></td><td>Market analysis</td><td>Recykal, Saahas send to recycling</td></tr>
+                    <tr><td>7</td><td><strong>EPR regulations create tailwind</strong></td><td>MoEF&CC (April 2026)</td><td>Paper packaging EPR now effective</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 17 -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">The Supply-Demand Match</h2>
+                <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);">
+                    <table style="margin: 0; box-shadow: none;">
+                        <tr style="background: #f1f5f9;">
+                            <th style="background: #f1f5f9; color: var(--secondary);">Dimension</th>
+                            <th style="background: var(--accent); color: white;">Online Shoppers (SUPPLY)</th>
+                            <th style="background: var(--primary); color: white;">Shopkeepers (DEMAND)</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Core Pain</strong></td>
+                            <td>Clutter & Eco-Guilt</td>
+                            <td>High packaging costs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Need</strong></td>
+                            <td>Frictionless, nearby disposal</td>
+                            <td>Cheap, sturdy boxes on demand</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Motivation</strong></td>
+                            <td>Rewards, convenience</td>
+                            <td>Profit margin protection</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Current Behavior</strong></td>
+                            <td>Throws in dry waste / hoards</td>
+                            <td>Buys expensive new boxes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Barrier</strong></td>
+                            <td>"Too much effort" / no option</td>
+                            <td>No organized local supply</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <div class="badge" style="font-size: 1.5rem; padding: 15px 30px; background: var(--secondary);">
+                        <strong>The Connection:</strong> ReBox sits at the intersection — solving BOTH pains simultaneously.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Data Inventory -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2 class="slide-title">Research Data Inventory</h2>
+                
+                <div style="display: flex; gap: 30px; margin-bottom: 30px; text-align: center;">
+                    <div class="card" style="flex:1; text-align: center; padding: 20px;">
+                        <div class="stat-big">60+</div>
+                        <div class="stat-label">Total Surveys</div>
+                    </div>
+                    <div class="card" style="flex:1; text-align: center; padding: 20px;">
+                        <div class="stat-big">22</div>
+                        <div class="stat-label">Audio Recordings</div>
+                    </div>
+                    <div class="card" style="flex:1; text-align: center; padding: 20px;">
+                        <div class="stat-big">30+</div>
+                        <div class="stat-label">Vendor Locations</div>
+                    </div>
+                    <div class="card" style="flex:1; text-align: center; padding: 20px;">
+                        <div class="stat-big">20+</div>
+                        <div class="stat-label">Field Photos</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <table style="margin: 0; box-shadow: none;">
+                        <tr><th>Data Type</th><th>Count</th><th>Status</th></tr>
+                        <tr><td>Online Shopper Questionnaires</td><td>30+ filled</td><td><span style="color: var(--primary); font-weight: bold;">✓ Complete</span></td></tr>
+                        <tr><td>Shopkeeper Bilingual Surveys</td><td>30+ filled</td><td><span style="color: var(--primary); font-weight: bold;">✓ Complete</span></td></tr>
+                        <tr><td>Audio Recordings (WhatsApp/Phone)</td><td>22 files</td><td><span style="color: var(--primary); font-weight: bold;">✓ Archived</span></td></tr>
+                        <tr><td>Field Visit Photographs</td><td>20+ photos</td><td><span style="color: var(--primary); font-weight: bold;">✓ Documented</span></td></tr>
+                        <tr><td>Vendor Locations Visited</td><td>30+ locations</td><td><span style="color: var(--primary); font-weight: bold;">✓ Complete</span></td></tr>
+                        <tr><td>Mentoring Session Reports</td><td>3 sessions</td><td><span style="color: var(--primary); font-weight: bold;">✓ Filed</span></td></tr>
+                    </table>
+                    <p style="margin-top: 20px; color: var(--text-light); text-align: center;"><strong>All raw data available for verification.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19 -->
+        <div class="slide title-slide">
+            <div class="slide-inner" style="align-items: center;">
+                <h1 style="font-size: 5rem;">Thank You</h1>
+                <div class="subtitle" style="color: white; margin-bottom: 20px;"><strong>ReBox</strong> — Towards a Circular Economy for E-Commerce Packaging</div>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; display: inline-block; text-align: left; margin-top: 30px;">
+                    <p style="color: white; margin-bottom: 10px;"><strong>Team:</strong> Hari Charan V | Anjali Kumari | Supriya</p>
+                    <p style="color: white; margin-bottom: 10px;"><strong>Mentor:</strong> Prof. Chandrani Chakravorty</p>
+                    <p style="color: #cbd5e1; margin-bottom: 5px;">Course: MCA427DL Design Thinking Lab</p>
+                    <p style="color: #cbd5e1; margin-bottom: 0;">R.V. College of Engineering, Bengaluru — 2026</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        let slides = [];
+        let isPPTMode = false;
+
+        function initPPT() {
+            slides = Array.from(document.querySelectorAll('.slide'));
+            document.getElementById('total-slide-num').innerText = slides.length;
+        }
+
+        function startPPTMode() {
+            if(slides.length === 0) initPPT();
+            isPPTMode = true;
+            document.body.classList.add('ppt-mode');
+            
+            // Enter fullscreen
+            try {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            } catch(e) { console.log("Fullscreen blocked", e); }
+            
+            showSlide(0);
+        }
+
+        function stopPPTMode() {
+            isPPTMode = false;
+            document.body.classList.remove('ppt-mode');
+            
+            // Exit fullscreen
+            if (document.fullscreenElement && document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            
+            // Restore all slides to natural flow
+            slides.forEach(s => {
+                s.style.display = '';
+                s.style.position = '';
+                s.style.transform = '';
+                s.style.top = '';
+                s.style.left = '';
+                s.style.right = '';
+                s.style.bottom = '';
+                s.style.margin = '';
+            });
+            
+            // Scroll to the slide we were looking at
+            slides[currentSlideIndex].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showSlide(index) {
+            if (!isPPTMode) return;
+            if (index < 0) index = 0;
+            if (index >= slides.length) index = slides.length - 1;
+            
+            currentSlideIndex = index;
+            document.getElementById('current-slide-num').innerText = currentSlideIndex + 1;
+            
+            slides.forEach((s, i) => {
+                if (i === currentSlideIndex) {
+                    s.style.display = 'flex';
+                    s.style.position = 'fixed';
+                    s.style.top = '0';
+                    s.style.left = '0';
+                    s.style.right = '0';
+                    s.style.bottom = '0';
+                    s.style.margin = 'auto';
+                    
+                    // Calculate scale to fit screen, allowing 5% padding
+                    const scaleX = window.innerWidth / 1024;
+                    const scaleY = window.innerHeight / 768;
+                    const scale = Math.min(scaleX, scaleY) * 0.95;
+                    
+                    s.style.transform = `scale(${scale})`;
+                    s.style.transformOrigin = 'center center';
+                } else {
+                    s.style.display = 'none';
+                    s.style.transform = '';
+                }
+            });
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+
+        // Keyboard controls
+        window.addEventListener('keydown', (e) => {
+            if (!isPPTMode) return;
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Escape') {
+                stopPPTMode();
+            }
+        });
+
+        // Mouse click to advance (only if clicking the background/card, not buttons)
+        document.addEventListener('click', (e) => {
+            if (!isPPTMode) return;
+            if (e.target.closest('.ppt-controls')) return; 
+            nextSlide();
+        });
+
+        // Resize handler to recalculate scale
+        window.addEventListener('resize', () => {
+            if (isPPTMode) showSlide(currentSlideIndex);
+        });
+        
+        // Listen for fullscreen exit from browser UI
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && isPPTMode) {
+                stopPPTMode();
+            }
+        });
+    </script>
+</body>
+</html>

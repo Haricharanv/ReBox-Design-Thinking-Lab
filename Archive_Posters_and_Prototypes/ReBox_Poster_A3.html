@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Design Thinking Poster | MCA427DL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A3 landscape;
+            margin: 0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            width: 420mm;
+            height: 297mm;
+            overflow: hidden;
+            background: #ffffff;
+            color: #1a1a2e;
+            position: relative;
+        }
+
+        /* ─── HEADER BAR ─── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 6mm 8mm;
+            height: 30mm;
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 5mm;
+        }
+
+        .rvce-logo {
+            width: 18mm;
+            height: 18mm;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .rvce-logo img {
+            width: 17mm;
+            height: 17mm;
+            object-fit: contain;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-text .college-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 9pt;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            color: #cbd5e1;
+        }
+
+        .header-text .dept-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11pt;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .header-text .course-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 8pt;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .header-center {
+            text-align: center;
+            flex: 1;
+        }
+
+        .project-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22pt;
+            font-weight: 800;
+            background: linear-gradient(135deg, #34d399, #a7f3d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .project-subtitle {
+            font-size: 8.5pt;
+            color: #94a3b8;
+            margin-top: 1mm;
+            font-weight: 400;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 4mm;
+            flex-shrink: 0;
+        }
+
+        .sdg-badge {
+            background: linear-gradient(135deg, #bf8b2e 0%, #d4a03c 100%);
+            color: #ffffff;
+            padding: 2mm 4mm;
+            border-radius: 3mm;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .sdg-badge .sdg-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14pt;
+            display: block;
+        }
+
+        .sdg-badge .sdg-text {
+            font-size: 5.5pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── MAIN CONTENT AREA ─── */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2.5mm;
+            padding: 2.5mm 3mm;
+            height: calc(297mm - 30mm - 16mm);
+        }
+
+        /* ─── PHASE CARD ─── */
+        .phase-card {
+            background: #f8fafc;
+            border-radius: 3mm;
+            padding: 3mm;
+            position: relative;
+            overflow: hidden;
+            border: 0.3mm solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1.5mm;
+        }
+
+        .phase-empathy::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .phase-define::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .phase-ideate::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .phase-prototype::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .phase-test::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            margin-bottom: 2mm;
+            margin-top: 1mm;
+        }
+
+        .phase-icon {
+            width: 8mm;
+            height: 8mm;
+            border-radius: 2mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12pt;
+            flex-shrink: 0;
+        }
+
+        .phase-empathy .phase-icon { background: rgba(59,130,246,0.12); }
+        .phase-define .phase-icon { background: rgba(139,92,246,0.12); }
+        .phase-ideate .phase-icon { background: rgba(245,158,11,0.12); }
+        .phase-prototype .phase-icon { background: rgba(16,185,129,0.12); }
+        .phase-test .phase-icon { background: rgba(239,68,68,0.12); }
+
+        .phase-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .phase-empathy .phase-title { color: #2563eb; }
+        .phase-define .phase-title { color: #7c3aed; }
+        .phase-ideate .phase-title { color: #d97706; }
+        .phase-prototype .phase-title { color: #059669; }
+        .phase-test .phase-title { color: #dc2626; }
+
+        .phase-body {
+            flex: 1;
+            font-size: 6.5pt;
+            line-height: 1.4;
+            color: #334155;
+            overflow: hidden;
+        }
+
+        .phase-body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 1.2mm 0 0.5mm;
+        }
+
+        .phase-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .phase-body ul {
+            margin: 0 0 1mm 3mm;
+            padding: 0;
+        }
+
+        .phase-body li {
+            margin-bottom: 0.4mm;
+        }
+
+        .phase-body .stat-row {
+            display: flex;
+            gap: 2mm;
+            margin: 1.5mm 0;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: #ffffff;
+            border: 0.3mm solid #e2e8f0;
+            border-radius: 2mm;
+            padding: 1.5mm 2mm;
+            text-align: center;
+        }
+
+        .stat-box .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12pt;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stat-box .stat-label {
+            font-size: 5.5pt;
+            color: #64748b;
+            margin-top: 0.5mm;
+        }
+
+        .phase-empathy .stat-value { color: #2563eb; }
+        .phase-define .stat-value { color: #7c3aed; }
+        .phase-ideate .stat-value { color: #d97706; }
+        .phase-prototype .stat-value { color: #059669; }
+        .phase-test .stat-value { color: #dc2626; }
+
+        .evidence-tag {
+            display: inline-block;
+            font-size: 5.5pt;
+            padding: 0.5mm 2mm;
+            border-radius: 1mm;
+            font-weight: 600;
+            margin: 0.3mm 0.3mm;
+        }
+
+        .evidence-tag.interview { background: #dbeafe; color: #1d4ed8; }
+        .evidence-tag.survey { background: #fef3c7; color: #92400e; }
+        .evidence-tag.observation { background: #dcfce7; color: #166534; }
+        .evidence-tag.photo { background: #fce7f3; color: #9d174d; }
+        .evidence-tag.technique { background: #e0e7ff; color: #3730a3; }
+        .evidence-tag.tool { background: #f0fdf4; color: #15803d; }
+
+        .quote-box {
+            background: #ffffff;
+            border-left: 1mm solid;
+            padding: 1.5mm 2.5mm;
+            margin: 1.5mm 0;
+            font-style: italic;
+            font-size: 6.5pt;
+            border-radius: 0 1.5mm 1.5mm 0;
+        }
+
+        .phase-empathy .quote-box { border-color: #3b82f6; }
+        .phase-define .quote-box { border-color: #8b5cf6; }
+
+        .hmw-box {
+            background: linear-gradient(135deg, #fefce8, #fef9c3);
+            border: 0.3mm solid #fde68a;
+            border-radius: 2mm;
+            padding: 2mm 3mm;
+            font-weight: 600;
+            font-size: 6.8pt;
+            color: #92400e;
+            margin: 1.5mm 0;
+            line-height: 1.4;
+        }
+
+        .solution-flow {
+            display: flex;
+            align-items: center;
+            gap: 1mm;
+            margin: 1.5mm 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: #ffffff;
+            border: 0.3mm solid #d1d5db;
+            border-radius: 1.5mm;
+            padding: 1mm 2mm;
+            font-size: 6pt;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            min-width: 18mm;
+        }
+
+        .flow-step .flow-icon {
+            font-size: 10pt;
+            display: block;
+            margin-bottom: 0.5mm;
+        }
+
+        .flow-arrow {
+            font-size: 8pt;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .cycle-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 6pt;
+            margin: 1mm 0;
+        }
+
+        .cycle-table th {
+            background: #0f172a;
+            color: #ffffff;
+            padding: 1mm 1.5mm;
+            text-align: center;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            font-size: 6pt;
+        }
+
+        .cycle-table td {
+            padding: 0.8mm 1.5mm;
+            border-bottom: 0.2mm solid #e2e8f0;
+            text-align: center;
+            font-size: 5.8pt;
+        }
+
+        .cycle-table tr:nth-child(even) td {
+            background: #f1f5f9;
+        }
+
+        /* Integrity bar */
+        .integrity-bar {
+            width: 100%;
+            height: 2mm;
+            background: #e2e8f0;
+            border-radius: 1mm;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .integrity-fill {
+            height: 100%;
+            border-radius: 1mm;
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .mini-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 1mm;
+            height: 14mm;
+            margin: 1mm 0;
+        }
+
+        .mini-bar {
+            flex: 1;
+            border-radius: 1mm 1mm 0 0;
+            min-width: 3mm;
+            position: relative;
+        }
+
+        .mini-bar-label {
+            font-size: 4.5pt;
+            text-align: center;
+            position: absolute;
+            bottom: -3mm;
+            left: 0;
+            right: 0;
+            color: #64748b;
+        }
+
+        .mini-bar-value {
+            font-size: 4.5pt;
+            text-align: center;
+            position: absolute;
+            top: -3mm;
+            left: 0;
+            right: 0;
+            font-weight: 700;
+        }
+
+        /* Center card spans full width for prototype */
+        .phase-center-wide {
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 2mm 10mm;
+            height: 16mm;
+            font-size: 7.5pt;
+        }
+
+        .footer-left {
+            display: flex;
+            gap: 8mm;
+        }
+
+        .footer-member {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-member .name {
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            font-size: 7.5pt;
+        }
+
+        .footer-member .usn {
+            font-size: 6.5pt;
+            color: #94a3b8;
+        }
+
+        .footer-center {
+            text-align: center;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-right .mentor-label {
+            font-size: 6pt;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-right .mentor-name {
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .green { color: #059669; }
+        .blue { color: #2563eb; }
+        .amber { color: #d97706; }
+        .red { color: #dc2626; }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1mm;
+            margin: 1mm 0;
+        }
+
+        .layer-box {
+            background: #ffffff;
+            border-radius: 2mm;
+            border: 0.3mm solid #d1d5db;
+            padding: 1.5mm 2.5mm;
+            margin: 1mm 0;
+        }
+
+        .layer-box .layer-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 7pt;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 0.5mm;
+        }
+
+        .layer-box p {
+            font-size: 6.2pt;
+            line-height: 1.35;
+            color: #475569;
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header class="header">
+        <div class="header-left">
+            <div class="rvce-logo">
+                <img src="assets/rvce_logo.png" alt="RVCE Logo">
+            </div>
+            <div class="header-text">
+                <div class="college-name">RV College of Engineering®, Bengaluru</div>
+                <div class="dept-name">Department of Master of Computer Applications</div>
+                <div class="course-name">Design Thinking Lab — MCA427DL • 2025-26</div>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <div class="project-title">ReBox</div>
+            <div class="project-subtitle">A Circular Economy Network for E-Commerce Packaging Reuse</div>
+        </div>
+
+        <div class="header-right">
+            <div class="sdg-badge">
+                <span class="sdg-text">SDG</span>
+                <span class="sdg-num">12</span>
+                <span class="sdg-text">Responsible<br>Consumption<br>& Production</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════ MAIN CONTENT: 5 DT PHASES ═══════════ -->
+    <main class="content">
+
+        <!-- ─── EMPATHY ─── -->
+        <div class="phase-card phase-empathy">
+            <div class="phase-header">
+                <div class="phase-icon">🔍</div>
+                <div class="phase-title">Empathy</div>
+            </div>
+            <div class="phase-body">
+                <div class="tag-row">
+                    <span class="evidence-tag interview">6 Interviews</span>
+                    <span class="evidence-tag survey">41 Survey Responses</span>
+                    <span class="evidence-tag observation">Field Visits</span>
+                    <span class="evidence-tag photo">Interaction Photos</span>
+                </div>
+
+                <h4>Key Research Findings</h4>
+                <ul>
+                    <li><span class="highlight">65%</span> of shoppers default to municipal dry waste — no reuse channel exists</li>
+                    <li><span class="highlight">50%</span> hoard boxes at home until forced pile-up disposal</li>
+                    <li>Vendors spend <span class="highlight">₹3,000–5,000/month</span> on new corrugated boxes</li>
+                    <li><span class="highlight">83.9%</span> of vendors are willing to accept second-hand boxes</li>
+                    <li><span class="highlight">96%</span> of vendors don't care about e-commerce logos</li>
+                </ul>
+
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <div class="stat-value">31</div>
+                        <div class="stat-label">Vendors Surveyed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">Shoppers Interviewed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">20+</div>
+                        <div class="stat-label">Localities Covered</div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    "A box is a box. My customer doesn't look at who sent it. They just want something to carry groceries in." — <strong>Ramesh, Kirana Store Owner</strong>
+                </div>
+
+                <h4>User Personas Identified</h4>
+                <ul>
+                    <li><strong>Priya, 28 (Shopper):</strong> IT professional, 5-8 packages/month, eco-guilt but space-constrained</li>
+                    <li><strong>Ramesh, 45 (Vendor):</strong> Kirana owner, needs 30-50 boxes/month, brand-neutral</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ─── DEFINE ─── -->
+        <div class="phase-card phase-define">
+            <div class="phase-header">
+                <div class="phase-icon">🎯</div>
+                <div class="phase-title">Define</div>
+            </div>
+            <div class="phase-body">
+                <div class="tag-row">
+                    <span class="evidence-tag technique">POV Statements</span>
+                    <span class="evidence-tag technique">Empathy Map</span>
+                    <span class="evidence-tag technique">Journey Map</span>
+                    <span class="evidence-tag technique">5 Whys</span>
+                </div>
+
+                <h4>Problem Statement</h4>
+                <p>Structurally intact e-commerce boxes are destroyed daily while nearby vendors pay premium for new ones — because <strong>zero infrastructure</strong> connects box-generators with box-needers at the neighbourhood level.</p>
+
+                <h4>Root Cause (5 Whys)</h4>
+                <ul>
+                    <li>Boxes end up in landfills → Residents throw them in dry waste (65%)</li>
+                    <li>No easy alternative → Kabadiwala visits are irregular</li>
+                    <li>Kabadiwala sells by weight → Crushing is more profitable than reuse</li>
+                    <li><span class="highlight red">ROOT:</span> Scrap ecosystem is optimized for <em>recycling (destroy)</em>, not <em>reuse (redirect intact)</em></li>
+                </ul>
+
+                <h4>Empathy Map Highlights</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5mm; margin: 1mm 0;">
+                    <div class="stat-box" style="text-align:left;">
+                        <div style="font-weight:700; font-size:6.5pt; color:#7c3aed;">SAYS</div>
+                        <div style="font-size:5.8pt;">"These boxes take up too much space"</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left;">
+                        <div style="font-weight:700; font-size:6.5pt; color:#7c3aed;">THINKS</div>
+                        <div style="font-size:5.8pt;">"Someone must need these boxes"</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left;">
+                        <div style="font-weight:700; font-size:6.5pt; color:#7c3aed;">DOES</div>
+                        <div style="font-size:5.8pt;">Hoards boxes, then dumps in dry waste</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left;">
+                        <div style="font-weight:700; font-size:6.5pt; color:#7c3aed;">FEELS</div>
+                        <div style="font-size:5.8pt;">Eco-guilt, frustrated by clutter</div>
+                    </div>
+                </div>
+
+                <h4>Pain Point Summary</h4>
+                <ul>
+                    <li><strong>Shoppers:</strong> Space constraints → eco-guilt → forced disposal</li>
+                    <li><strong>Vendors:</strong> ₹20-35/box cost → travel to wholesale → capital lock-up</li>
+                    <li><strong>Gap:</strong> ₹20 price gap between scrap (₹3) and new box (₹25) with no bridge</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ─── PROTOTYPE (Center, spanning 2 rows) ─── -->
+        <div class="phase-card phase-prototype phase-center-wide">
+            <div class="phase-header">
+                <div class="phase-icon">🛠️</div>
+                <div class="phase-title">Prototype</div>
+            </div>
+            <div class="phase-body">
+                <div class="tag-row">
+                    <span class="evidence-tag tool">Interactive Simulator</span>
+                    <span class="evidence-tag tool">WhatsApp Bot</span>
+                    <span class="evidence-tag tool">App Mockup</span>
+                    <span class="evidence-tag technique">Layered Architecture</span>
+                </div>
+
+                <h4>The Layered Circular Solution</h4>
+
+                <div class="layer-box">
+                    <div class="layer-label">Layer 1 — Physical Green Bin 📦</div>
+                    <p>Designated cardboard-only bin in apartment basements. Zero-friction entry point. Poster guides residents to flatten & drop. Serves tech-averse users like Swarna, 45.</p>
+                </div>
+
+                <div class="layer-box">
+                    <div class="layer-label">Layer 2 — WhatsApp Bot + QR 💬</div>
+                    <p>QR code on bin opens WhatsApp chat. Resident logs drop-off, gets impact score. Bot broadcasts "10 medium boxes ready" to nearby registered vendors. Guard verifies pickup.</p>
+                </div>
+
+                <div class="layer-box">
+                    <div class="layer-label">Layer 3 — Dashboard (Future) 📊</div>
+                    <p>Vendor portal to broadcast box needs. Admin dashboard for diversion analytics. Carbon offset tracking for residents. Planned for Phase 2 scaling.</p>
+                </div>
+
+                <h4>Circular Flow: Box Journey</h4>
+                <div class="solution-flow">
+                    <div class="flow-step">
+                        <span class="flow-icon">📦</span>
+                        Parcel<br>Arrives
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <span class="flow-icon">♻️</span>
+                        Flatten<br>& Drop
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <span class="flow-icon">📱</span>
+                        QR Scan<br>& Log
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <span class="flow-icon">🔔</span>
+                        Vendor<br>Alert
+                    </div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">
+                        <span class="flow-icon">✅</span>
+                        Pickup &<br>Reuse
+                    </div>
+                </div>
+
+                <h4>7-Cycle Box Lifecycle Simulator</h4>
+                <p style="margin-bottom:1mm;">Research confirms corrugated boxes survive <strong>5–7 reuse cycles</strong>. Our interactive simulator demonstrates progressive degradation and cumulative eco-savings:</p>
+                
+                <table class="cycle-table">
+                    <thead>
+                        <tr>
+                            <th>Cycle</th>
+                            <th>Condition</th>
+                            <th>Integrity</th>
+                            <th>CO₂ Saved</th>
+                            <th>Water Saved</th>
+                            <th>₹ Saved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Like New</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:100%"></div></div></td><td>0.72 kg</td><td>37 L</td><td>₹20</td></tr>
+                        <tr><td>2</td><td>Excellent</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:95%"></div></div></td><td>1.44 kg</td><td>74 L</td><td>₹40</td></tr>
+                        <tr><td>3</td><td>Good</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:87%"></div></div></td><td>2.16 kg</td><td>111 L</td><td>₹60</td></tr>
+                        <tr><td>4</td><td>Fair</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:76%"></div></div></td><td>2.88 kg</td><td>148 L</td><td>₹80</td></tr>
+                        <tr><td>5</td><td>Worn</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:62%"></div></div></td><td>3.60 kg</td><td>185 L</td><td>₹100</td></tr>
+                        <tr><td>6</td><td>Fragile</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:45%"></div></div></td><td>4.32 kg</td><td>222 L</td><td>₹120</td></tr>
+                        <tr><td>7</td><td>End of Life</td><td><div class="integrity-bar"><div class="integrity-fill" style="width:25%"></div></div></td><td>5.04 kg</td><td>259 L</td><td>₹140</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="stat-row" style="margin-top:2mm;">
+                    <div class="stat-box">
+                        <div class="stat-value">5.04 kg</div>
+                        <div class="stat-label">CO₂ Saved / Box (7 cycles)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">259 L</div>
+                        <div class="stat-label">Water Saved / Box</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">₹140</div>
+                        <div class="stat-label">Vendor Savings / Box</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">₹48K</div>
+                        <div class="stat-label">Annual Savings / Vendor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── IDEATE ─── -->
+        <div class="phase-card phase-ideate">
+            <div class="phase-header">
+                <div class="phase-icon">💡</div>
+                <div class="phase-title">Ideate</div>
+            </div>
+            <div class="phase-body">
+                <div class="tag-row">
+                    <span class="evidence-tag technique">Brainstorming</span>
+                    <span class="evidence-tag technique">Mind Map</span>
+                    <span class="evidence-tag technique">Affinity Diagram</span>
+                    <span class="evidence-tag technique">Selection Matrix</span>
+                </div>
+
+                <div class="hmw-box">
+                    <strong>HMW:</strong> "How might we intercept structurally intact e-commerce boxes at the apartment level and redirect them to local vendors who need them?"
+                </div>
+
+                <h4>3-Tier Brainstorming</h4>
+                <ul>
+                    <li><strong>Low-Tech:</strong> Physical Green Bins, signage, WhatsApp groups</li>
+                    <li><strong>Mid-Tech:</strong> QR-enabled bins, WhatsApp Bot, SMS broadcasts</li>
+                    <li><strong>High-Tech:</strong> Dedicated app, vendor portal, admin dashboard</li>
+                </ul>
+
+                <h4>Concept Selection Matrix</h4>
+                <table class="cycle-table">
+                    <thead>
+                        <tr>
+                            <th>Solution</th>
+                            <th>Desir.</th>
+                            <th>Feasib.</th>
+                            <th>Viab.</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="text-align:left">Physical Bins</td><td>4</td><td>5</td><td>3</td><td>12/15</td></tr>
+                        <tr style="background:#dcfce7 !important;"><td style="text-align:left;font-weight:700;">WhatsApp Bot + QR</td><td><strong>5</strong></td><td><strong>4</strong></td><td><strong>5</strong></td><td><strong>14/15</strong></td></tr>
+                        <tr><td style="text-align:left">Mobile App</td><td>2</td><td>2</td><td>3</td><td>7/15</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Selected: Layered Circular System</h4>
+                <p>Rather than picking one tier, we combine all three into a <strong>layered architecture</strong> — ensuring accessibility for all tech literacies, from app-averse seniors to app-native youth.</p>
+
+                <h4>Affinity Clusters</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1mm; margin-top:1mm;">
+                    <div class="stat-box" style="text-align:left; padding:1.5mm;">
+                        <div style="font-weight:700; font-size:6pt; color:#d97706;">💰 ECONOMIC</div>
+                        <div style="font-size:5.5pt;">₹500-5,000+/mo on boxes<br>Scrap ₹3 vs New ₹25</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left; padding:1.5mm;">
+                        <div style="font-weight:700; font-size:6pt; color:#d97706;">🧠 BEHAVIORAL</div>
+                        <div style="font-size:5.5pt;">65% → dry waste<br>Convenience > Eco-guilt</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left; padding:1.5mm;">
+                        <div style="font-weight:700; font-size:6pt; color:#d97706;">✅ WILLINGNESS</div>
+                        <div style="font-size:5.5pt;">83.9% vendors willing<br>96% brand-neutral</div>
+                    </div>
+                    <div class="stat-box" style="text-align:left; padding:1.5mm;">
+                        <div style="font-weight:700; font-size:6pt; color:#d97706;">📦 QUALITY</div>
+                        <div style="font-size:5.5pt;">Reject: wet, smelly, torn<br>1-2 km pickup radius</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── TEST ─── -->
+        <div class="phase-card phase-test">
+            <div class="phase-header">
+                <div class="phase-icon">✅</div>
+                <div class="phase-title">Test</div>
+            </div>
+            <div class="phase-body">
+                <div class="tag-row">
+                    <span class="evidence-tag technique">Pilot Plan</span>
+                    <span class="evidence-tag survey">User Feedback</span>
+                    <span class="evidence-tag observation">Field Trials</span>
+                </div>
+
+                <h4>2-Week Pilot Plan</h4>
+                <p><strong>Location:</strong> Bellandur Green Society (200 apartments) + 5 nearby vendors</p>
+
+                <h4>Key Pilot Metrics & Targets</h4>
+                <table class="cycle-table">
+                    <thead>
+                        <tr><th>Metric</th><th>Target</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="text-align:left">Divert Rate (% boxes to Green Bin)</td><td>≥ 40%</td></tr>
+                        <tr><td style="text-align:left">Vendor Cost Reduction</td><td>≥ 30%</td></tr>
+                        <tr><td style="text-align:left">WhatsApp Bot Log Rate</td><td>≥ 50%</td></tr>
+                        <tr><td style="text-align:left">Box Quality Acceptance</td><td>≥ 85%</td></tr>
+                        <tr><td style="text-align:left">Repeat Users</td><td>≥ 25%</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Feedback Loops</h4>
+                <ul>
+                    <li><strong>Resident:</strong> Post-drop WhatsApp micro-survey (3 questions)</li>
+                    <li><strong>Vendor:</strong> In-person check-ins on cleanliness, size & cost impact</li>
+                    <li><strong>Guard:</strong> Focus group on operational burden & verification flow</li>
+                </ul>
+
+                <h4>User Feedback Highlights</h4>
+                <div class="quote-box" style="border-color:#ef4444;">
+                    "If there was a bin downstairs, I would use it." — <strong>Swarna, 45</strong>
+                </div>
+                <div class="quote-box" style="border-color:#ef4444;">
+                    "If someone brings me good boxes for ₹5, I'll take all of them." — <strong>Lakshmi, Fruit Seller</strong>
+                </div>
+
+                <h4>Projected Annual Impact (per 100 boxes/month)</h4>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <div class="stat-value" style="font-size:10pt;">6 T</div>
+                        <div class="stat-label">CO₂ Saved</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" style="font-size:10pt;">₹1.68L</div>
+                        <div class="stat-label">Vendor Savings</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" style="font-size:10pt;">29</div>
+                        <div class="stat-label">Trees Saved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="footer-member">
+                <span class="name">Hari Charan V</span>
+                <span class="usn">1RV25MC037</span>
+            </div>
+            <div class="footer-member">
+                <span class="name">Anjali Kumari</span>
+                <span class="usn">1RV25MC013</span>
+            </div>
+            <div class="footer-member">
+                <span class="name">Jajala Lakshmi Supriya</span>
+                <span class="usn">1RV25MC042</span>
+            </div>
+        </div>
+        <div class="footer-center">
+            <div style="font-family:'Outfit',sans-serif; font-size:10pt; font-weight:800; color:#34d399;">♻️ ReBox</div>
+            <div style="font-size:5.5pt; color:#64748b;">Towards a Circular Economy for E-Commerce Packaging</div>
+        </div>
+        <div class="footer-right">
+            <div class="mentor-label">Faculty Mentor</div>
+            <div class="mentor-name">Prof. Chandrani Chakravorty</div>
+            <div style="font-size:5.5pt; color:#64748b;">Dept. of MCA, RVCE Bengaluru</div>
+        </div>
+    </footer>
+
+</body>
+</html>

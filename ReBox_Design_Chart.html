@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox Design Chart (Large)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --accent: #FFC107;
+            --bg-color: #F1F8E9;
+            --card-bg: #FFFFFF;
+            --text-main: #263238;
+            --text-light: #546E7A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            /* Added to scale down view on normal screens while keeping chart dimensions */
+            zoom: 0.5; 
+        }
+
+        /* Large Chart Paper Size (A2 / 420x594mm) */
+        .poster {
+            background-color: var(--card-bg);
+            width: 420mm; /* Large Chart width */
+            min-height: 594mm; /* Large Chart height */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 8px solid var(--primary-light);
+        }
+
+        .header h1 {
+            font-size: 7rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+        }
+        
+        .header h1 span {
+            color: var(--primary-light);
+        }
+
+        .header p {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        /* Two Column Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .card {
+            background: #f9fbf9;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 40px;
+            border-left: 10px solid var(--primary);
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            font-size: 2.8rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card p, .card ul {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .card ul {
+            padding-left: 40px;
+            margin-top: 20px;
+        }
+
+        .card ul li {
+            margin-bottom: 15px;
+        }
+
+        /* Circular Journey Diagram */
+        .journey-section {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-radius: 20px;
+            padding: 60px;
+            color: white;
+            text-align: center;
+        }
+
+        .journey-section h2 {
+            margin-bottom: 50px;
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .flow-container::before {
+            content: '';
+            position: absolute;
+            top: 80px;
+            left: 100px;
+            right: 100px;
+            height: 8px;
+            background: rgba(255,255,255,0.4);
+            z-index: 1;
+        }
+
+        .step {
+            z-index: 2;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .step-icon {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4.5rem;
+            color: var(--primary-dark);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 8px solid var(--accent);
+        }
+
+        .step-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            border: 4px solid var(--primary-light);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-label {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                zoom: 1;
+            }
+            .poster {
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster">
+        
+        <!-- Header -->
+        <div class="header">
+            <h1>📦 Re<span>Box</span></h1>
+            <p>A Sustainable Circular Economy Initiative for E-commerce Packaging</p>
+        </div>
+
+        <!-- Problem & Solution -->
+        <div class="grid-2">
+            <div class="card" style="border-left-color: #d32f2f;">
+                <h3>🛑 The Problem: Linear Economy</h3>
+                <p>E-commerce relies heavily on single-use corrugated cardboard boxes. Once delivered, these boxes are immediately discarded, contributing massively to municipal solid waste and deforestation.</p>
+                <ul>
+                    <li>Millions of trees cut annually for packaging.</li>
+                    <li>High carbon footprint in manufacturing.</li>
+                    <li>End up in landfills after 1 use.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>✅ The Solution: Circular Economy</h3>
+                <p>ReBox transforms packaging into a reusable asset. By utilizing smart-tracking (QR codes) and leveraging local shopkeepers as collection hubs, we create a closed-loop system.</p>
+                <ul>
+                    <li>Boxes reused 10-20 times.</li>
+                    <li>Gamified rewards for customers.</li>
+                    <li>New revenue stream for local shopkeepers.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- System Architecture / Flow -->
+        <div class="journey-section">
+            <h2>The ReBox Ecosystem Journey</h2>
+            <div class="flow-container">
+                <div class="step">
+                    <div class="step-icon">🛒</div>
+                    <div class="step-text">1. E-Commerce Dispatch</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🚚</div>
+                    <div class="step-text">2. Customer Delivery</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🏪</div>
+                    <div class="step-text">3. Shopkeeper Drop-off</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">♻️</div>
+                    <div class="step-text">4. Collection & Reuse</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Analysis & Stakeholder Value -->
+        <div class="grid-2">
+            <div class="card">
+                <h3>👥 Value for Customers</h3>
+                <p>Customers are incentivized to participate in the circular economy rather than throwing boxes away.</p>
+                <ul>
+                    <li><strong>Eco-conscious:</strong> Feel good about reducing carbon footprint.</li>
+                    <li><strong>Incentives:</strong> Earn "ReBox Coins" via the app.</li>
+                    <li><strong>Convenience:</strong> Drop-off points are nearby.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🏪 Value for Shopkeepers</h3>
+                <p>Local shops act as the critical nodes (micro-hubs) of the network.</p>
+                <ul>
+                    <li><strong>Extra Income:</strong> Paid a small fee for every box collected and stored.</li>
+                    <li><strong>Footfall:</strong> Customers drop a box, buy groceries.</li>
+                    <li><strong>Space efficiency:</strong> Smart folding design.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Survey Insights / Data -->
+        <div class="card" style="border-left-color: var(--accent);">
+            <h3>📊 Market Survey Insights (Synthesis Data)</h3>
+            <div class="stats-container" style="margin-top: 30px;">
+                <div class="stat-box">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Customers willing to return boxes</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3x</div>
+                    <div class="stat-label">Increase in shopkeeper footfall</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">Reduction in packaging waste</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Primary Data Analysis & Insights Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            background: var(--white);
+            padding: 50px 60px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Typography */
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin: 30px 0 15px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        /* Insight Boxes */
+        .insight-box {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 24px 0;
+        }
+
+        .insight-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Charts Section */
+        .chart-container {
+            margin: 40px 0;
+            text-align: center;
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-caption {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .stat-card .value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Print formatting */
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; border: none; padding: 0; margin: 0; }
+            .chart-container { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Data Analysis & Insights Report</h1>
+            <p>Phase 2: Empathize & Define | ReBox Project (May 2026)</p>
+        </div>
+
+        <p>This report synthesizes the primary data collected from <strong>31 local shopkeepers</strong> and <strong>10 urban e-commerce shoppers</strong>. Our objective is to transition from raw survey counts to deep, actionable human insights regarding the financial and behavioral dimensions of corrugated box waste.</p>
+
+        <!-- SECTION 1: SHOPKEEPER FINANCIAL BURDEN -->
+        <h2>1. The Financial Burden on Local Vendors</h2>
+        <p>Local vendors (Kirana stores, fruit sellers, bakeries) form the backbone of urban neighborhoods. However, packaging costs are severely impacting their profit margins.</p>
+
+        <div class="chart-container">
+            <img src="assets/charts/chart_spend.png" alt="Shopkeeper Monthly Spend Chart">
+            <p class="chart-caption">Figure 1.1: Distribution of monthly spending on packaging across 31 surveyed vendors.</p>
+        </div>
+
+        <div class="insight-box">
+            <h4>Insight: The Invisible Tax on MSMEs</h4>
+            <p><strong>Over 77%</strong> of the surveyed shopkeepers spend more than ₹500 monthly on boxes, with <strong>45% spending between ₹2,000 and ₹5,000+</strong>. This represents a massive operational drain. For a small fruit vendor making a slim margin per kg, spending ₹25 on a single new corrugated box directly diminishes their daily take-home income.</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/charts/chart_frequency.png" alt="Shopkeeper Box Frequency Chart">
+            <p class="chart-caption">Figure 1.2: Frequency of requiring corrugated boxes for business operations.</p>
+        </div>
+
+        <p>Furthermore, <strong>84% of vendors</strong> require boxes either "every day" or "a few times a week". The demand is high and continuous, yet the supply is entirely dependent on expensive new purchases or unpredictable scrap dealers.</p>
+
+        <!-- SECTION 2: THE VALUE DISCREPANCY -->
+        <h2>2. Market Failure: The Value Discrepancy</h2>
+        <p>The core of the ReBox concept lies in identifying a massive market inefficiency between the scrap value of a box and its functional value.</p>
+
+        <div class="chart-container">
+            <img src="assets/charts/chart_impact.png" alt="Financial Impact Cost Comparison">
+            <p class="chart-caption">Figure 2.1: The economic value of a single corrugated box across different models.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="value">₹30,000+</div>
+                <div class="label">Potential Annual Savings per Vendor</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">₹20</div>
+                <div class="label">Margin Recovered Per Box</div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h4>Insight: Profitability in Reuse</h4>
+            <p>Currently, consumers sell used boxes to scrap dealers for roughly ₹3–₹5 per kg (which equates to pennies per box), destined for pulping. Meanwhile, vendors buy equivalent new boxes for ₹25. By implementing a direct C2B (Consumer-to-Business) drop-off bin system at a nominal ₹5 fee, <strong>ReBox bridges a ₹20 market gap</strong> per unit, turning environmental waste into direct financial relief for local businesses.</p>
+        </div>
+
+        <!-- SECTION 3: VENDOR ADOPTION & BRAND NEUTRALITY -->
+        <h2>3. Vendor Willingness & Brand Neutrality</h2>
+        <p>A critical assumption to test was whether vendors would accept second-hand boxes that display corporate branding (e.g., Amazon, Flipkart, Myntra logos).</p>
+
+        <div class="chart-container">
+            <img src="assets/charts/chart_willingness.png" alt="Willingness to use second-hand boxes">
+            <p class="chart-caption">Figure 3.1: Vendor willingness to utilize second-hand e-commerce packaging.</p>
+        </div>
+
+        <div class="insight-box">
+            <h4>Insight: "A Box is a Box"</h4>
+            <p>An overwhelming <strong>83.8% of shopkeepers</strong> are willing to use second-hand boxes (45.2% "definitely", 38.7% "if condition is good"). Audio interviews corroborated that end-consumers do not penalize local vendors for using Amazon-branded boxes to carry groceries. The primary deal-breakers for vendors are physical defects: <strong>wetness, bad odors, and severe tearing.</strong></p>
+        </div>
+
+
+        <!-- SECTION 4: THE SHOPPER'S DILEMMA -->
+        <h2>4. The Urban Shopper's Dilemma: Clutter vs. Guilt</h2>
+        <p>Transitioning to the supply side, we analyzed the behavior of 10 urban online shoppers living in apartments.</p>
+
+        <div class="chart-container">
+            <img src="assets/charts/chart_disposal.png" alt="Urban Shopper Box Disposal Timeframe">
+            <p class="chart-caption">Figure 4.1: Time taken by urban consumers to dispose of e-commerce boxes.</p>
+        </div>
+
+        <p>The data reveals that <strong>50% of users hoard boxes ("piling up")</strong> before ultimately throwing them out. This creates a psychological tension between wanting to act sustainably and needing to clear physical space in small urban apartments.</p>
+
+        <div class="insight-box">
+            <h4>Insight: Convenience Trumps Guilt</h4>
+            <p>While shoppers experience "eco-guilt," their ultimate disposal method defaults to municipal dry waste because the traditional recycling route (waiting for a kabadiwala) is highly inconvenient. <strong>Therefore, ReBox's primary value proposition to the consumer is not just environmental impact, but immediate space reclamation via extreme convenience (the basement drop-off bin).</strong></p>
+        </div>
+
+        <!-- CONCLUSION -->
+        <h2>5. Final Strategic Recommendations</h2>
+        <p>Based on the data synthesis, the ReBox implementation strategy must adopt the following parameters:</p>
+        <ul style="margin-left: 20px; margin-bottom: 30px;">
+            <li style="margin-bottom: 10px;"><strong>Focus on Quality Control:</strong> Since vendors reject wet or smelly boxes, the ReBox collection bins must be designed with weather-proofing and strict visual instructions to only deposit dry, intact cardboard.</li>
+            <li style="margin-bottom: 10px;"><strong>Pitch the Financials:</strong> When onboarding shopkeepers, the marketing pitch should entirely revolve around the "₹30,000+ Annual Savings," positioning ReBox as a cost-cutting tool rather than just a green initiative.</li>
+            <li style="margin-bottom: 10px;"><strong>Hyper-Local Network:</strong> To maintain the ₹5 nominal cost, logistics must be negligible. Drop-off bins in apartments must be mapped to vendors within a maximum 1–2 km radius.</li>
+        </ul>
+
+    </div>
+
+</body>
+</html>

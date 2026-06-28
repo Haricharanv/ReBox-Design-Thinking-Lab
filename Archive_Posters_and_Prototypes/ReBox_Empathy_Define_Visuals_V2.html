@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox - Vertical Funnel Layout</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Patrick+Hand&display=swap');
+
+        :root {
+            --bg-color: #f4ecd8; /* Lighter cream paper */
+            --paper-texture: url('https://www.transparenttextures.com/patterns/notebook-dark.png');
+            --ink-blue: #1e3a8a;
+            --ink-red: #b91c1c;
+            --ink-green: #047857;
+            --ink-black: #1f2937;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: var(--paper-texture);
+            font-family: 'Patrick Hand', cursive;
+            color: var(--ink-black);
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Portrait Canvas */
+        .chart-container {
+            width: 900px; /* Vertical aspect ratio */
+            min-height: 1400px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 5px solid var(--ink-blue);
+            border-radius: 2px;
+            padding: 40px;
+            box-shadow: 15px 15px 0px rgba(30, 58, 138, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h1, h2, h3 { font-family: 'Architects Daughter', cursive; margin-bottom: 15px; }
+        p, li { font-size: 1.3rem; line-height: 1.4; margin-bottom: 10px; }
+
+        /* Sections */
+        .section-header { text-align: center; border-bottom: 4px dashed var(--ink-blue); padding-bottom: 20px; }
+        .section-header h1 { font-size: 4rem; color: var(--ink-blue); transform: rotate(-1deg); }
+        .section-header h2 { font-size: 2rem; color: var(--ink-red); }
+
+        .flex-row { display: flex; gap: 20px; }
+        
+        /* Elements */
+        .card { 
+            flex: 1; 
+            border: 3px solid var(--ink-black); 
+            padding: 20px; 
+            background: #fff; 
+            box-shadow: 5px 5px 0px var(--ink-black);
+            position: relative;
+        }
+
+        .tape {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            width: 100px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid #ccc;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .stat-badge {
+            background: var(--ink-red);
+            color: white;
+            font-size: 1.8rem;
+            font-family: 'Architects Daughter';
+            padding: 10px 20px;
+            display: inline-block;
+            transform: rotate(-3deg);
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .funnel-step {
+            border: 3px solid var(--ink-blue);
+            padding: 15px;
+            background: #e0f2fe;
+            margin: 0 auto 10px auto;
+            text-align: center;
+        }
+        
+        .arrow-down { text-align: center; font-size: 2rem; color: var(--ink-red); margin-top: -10px; margin-bottom: -10px; }
+
+        .hmw-banner {
+            border: 5px solid var(--ink-green);
+            background: #d1fae5;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 8px 8px 0px var(--ink-green);
+            transform: rotate(1deg);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        
+        <div class="section-header">
+            <h1>📦 PROJECT: ReBox</h1>
+            <h2>Phase 2: Empathy & Define (The Funnel)</h2>
+            <p>Hari Charan V | Anjali | Supriya // RVCE 2026</p>
+        </div>
+
+        <div class="flex-row" style="text-align: center; justify-content: space-around;">
+            <div><div class="stat-badge">25+</div><h3>Shopper Surveys</h3></div>
+            <div><div class="stat-badge">25+</div><h3>Vendor Surveys</h3></div>
+            <div><div class="stat-badge">22</div><h3>Audio Interviews</h3></div>
+        </div>
+
+        <!-- EMPATHY MAPS -->
+        <div class="flex-row">
+            <div class="card" style="transform: rotate(-1deg);">
+                <div class="tape"></div>
+                <h2 style="color: var(--ink-blue);">🧠 Shopper Empathy</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Says:</strong><br>"Boxes take up too much space."</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Thinks:</strong><br>"I feel guilty wasting them."</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Does:</strong><br>Hoards then dumps in dry waste.</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Feels:</strong><br>Frustrated by clutter in 2BHK.</div>
+                </div>
+            </div>
+            
+            <div class="card" style="transform: rotate(1deg);">
+                <div class="tape"></div>
+                <h2 style="color: var(--ink-red);">🧠 Vendor Empathy</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Says:</strong><br>"My margins are disappearing."</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Thinks:</strong><br>"I wish I had cheap local boxes."</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Does:</strong><br>Buys new boxes for ₹25.</div>
+                    <div style="border: 2px dashed #ccc; padding: 10px;"><strong>Feels:</strong><br>Stressed about raw paper prices.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POV -->
+        <div class="flex-row">
+            <div class="card">
+                <h2>💡 POV Synthesis</h2>
+                <p><strong>Shopper POV:</strong> Needs zero-friction disposal because space constraints force rapid disposal (overriding eco-guilt).</p>
+                <hr style="border-top: 2px dashed #ccc; margin: 10px 0;">
+                <p><strong>Vendor POV:</strong> Needs hyper-local box supply because new boxes (₹25) consume 10-15% of thin margins.</p>
+            </div>
+        </div>
+
+        <!-- 5 WHYS FUNNEL -->
+        <div>
+            <h2 style="text-align: center;">⬇️ The 5 Whys Drill-Down</h2>
+            
+            <div class="funnel-step" style="width: 100%;"><strong>1. Why landfill?</strong> Residents throw in dry waste.</div>
+            <div class="arrow-down">▼</div>
+            
+            <div class="funnel-step" style="width: 90%;"><strong>2. Why throw away?</strong> No space + no easy alternative.</div>
+            <div class="arrow-down">▼</div>
+            
+            <div class="funnel-step" style="width: 80%;"><strong>3. Why no alternative?</strong> Kabadiwala visits are irregular.</div>
+            <div class="arrow-down">▼</div>
+            
+            <div class="funnel-step" style="width: 70%;"><strong>4. Why no redirection?</strong> Kabadiwala sells by weight (pulping).</div>
+            <div class="arrow-down">▼</div>
+            
+            <div class="funnel-step" style="width: 60%; background: #fee2e2; border-color: var(--ink-red);">
+                <strong style="color: var(--ink-red);">ROOT CAUSE:</strong><br>Scrap system is built to RECYCLE (destroy), not REUSE.
+            </div>
+        </div>
+
+        <!-- HMW -->
+        <div class="hmw-banner">
+            <h1 style="color: var(--ink-green); font-size: 2.8rem; margin-bottom: 0;">"How Might We intercept intact boxes at the apartment level and redirect them to local vendors who need them?"</h1>
+        </div>
+        
+        <div class="flex-row" style="text-align: center; justify-content: center; gap: 40px; margin-top: 10px;">
+            <p><strong style="font-size: 1.8rem; color: var(--ink-red);">80%</strong><br>Cite Space as #1 Pain</p>
+            <p><strong style="font-size: 1.8rem; color: var(--ink-blue);">96%</strong><br>Brand Neutral Vendors</p>
+            <p><strong style="font-size: 1.8rem; color: var(--ink-green);">₹3 vs ₹25</strong><br>Scrap vs New Value Gap</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
