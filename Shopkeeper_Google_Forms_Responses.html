@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReBox Pilot Feedback - Google Forms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0ebf8;
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header-bar {
+            height: 12px;
+            background-color: #673ab7;
+            width: 100%;
+        }
+        .container {
+            max-width: 770px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            border: 1px solid #dadce0;
+        }
+        .card-top {
+            border-top: 10px solid #673ab7;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .title {
+            font-size: 32px;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #202124;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #202124;
+            border-bottom: 1px solid #dadce0;
+            padding-bottom: 20px;
+        }
+        .required {
+            color: #d93025;
+        }
+        .question {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 16px;
+        }
+        .answer {
+            font-size: 14px;
+            color: #202124;
+            line-height: 20px;
+        }
+        .answer-box {
+            margin-top: 10px;
+        }
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
+            font-size: 14px;
+            color: #5f6368;
+        }
+        .nav-buttons span {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+        .nav-buttons span:hover {
+            background-color: #f1f3f4;
+        }
+        .radio-checked {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .radio-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #673ab7;
+            position: relative;
+        }
+        .radio-icon::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #673ab7;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <!-- Navigation Simulation -->
+        <div class="nav-controls">
+            <div><strong>3 responses</strong></div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span>Summary</span>
+                <span>Question</span>
+                <span style="color: #673ab7; border-bottom: 3px solid #673ab7; padding-bottom: 10px; font-weight: 500;">Individual</span>
+            </div>
+            <div class="nav-buttons">
+                <span>&lt;</span>
+                <span style="font-weight: 500;">1 of 3</span>
+                <span>&gt;</span>
+            </div>
+        </div>
+
+        <!-- Form Header -->
+        <div class="card card-top">
+            <h1 class="title">ReBox Pilot Feedback</h1>
+            <div class="subtitle">
+                Post-pilot assessment for local vendors participating in the ReBox closed test (June 2026).
+            </div>
+            <div style="font-size: 14px; margin-top: 15px; color: #5f6368;">
+                Email *
+                <div style="color: #202124; margin-top: 5px;">srikrishnagroceries.blr@gmail.com</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="question">Vendor Name <span class="required">*</span></div>
+            <div class="answer-box">
+                <div class="answer">Sri Krishna Groceries (Owner: Ramesh)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="question">How many ReBoxes did you receive during the 5-day pilot? <span class="required">*</span></div>
+            <div class="answer-box">
+                <div class="answer">18 boxes</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="question">Overall, how would you rate the structural quality of the reused boxes you received? <span class="required">*</span></div>
+            <div class="radio-checked">
+                <div class="radio-icon"></div>
+                <div class="answer">5 - Excellent (Like New)</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="question">Would you continue using ReBox to source your packaging instead of buying new boxes? <span class="required">*</span></div>
+            <div class="radio-checked">
+                <div class="radio-icon"></div>
+                <div class="answer">Yes, definitely. Saves me ₹20 per box.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="question">Any additional comments or suggestions for the ReBox team?</div>
+            <div class="answer-box">
+                <div class="answer">Perfect for packing heavy dal and rice orders. It was very easy to just take them from the community bin when I needed them.</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 50px;">
+            <button style="background: #673ab7; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: 500; font-size: 14px; cursor: pointer;">Print response</button>
+        </div>
+
+    </div>
+</body>
+</html>
