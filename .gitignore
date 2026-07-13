@@ -14,4 +14,26 @@ scratch/
 mail/
 Pictures (DTL)/
 FinalReports/
-assets/*.jpeg
+# Media files
+*.mp3
+*.wav
+*.ogg
+*.m4a
+*.aac
+*.flac
+*.webm
+*.mpeg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.webp
+*.ico
+*.tiff
+
+# Media directories
+Audio Reports/
+assets/
+Archive_Posters_and_Prototypes/Images/
